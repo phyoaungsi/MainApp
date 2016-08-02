@@ -2,6 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pas.com.mm.shoopingcart.MainActivity">
+
+    <item
+        android:id="@+id/sign_in"
+
+        android:title="@string/sign_in"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

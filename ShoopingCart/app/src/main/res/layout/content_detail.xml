@@ -15,6 +15,15 @@
     android:baselineAligned="false">
 
 
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:id="@+id/toggleButton"
+        android:layout_gravity="bottom"
+        style="@style/toggleButton"
+        android:background="@drawable/ic_toggle_bg"/>
+       />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -23,7 +32,7 @@
         android:src="@drawable/anime"
         style="@style/AppTheme.PopupOverlay"
         android:padding="2dp"
-        android:background="#ffffff" />
+        android:background="@drawable/ic_favorite_black_48dp" />
 
     <Button
         android:id="@+id/btnChangeImage"
@@ -32,10 +41,12 @@
         android:text="Change Image" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="78dp"
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/button"
         android:layout_gravity="center_vertical"
         style="@style/Base.TextAppearance.AppCompat.Caption" />
+
+
 </LinearLayout>
