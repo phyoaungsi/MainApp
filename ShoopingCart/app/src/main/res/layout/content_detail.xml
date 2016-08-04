@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -29,7 +32,7 @@
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/anime"
+        android:src="@drawable/dots"
         style="@style/AppTheme.PopupOverlay"
         android:padding="2dp"
         android:background="@drawable/ic_favorite_black_48dp" />
@@ -48,10 +51,7 @@
         android:layout_gravity="center_vertical"
         style="@style/Base.TextAppearance.AppCompat.Caption" />
 
-    <ImageView
-        android:id="@+id/expanded_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"
-        android:contentDescription="@string/description_zoom_touch_close" />
+
 </LinearLayout>
+
+

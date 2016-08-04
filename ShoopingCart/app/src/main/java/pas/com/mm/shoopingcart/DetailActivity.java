@@ -6,7 +6,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,8 +16,6 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import java.net.URL;
 
 public class DetailActivity extends AppCompatActivity {
    // Button button;
@@ -55,9 +52,11 @@ public class DetailActivity extends AppCompatActivity {
         thumb1View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(thumb1View, R.drawable.anime);
+                zoomImageFromThumb(thumb1View, R.drawable.wallpaper);
             }
         });
+        // Retrieve and cache the system's default "short" animation time.
+        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
     @Override

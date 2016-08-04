@@ -31,5 +31,10 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_dialog_email" />
-
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:contentDescription="@string/description_zoom_touch_close" />
 </android.support.design.widget.CoordinatorLayout>
