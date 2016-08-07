@@ -34,7 +34,7 @@ public class CustomerList extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         txtTitle.setText(web[position]);
 
-        imageView.setImageResource(imageId[position]);
+ //       imageView.setImageResource(imageId[position]);
         return rowView;
     }
 }

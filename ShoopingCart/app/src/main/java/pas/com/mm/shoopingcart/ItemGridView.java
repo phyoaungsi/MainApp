@@ -1,5 +1,6 @@
 package pas.com.mm.shoopingcart;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-public class ItemGridView extends AppCompatActivity {
+public class ItemGridView extends AppCompatActivity implements ImageGridFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class ItemGridView extends AppCompatActivity {
 
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
+       // gridview.setAdapter(new ImageAdapter(this));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -43,6 +44,10 @@ public class ItemGridView extends AppCompatActivity {
 
 
 
+    }
+
+    public void onFragmentInteraction(Uri uri){
+        //you can leave it empty
     }
 
 }

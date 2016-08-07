@@ -29,4 +29,11 @@
     android:baselineAligned="false"
 
     />
+
+    <fragment
+        android:name="pas.com.mm.shoopingcart.ImageGridFragment"
+        android:id="@+id/log_fragment"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

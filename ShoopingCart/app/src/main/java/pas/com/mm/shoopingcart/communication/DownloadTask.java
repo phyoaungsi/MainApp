@@ -1,6 +1,11 @@
 package pas.com.mm.shoopingcart.communication;
 
 import android.os.AsyncTask;
+import android.widget.ListView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +14,10 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
+import pas.com.mm.shoopingcart.CustomerList;
 import pas.com.mm.shoopingcart.R;
 import pas.com.mm.shoopingcart.logger.Log;
 import pas.com.mm.shoopingcart.logger.LogFragment;
@@ -24,7 +32,9 @@ public class DownloadTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... urls) {
         try {
-            return loadFromNetwork(urls[0]);
+            String text= loadFromNetwork(urls[0]);
+
+            return text;
         } catch (IOException e) {
             return "Connection Error";
         }
@@ -48,6 +58,7 @@ public class DownloadTask extends AsyncTask<String, Void, String> {
         try {
             stream = downloadUrl(urlString);
             str = readIt(stream, 500);
+
         } finally {
             if (stream != null) {
                 stream.close();
@@ -89,8 +100,13 @@ public class DownloadTask extends AsyncTask<String, Void, String> {
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");
         char[] buffer = new char[len];
-        reader.read(buffer);
-        return new String(buffer);
+        StringBuilder sb=new StringBuilder();
+        int data=0;
+        while(data!=-1) {
+          data=  reader.read(buffer);
+           sb.append(new String(buffer));
+        }
+        return sb.toString();
     }
 
     /** Create a chain of targets that will receive log data */
@@ -112,4 +128,6 @@ public class DownloadTask extends AsyncTask<String, Void, String> {
         //        (LogFragment) getSupportFragmentManager().findFragmentById(R.id.log_fragment);
        // msgFilter.setNext(mLogFragment.getLogView());
     }
+
+
 }
