@@ -4,32 +4,60 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity {
-   // Button button;
+    // Button button;
     ImageView image;
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
+    private Context context;
+    private String[] mPlanetTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+
+    private ActionBarDrawerToggle mDrawerToggle;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        context = this;
         setSupportActionBar(toolbar);
-
+        mPlanetTitles = getResources().getStringArray(R.array.planets_array);
+        mDrawerLayout =new  DrawerLayout(this);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout1);
+        mDrawerList =new ListView(this);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer1);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,13 +68,22 @@ public class DetailActivity extends AppCompatActivity {
         });
 
         final Button button = (Button) findViewById(R.id.btnChangeImage);
-        String pos= String.valueOf(this.getIntent().getLongExtra("POSITION",0));
+        String pos = String.valueOf(this.getIntent().getLongExtra("POSITION", 0));
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Toast.makeText(context, "anonymous", Toast.LENGTH_SHORT);
+                View frame = (View) findViewById(R.id.sliding_detail_frame);
+                TranslateAnimation anim = new TranslateAnimation(0f, 100f, 0f, 0f);  // might need to review the docs
+                anim.setDuration(1000); // set how long you want the animation
+                frame.setAnimation(anim);
+                frame.startAnimation(anim);
+
+                frame.setLeft(100);
+                //  frame.setVisibility(View.VISIBLE);
                 // Perform action on click
             }
         });
-        button.setText(pos);
+        button.setText("haheehe");
 
         final View thumb1View = findViewById(R.id.imageView1);
         thumb1View.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +94,68 @@ public class DetailActivity extends AppCompatActivity {
         });
         // Retrieve and cache the system's default "short" animation time.
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        //drawer layout
+
+
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.menu_drawer, mPlanetTitles));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        mTitle = mDrawerTitle = getTitle();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout1);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout1);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(mDrawerTitle);
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+
     }
 
     @Override
@@ -66,17 +165,27 @@ public class DetailActivity extends AppCompatActivity {
         return true;
     }
 
+
+    /* Called whenever we call invalidateOptionsMenu() */
+   // @Override
+   // public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+       // boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+       // menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+       // return super.onPrepareOptionsMenu(menu);
+   // }
+
     /**
      * "Zooms" in a thumbnail view by assigning the high resolution image to a hidden "zoomed-in"
      * image view and animating its bounds to fit the entire activity content area. More
      * specifically:
-     *
+     * <p>
      * <ol>
-     *   <li>Assign the high-res image to the hidden "zoomed-in" (expanded) image view.</li>
-     *   <li>Calculate the starting and ending bounds for the expanded view.</li>
-     *   <li>Animate each of four positioning/sizing properties (X, Y, SCALE_X, SCALE_Y)
-     *       simultaneously, from the starting bounds to the ending bounds.</li>
-     *   <li>Zoom back out by running the reverse animation on click.</li>
+     * <li>Assign the high-res image to the hidden "zoomed-in" (expanded) image view.</li>
+     * <li>Calculate the starting and ending bounds for the expanded view.</li>
+     * <li>Animate each of four positioning/sizing properties (X, Y, SCALE_X, SCALE_Y)
+     * simultaneously, from the starting bounds to the ending bounds.</li>
+     * <li>Zoom back out by running the reverse animation on click.</li>
      * </ol>
      *
      * @param thumbView  The thumbnail view to zoom in.
@@ -207,4 +316,64 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    /**
+     * Swaps fragments in the main content view
+     */
+    private void selectItem(int position) {
+        // Create a new fragment and specify the planet to show based on position
+        Fragment fragment = new PlanetFragment();
+        Bundle args = new Bundle();
+        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+        fragment.setArguments(args);
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame1, fragment)
+                .commit();
+
+        // Highlight the selected item, update the title, and close the drawer
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mPlanetTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getActionBar().setTitle(mTitle);
+    }
+
+    public static class PlanetFragment extends Fragment {
+        public static final String ARG_PLANET_NUMBER = "planet_number";
+
+        public PlanetFragment() {
+            // Empty constructor required for fragment subclasses
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_planet, container, false);
+            int i = getArguments().getInt(ARG_PLANET_NUMBER);
+            String planet = getResources().getStringArray(R.array.planets_array)[i];
+
+            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
+                    "drawable", getActivity().getPackageName());
+            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
+            getActivity().setTitle(planet);
+            return rootView;
+        }
+    }
+
+
+
 }
+
