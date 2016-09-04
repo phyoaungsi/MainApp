@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 
+import pas.com.mm.shoopingcart.Main2Activity;
 import pas.com.mm.shoopingcart.MainActivity;
 import pas.com.mm.shoopingcart.R;
 
