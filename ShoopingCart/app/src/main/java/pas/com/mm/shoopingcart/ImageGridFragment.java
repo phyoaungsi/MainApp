@@ -1,6 +1,7 @@
 package pas.com.mm.shoopingcart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -88,7 +89,7 @@ public class ImageGridFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View v= inflater.inflate(R.layout.image_grid_fragment, container, false);
-
+        final Context context=this.getContext();
 
         GridView gridview = (GridView) v.findViewById(R.id.gridview_cache);
         MobileImageAdapter  imageAdapter=new MobileImageAdapter(getActivity(),mImageFetcher);
@@ -99,6 +100,9 @@ public class ImageGridFragment extends Fragment {
                                     int position, long id) {
                 Toast.makeText(getActivity(), "" + position,
                         Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("POSITION", id);
+                startActivity(intent);
             }
         });
         return v;

@@ -29,7 +29,7 @@ import android.support.v4.app.FragmentManager;
 import android.widget.ImageView;
 
 import pas.com.mm.shoopingcart.BuildConfig;
-import  pas.com.mm.shoopingcart.logger.Log;
+import android.util.Log;
 
 
 import java.lang.ref.WeakReference;
@@ -84,14 +84,15 @@ public abstract class ImageWorker {
         if (mImageCache != null) {
             value = mImageCache.getBitmapFromMemCache(String.valueOf(data));
         }
-
         if (value != null) {
+            Log.i("ImageWOrker","Cache HIT OKOKOKOKO");
             // Bitmap found in memory cache
             imageView.setImageDrawable(value);
             if (listener != null) {
                 listener.onImageLoaded(true);
             }
         } else if (cancelPotentialWork(data, imageView)) {
+            Log.i("ImageWOrker","Cache MISS EEEEEEEE");
             //BEGIN_INCLUDE(execute_background_task)
             final BitmapWorkerTask task = new BitmapWorkerTask(data, imageView, listener);
             final AsyncDrawable asyncDrawable =

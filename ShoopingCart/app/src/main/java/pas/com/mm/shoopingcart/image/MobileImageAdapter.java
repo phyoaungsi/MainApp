@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import pas.com.mm.shoopingcart.R;
+import android.util.Log;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 
 /**
@@ -65,20 +67,27 @@ public class MobileImageAdapter extends BaseAdapter {
         textView.setText("Temporay position >"+position);
 
         ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_image);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setPadding(8, 8, 8, 8);
+
         //imageView.setImageResource(mThumbIds[position]);
         if (convertView == null) { // if it's not recycled, instantiate and initialize
-            imageView = new RecyclingImageView(mContext);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+           imageView = new RecyclingImageView(mContext);
+        //    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //            imageView.setLayoutParams(gridView.getLayoutParams());
+            Log.i("test","getview new"+position);
         } else { // Otherwise re-use the converted view
           //  gridView = (LinearLayout) convertView;
+          //  AbsListView.LayoutParams layoutParms= new AbsListView.LayoutParams(400,600);
+                 //   ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+         //  imageView.setLayoutParams(layoutParms);
+            mImageFetcher.loadImage(Images.imageThumbUrls[position], imageView);
+            Log.i("test","getview***"+position);
         }
 
 
       //  mImageFetcher.loadImage(Images.imageThumbUrls[position - mNumColumns], imageView);
-        mImageFetcher.loadImage(Images.imageThumbUrls[position], imageView);
+       // imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+     //   imageView.setPadding(0, 0, 0, 0);
+
         return gridView;
     }
 

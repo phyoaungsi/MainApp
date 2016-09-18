@@ -9,6 +9,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -32,6 +33,10 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+import pas.com.mm.shoopingcart.image.Images;
+import pas.com.mm.shoopingcart.util.ImageCache;
+import pas.com.mm.shoopingcart.util.ImageFetcher;
+
 public class DetailActivity extends AppCompatActivity {
     // Button button;
     ImageView image;
@@ -39,13 +44,14 @@ public class DetailActivity extends AppCompatActivity {
     private int mShortAnimationDuration;
     private Context context;
     private String[] mPlanetTitles;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-
-    private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mDrawerTitle;
+   // private DrawerLayout mDrawerLayout;
+   // private ListView mDrawerList;
+    private static final String IMAGE_CACHE_DIR = "thumbs";
+   // private ActionBarDrawerToggle mDrawerToggle;
+   // private CharSequence mDrawerTitle;
+    private  ImageCache.ImageCacheParams cacheParams;
     private CharSequence mTitle;
-
+    private ImageFetcher mImageFetcher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +60,10 @@ public class DetailActivity extends AppCompatActivity {
         context = this;
         setSupportActionBar(toolbar);
         mPlanetTitles = getResources().getStringArray(R.array.planets_array);
-        mDrawerLayout =new  DrawerLayout(this);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout1);
-        mDrawerList =new ListView(this);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer1);
+      //  mDrawerLayout =new  DrawerLayout(this);
+      //  mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout1);
+      //  mDrawerList =new ListView(this);
+      //  mDrawerList = (ListView) findViewById(R.id.left_drawer1);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,14 +90,20 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
         button.setText("haheehe");
-
-        final View thumb1View = findViewById(R.id.imageView1);
+       int  mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_big_item_size);
+        final ImageView thumb1View =(ImageView) findViewById(R.id.imageView1);
+        cacheParams = new ImageCache.ImageCacheParams(this, IMAGE_CACHE_DIR);
+        mImageFetcher = new ImageFetcher(this, mImageThumbSize);
+        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
+        mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams);
+        mImageFetcher.loadImage("https://s-media-cache-ak0.pinimg.com/564x/4c/84/03/4c84030879a89cf9dde78ca79b454340.jpg", thumb1View);
         thumb1View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 zoomImageFromThumb(thumb1View, R.drawable.wallpaper);
             }
         });
+
         // Retrieve and cache the system's default "short" animation time.
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -99,61 +111,61 @@ public class DetailActivity extends AppCompatActivity {
 
 
         // Set the adapter for the list view
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.menu_drawer, mPlanetTitles));
+        //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.menu_drawer, mPlanetTitles));
         // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-        mTitle = mDrawerTitle = getTitle();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout1);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout1);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        ) {
+       // mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+/**
+       // mTitle = mDrawerTitle = getTitle();
+        //mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout1);
+       // mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
-            }
+            //public void onDrawerClosed(View view) {
+                //super.onDrawerClosed(view);
+                //getActionBar().setTitle(mTitle);
+              //  invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            //}
 
             /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
-            }
-        };
+          //  public void onDrawerOpened(View drawerView) {
+        //        super.onDrawerOpened(drawerView);
+               // getActionBar().setTitle(mDrawerTitle);
+      //          invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+    //        }
+  //      };
 
         // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+//        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+
+
+        //mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout1);
+        //mDrawerToggle = new ActionBarDrawerToggle(
+                //this,                  /* host Activity */
+                //mDrawerLayout,         /* DrawerLayout object */
+              //  R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+            //    R.string.drawer_open,  /* "open drawer" description */
+          //      R.string.drawer_close  /* "close drawer" description */
+        //) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+        //    public void onDrawerClosed(View view) {
+      //          super.onDrawerClosed(view);
+    //            getActionBar().setTitle(mTitle);
+  //          }
+//
+          //  /** Called when a drawer has settled in a completely open state. */
+        //    public void onDrawerOpened(View drawerView) {
+      //          super.onDrawerOpened(drawerView);
+    //            getActionBar().setTitle(mDrawerTitle);
+  //          }
+//        };
+
+        // Set the drawer toggle as the DrawerListener
+      //  mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+      //  getActionBar().setDisplayHomeAsUpEnabled(true);
+      //  getActionBar().setHomeButtonEnabled(true);
 
 
     }
@@ -199,8 +211,10 @@ public class DetailActivity extends AppCompatActivity {
 
         // Load the high-resolution "zoomed-in" image.
         final ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
-        expandedImageView.setImageResource(imageResId);
-
+       // expandedImageView.setImageResource(imageResId);
+        ImageCache mImageCache= ImageCache.getInstance(this.getSupportFragmentManager(), cacheParams);
+        BitmapDrawable value = mImageCache.getBitmapFromMemCache(String.valueOf("https://s-media-cache-ak0.pinimg.com/564x/4c/84/03/4c84030879a89cf9dde78ca79b454340.jpg"));
+        expandedImageView.setImageDrawable(value);
         // Calculate the starting and ending bounds for the zoomed-in image. This step
         // involves lots of math. Yay, math.
         final Rect startBounds = new Rect();
@@ -340,9 +354,9 @@ public class DetailActivity extends AppCompatActivity {
                 .commit();
 
         // Highlight the selected item, update the title, and close the drawer
-        mDrawerList.setItemChecked(position, true);
+        //mDrawerList.setItemChecked(position, true);
         setTitle(mPlanetTitles[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
+        //mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     @Override

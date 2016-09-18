@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 
+import pas.com.mm.shoopingcart.ItemGridView;
 import pas.com.mm.shoopingcart.Main2Activity;
 import pas.com.mm.shoopingcart.MainActivity;
 import pas.com.mm.shoopingcart.R;
@@ -117,7 +118,7 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(SplashScreen.this,MainActivity.class);
+                Intent mainIntent = new Intent(SplashScreen.this,ItemGridView.class);
                 SplashScreen.this.startActivity(mainIntent);
                 SplashScreen.this.finish();
             }

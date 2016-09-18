@@ -31,16 +31,8 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
 
 
 
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-       // gridview.setAdapter(new ImageAdapter(this));
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(ItemGridView.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+       // gridview.setAdapter(new ImageAdapter(this));
 
 
 
