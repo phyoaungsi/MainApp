@@ -11,12 +11,38 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="pas.com.mm.shoopingcart.ItemGridView"
     tools:showIn="@layout/activity_grid_view"
-    android:background="#f3e5f5">
+    android:background="#f3e5f5"
+    android:id="@+id/container">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/wrapper">
+        <android.support.v4.view.ViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <fragment
+            <android.support.v4.view.PagerTitleStrip
+                android:id="@+id/pager_title_strip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="#000"
+                android:textColor="#fff"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp" />
+
+        </android.support.v4.view.ViewPager>
+  <!--  <fragment
         android:name="pas.com.mm.shoopingcart.ImageGridFragment"
         android:id="@+id/log_fragment"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+-->
+  </FrameLayout>
 </RelativeLayout>

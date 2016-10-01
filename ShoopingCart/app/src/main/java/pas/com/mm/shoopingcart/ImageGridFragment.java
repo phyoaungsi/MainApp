@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,8 +81,9 @@ public class ImageGridFragment extends Fragment {
 
         ImageCache.ImageCacheParams cacheParams = new ImageCache.ImageCacheParams(getActivity(), IMAGE_CACHE_DIR);
         cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
+        Log.i("ImagGrid","actifity aniitialized--------------------");
         mImageFetcher = new ImageFetcher(getActivity(), mImageThumbSize);
-        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
+        mImageFetcher.setLoadingImage(R.drawable.ie_loader);
         mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
     }
 
@@ -100,9 +103,10 @@ public class ImageGridFragment extends Fragment {
                                     int position, long id) {
                 Toast.makeText(getActivity(), "" + position,
                         Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("POSITION", id);
+               Intent intent = new Intent(getActivity(), DetailActivity.class);intent.putExtra("POSITION", id);
                 startActivity(intent);
+            //  getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new DetailFragment()).commit();
+
             }
         });
         return v;

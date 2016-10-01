@@ -115,7 +115,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
-
     <string-array name="planets_array">
         <item>Mercury</item>
         <item>Venus</item>

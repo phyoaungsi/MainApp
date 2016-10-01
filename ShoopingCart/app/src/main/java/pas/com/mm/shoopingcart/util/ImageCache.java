@@ -32,7 +32,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.util.LruCache;
 
 import pas.com.mm.shoopingcart.BuildConfig;
-import pas.com.mm.shoopingcart.logger.Log;
+import android.util.Log;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -233,6 +233,7 @@ public class ImageCache {
      */
     public void addBitmapToCache(String data, BitmapDrawable value) {
         //BEGIN_INCLUDE(add_bitmap_to_cache)
+        Log.i("ImageCache","adding bitmap to cache MMMMMM STORED.................");
         if (data == null || value == null) {
             return;
         }
@@ -245,6 +246,7 @@ public class ImageCache {
                 ((RecyclingBitmapDrawable) value).setIsCached(true);
             }
             mMemoryCache.put(data, value);
+            Log.i("iMAGEcache","MMMMMM STORED.................");
         }
 
         synchronized (mDiskCacheLock) {

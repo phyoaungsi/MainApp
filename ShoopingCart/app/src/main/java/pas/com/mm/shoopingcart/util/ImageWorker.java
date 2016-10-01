@@ -279,6 +279,7 @@ public abstract class ImageWorker {
         @Override
         protected BitmapDrawable doInBackground(Void... params) {
             //BEGIN_INCLUDE(load_bitmap_in_background)
+             Log.i("iMAGEcache","Doing background ->MMMMMM STORED.................");
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, "doInBackground - starting work");
             }
