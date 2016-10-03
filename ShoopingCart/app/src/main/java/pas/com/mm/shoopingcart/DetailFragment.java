@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -113,6 +114,8 @@ public class DetailFragment extends Fragment {
         String pos = String.valueOf(getActivity().getIntent().getLongExtra("POSITION", 0));
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                /**
                 Toast.makeText(context, "anonymous", Toast.LENGTH_SHORT);
                 View frame = (View) v.findViewById(R.id.sliding_detail_frame);
                 TranslateAnimation anim = new TranslateAnimation(0f, 100f, 0f, 0f);  // might need to review the docs
@@ -123,6 +126,46 @@ public class DetailFragment extends Fragment {
                 frame.setLeft(100);
                 //  frame.setVisibility(View.VISIBLE);
                 // Perform action on click
+                 **/
+                boolean sms_success=false;
+                try {
+                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                    smsIntent.setType("vnd.android-dir/mms-sms");
+                    smsIntent.putExtra("address", "+6591094326");
+                    smsIntent.putExtra("sms_body", "Body of Message");
+                    startActivity(smsIntent);
+                    sms_success=true;
+                }
+                catch(Exception e)
+                {
+                   sms_success=false;
+                }
+                if(sms_success==false)
+                {
+                    try
+                    {
+                        Uri uri = Uri.parse("smsto:+6591814799");
+                        Intent share = new Intent(android.content.Intent.ACTION_SEND,uri);
+                        share.setType("text/plain");
+                        share.putExtra(Intent.EXTRA_TEXT, "Your text to share");
+                        share.setPackage("com.viber.voip");
+                        startActivity(Intent.createChooser(share, "Select"));
+                    }
+                    catch(Exception e)
+                    {
+                        Toast.makeText(context,"Viber not found",Toast.LENGTH_SHORT);
+                    }
+                }
+            }
+        });
+        final Button call = (Button) v.findViewById(R.id.button);
+        call.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                String number = "tel:91094326";
+                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+                startActivity(callIntent);
             }
         });
 

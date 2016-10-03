@@ -6,7 +6,7 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="image_thumbnail_size">100dp</dimen>
+    <dimen name="image_thumbnail_size">400dp</dimen>
 
     <dimen name="image_big_item_size">400dp</dimen>
     <dimen name="image_thumbnail_spacing">1dp</dimen>

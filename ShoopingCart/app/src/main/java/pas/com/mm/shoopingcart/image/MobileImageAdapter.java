@@ -79,7 +79,7 @@ public class MobileImageAdapter extends BaseAdapter {
           //  AbsListView.LayoutParams layoutParms= new AbsListView.LayoutParams(400,600);
                  //   ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
          //  imageView.setLayoutParams(layoutParms);
-          String url="http://pngimg.com/upload/bus_PNG8615.png";
+          String url="https://drive.google.com/uc?export=download&id=0B_9ZBXw3kTLIN01ibXRqUHV5Umc";
           //  mImageFetcher.loadImage(Images.imageThumbUrls[position], imageView);
             mImageFetcher.loadImage(url, imageView);
             Log.i("test","getview***"+position);
