@@ -1,5 +1,6 @@
 package pas.com.mm.shoopingcart;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+
+import pas.com.mm.shoopingcart.activities.ContactActivity;
 
 public class ItemGridView extends AppCompatActivity implements ImageGridFragment.OnFragmentInteractionListener,DetailFragment.OnFragmentInteractionListener {
     private static final String TAG = "ImageGridActivity";
@@ -82,7 +85,12 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.action_contact) {
 
+            Intent intent = new Intent(this, ContactActivity.class);intent.putExtra("POSITION", id);
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
