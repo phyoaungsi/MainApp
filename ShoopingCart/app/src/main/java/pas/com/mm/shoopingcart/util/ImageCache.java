@@ -65,7 +65,7 @@ public class ImageCache {
 
     // Compression settings when writing images to disk cache
     private static final CompressFormat DEFAULT_COMPRESS_FORMAT = CompressFormat.JPEG;
-    private static final int DEFAULT_COMPRESS_QUALITY = 70;
+    private static final int DEFAULT_COMPRESS_QUALITY = 1000;
     private static final int DISK_CACHE_INDEX = 0;
 
     // Constants to easily toggle various caches
@@ -563,8 +563,8 @@ public class ImageCache {
     public static File getDiskCacheDir(Context context, String uniqueName) {
         // Check if media is mounted or storage is built-in, if so, try and use external cache dir
         // otherwise use internal cache dir
-       // final String cachePath =  Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !isExternalStorageRemovable() ? getExternalCacheDir(context).getPath() :  context.getCacheDir().getPath();
-        final String cachePath= context.getCacheDir().getPath();
+        final String cachePath =  Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !isExternalStorageRemovable() ? getExternalCacheDir(context).getPath() :  context.getCacheDir().getPath();
+       // final String cachePath= context.getCacheDir().getPath();
         return new File(cachePath + File.separator + uniqueName);
     }
 

@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -93,6 +94,7 @@ public class DetailActivity extends AppCompatActivity {
        int  mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_big_item_size);
         final ImageView thumb1View =(ImageView) findViewById(R.id.imageView1);
         cacheParams = new ImageCache.ImageCacheParams(this, IMAGE_CACHE_DIR);
+        Log.i("DetailActivity","OnCreate");
         mImageFetcher = new ImageFetcher(this, mImageThumbSize);
         mImageFetcher.setLoadingImage(R.drawable.empty_photo);
         mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams);
@@ -168,6 +170,13 @@ public class DetailActivity extends AppCompatActivity {
       //  getActionBar().setHomeButtonEnabled(true);
 
 
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        Log.i("DetailActivity","Destory");
     }
 
     @Override
