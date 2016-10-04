@@ -1,3 +1,8 @@
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swiperefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <GridView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/gridview_cache"
     android:layout_width="match_parent"
@@ -15,3 +20,4 @@
     android:baselineAligned="false"
 
     />
+    </android.support.v4.widget.SwipeRefreshLayout>

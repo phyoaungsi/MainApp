@@ -47,6 +47,12 @@
                 android:text="@string/dummy_button" />
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="306dp"
+            android:id="@+id/image_rotate"
+            android:layout_gravity="center" />
     </FrameLayout>
 
 </FrameLayout>

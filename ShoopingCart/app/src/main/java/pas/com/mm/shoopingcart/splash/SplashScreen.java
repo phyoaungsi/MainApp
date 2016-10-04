@@ -2,6 +2,7 @@ package pas.com.mm.shoopingcart.splash;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import pas.com.mm.shoopingcart.ItemGridView;
 import pas.com.mm.shoopingcart.Main2Activity;
@@ -20,6 +22,9 @@ import pas.com.mm.shoopingcart.R;
  * status bar and navigation/system bar) with user interaction.
  */
 public class SplashScreen extends AppCompatActivity {
+
+    AnimationDrawable rocketAnimation;
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -96,6 +101,12 @@ public class SplashScreen extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash_screen);
 
+        ImageView rocketImage = (ImageView) findViewById(R.id.image_rotate);
+        rocketImage.setBackgroundResource(R.drawable.splash_animation_list);
+        rocketAnimation = (AnimationDrawable) rocketImage.getBackground();
+        rocketAnimation.start();
+
+
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
@@ -122,10 +133,11 @@ public class SplashScreen extends AppCompatActivity {
                 SplashScreen.this.startActivity(mainIntent);
                 SplashScreen.this.finish();
             }
-        }, 1000);
+        }, 3000);
 
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

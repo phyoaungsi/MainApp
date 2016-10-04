@@ -1,37 +1,24 @@
-package pas.com.mm.shoopingcart;
+package pas.com.mm.shoopingcart.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import pas.com.mm.shoopingcart.image.MobileImageAdapter;
-import pas.com.mm.shoopingcart.util.ImageCache;
-import pas.com.mm.shoopingcart.util.ImageFetcher;
-
+import pas.com.mm.shoopingcart.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ImageGridFragment.OnFragmentInteractionListener} interface
+ * {@link ContactFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ImageGridFragment#newInstance} factory method to
+ * Use the {@link ContactFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ImageGridFragment extends Fragment {
+public class ContactFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,12 +27,10 @@ public class ImageGridFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private int mImageThumbSize;
-    private int mImageThumbSpacing;
-    private static final String IMAGE_CACHE_DIR = "thumbs";
+
     private OnFragmentInteractionListener mListener;
-    private ImageFetcher mImageFetcher;
-    public ImageGridFragment() {
+
+    public ContactFragment() {
         // Required empty public constructor
     }
 
@@ -55,11 +40,11 @@ public class ImageGridFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ImageGridFragment.
+     * @return A new instance of fragment ContactFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ImageGridFragment newInstance(String param1, String param2) {
-        ImageGridFragment fragment = new ImageGridFragment();
+    public static ContactFragment newInstance(String param1, String param2) {
+        ContactFragment fragment = new ContactFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,43 +59,13 @@ public class ImageGridFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
-        mImageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_spacing);
-
-
-        ImageCache.ImageCacheParams cacheParams = new ImageCache.ImageCacheParams(getActivity(), IMAGE_CACHE_DIR);
-        cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
-        Log.i("ImagGrid","actifity aniitialized--------------------");
-        mImageFetcher = new ImageFetcher(getActivity(), mImageThumbSize);
-        mImageFetcher.setLoadingImage(R.drawable.ie_loader);
-        mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View v= inflater.inflate(R.layout.image_grid_fragment, container, false);
-        final Context context=this.getContext();
-
-        GridView gridview = (GridView) v.findViewById(R.id.gridview_cache);
-        MobileImageAdapter  imageAdapter=new MobileImageAdapter(getActivity(),mImageFetcher);
-        gridview.setAdapter(imageAdapter);
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(getActivity(), "" + position,
-                        Toast.LENGTH_SHORT).show();
-               Intent intent = new Intent(getActivity(), DetailActivity.class);intent.putExtra("POSITION", id);
-                startActivity(intent);
-            //  getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new DetailFragment()).commit();
-
-            }
-        });
-        return v;
-
+        return inflater.inflate(R.layout.fragment_contact, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -151,6 +106,4 @@ public class ImageGridFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-
 }

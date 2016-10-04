@@ -32,7 +32,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.util.LruCache;
 
 import pas.com.mm.shoopingcart.BuildConfig;
-import pas.com.mm.shoopingcart.logger.Log;
+import android.util.Log;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -65,11 +65,13 @@ public class ImageCache {
 
     // Compression settings when writing images to disk cache
     private static final CompressFormat DEFAULT_COMPRESS_FORMAT = CompressFormat.JPEG;
-    private static final int DEFAULT_COMPRESS_QUALITY = 1000;
+
+    private static final int DEFAULT_COMPRESS_QUALITY = 100;
+
     private static final int DISK_CACHE_INDEX = 0;
 
     // Constants to easily toggle various caches
-    private static final boolean DEFAULT_MEM_CACHE_ENABLED = true;
+    private static final boolean DEFAULT_MEM_CACHE_ENABLED = false;
     private static final boolean DEFAULT_DISK_CACHE_ENABLED = true;
     private static final boolean DEFAULT_INIT_DISK_CACHE_ON_CREATE = false;
 
@@ -233,6 +235,7 @@ public class ImageCache {
      */
     public void addBitmapToCache(String data, BitmapDrawable value) {
         //BEGIN_INCLUDE(add_bitmap_to_cache)
+        Log.i("ImageCache","adding bitmap to cache MMMMMM STORED.................");
         if (data == null || value == null) {
             return;
         }
@@ -245,6 +248,7 @@ public class ImageCache {
                 ((RecyclingBitmapDrawable) value).setIsCached(true);
             }
             mMemoryCache.put(data, value);
+            Log.i("iMAGEcache","MMMMMM STORED.................");
         }
 
         synchronized (mDiskCacheLock) {
