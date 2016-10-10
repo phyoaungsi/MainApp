@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import pas.com.mm.shoopingcart.R;
 import android.util.Log;
+
+import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 
 /**
@@ -39,7 +41,8 @@ public class MobileImageAdapter extends BaseAdapter {
         }
 
         // Size + number of columns for top empty row
-        return Images.imageThumbUrls.length + mNumColumns;
+        //return Images.imageThumbUrls.length + mNumColumns;
+        return DbSupport.list.size();
     }
 
     public Object getItem(int position) {
@@ -62,10 +65,9 @@ public class MobileImageAdapter extends BaseAdapter {
         // gridView = new View(mContext);
         gridView = inflater.inflate(R.layout.grid_item, null);
 
-        TextView textView = (TextView) gridView
-                .findViewById(R.id.grid_caption);
-        textView.setText("Temporay position >"+position);
 
+        TextView textView = (TextView) gridView.findViewById(R.id.grid_caption);
+        textView.setText(DbSupport.list.get(position).description+" "+DbSupport.list.size());
         ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_image);
 
         //imageView.setImageResource(mThumbIds[position]);
@@ -80,6 +82,7 @@ public class MobileImageAdapter extends BaseAdapter {
                  //   ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
          //  imageView.setLayoutParams(layoutParms);
           String url="https://drive.google.com/uc?export=download&id=0B_9ZBXw3kTLIN01ibXRqUHV5Umc";
+            url=DbSupport.list.get(position).imgUrl;
           //  mImageFetcher.loadImage(Images.imageThumbUrls[position], imageView);
             mImageFetcher.loadImage(url, imageView);
             Log.i("test","getview***"+position);

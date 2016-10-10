@@ -15,3 +15,10 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+
+-keepattributes Signature
+-keepattributes *Annotation*
+-keepclassmembers class pas.com.mm.shoopingcart.database.model.** {
+    *;
+}

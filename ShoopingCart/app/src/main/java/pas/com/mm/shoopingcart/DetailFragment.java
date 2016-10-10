@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 
@@ -181,6 +182,11 @@ public class DetailFragment extends Fragment {
 
         // Retrieve and cache the system's default "short" animation time.
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+
+        DbSupport db=new DbSupport();
+       // db.writeNewPost("CODE002","HELLO","HTTP://WWW",12.9);
+        db.listenDataChange();
         return v;
     }
 

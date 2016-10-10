@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.DropBoxManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.image.MobileImageAdapter;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
@@ -85,6 +87,7 @@ public class ImageGridFragment extends Fragment {
         mImageFetcher = new ImageFetcher(getActivity(), mImageThumbSize);
         mImageFetcher.setLoadingImage(R.drawable.ie_loader);
         mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
+
     }
 
     @Override

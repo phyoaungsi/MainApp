@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.image.Images;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
@@ -53,6 +54,7 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 
         setSupportActionBar(toolbar);
        context=this;
+
       //  mDrawerLayout =new  DrawerLayout(this);
       //  mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout1);
       //  mDrawerList =new ListView(this);

@@ -16,6 +16,7 @@ import pas.com.mm.shoopingcart.ItemGridView;
 import pas.com.mm.shoopingcart.Main2Activity;
 import pas.com.mm.shoopingcart.MainActivity;
 import pas.com.mm.shoopingcart.R;
+import pas.com.mm.shoopingcart.database.DbSupport;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -136,6 +137,8 @@ public class SplashScreen extends AppCompatActivity {
         }, 3000);
 
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        DbSupport db=new DbSupport();
+        db.loadItemList();
     }
 
 
