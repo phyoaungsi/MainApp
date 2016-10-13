@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import pas.com.mm.shoopingcart.R;
@@ -20,6 +21,7 @@ import android.util.Log;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
+import pas.com.mm.shoopingcart.util.ImageWorker;
 
 /**
  * Created by phyo on 22/07/2016.
@@ -68,11 +70,19 @@ public class MobileImageAdapter extends BaseAdapter {
 
         TextView textView = (TextView) gridView.findViewById(R.id.grid_caption);
         textView.setText(DbSupport.list.get(position).description+" "+DbSupport.list.size());
-        ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_image);
+        final ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_image);
 
+        final ProgressBar pb=(ProgressBar) gridView.findViewById(R.id.progressbar_grid_img);
+        ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
+            @Override
+            public void onImageLoaded(boolean success) {
+                pb.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+            }
+        };
         //imageView.setImageResource(mThumbIds[position]);
         if (convertView == null) { // if it's not recycled, instantiate and initialize
-           imageView = new RecyclingImageView(mContext);
+           //imageView = new RecyclingImageView(mContext);
         //    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //            imageView.setLayoutParams(gridView.getLayoutParams());
             Log.i("test","getview new"+position);
@@ -84,7 +94,7 @@ public class MobileImageAdapter extends BaseAdapter {
           String url="https://drive.google.com/uc?export=download&id=0B_9ZBXw3kTLIN01ibXRqUHV5Umc";
             url=DbSupport.list.get(position).imgUrl;
           //  mImageFetcher.loadImage(Images.imageThumbUrls[position], imageView);
-            mImageFetcher.loadImage(url, imageView);
+            mImageFetcher.loadImage(url, imageView,imageListener);
             Log.i("test","getview***"+position);
         }
 

@@ -49,8 +49,17 @@
         style="@style/AppTheme.PopupOverlay"
         android:padding="2dp"
         android:background="@drawable/ic_favorite_black_48dp"
-        android:layout_gravity="center_horizontal" />
-    <ToggleButton
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressbar_detail_img"
+            android:layout_weight="0.45" />
+
+        <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New ToggleButton"

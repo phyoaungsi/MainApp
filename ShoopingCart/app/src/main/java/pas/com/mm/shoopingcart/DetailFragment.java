@@ -20,12 +20,14 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
+import pas.com.mm.shoopingcart.util.ImageWorker;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -111,6 +113,7 @@ public class DetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View v= inflater.inflate(R.layout.activity_detail, container, false);
         final Context context=this.getContext();
+        final ProgressBar pb=(ProgressBar) v.findViewById(R.id.progressbar_detail_img);
         final Button button = (Button) v.findViewById(R.id.btnChangeImage);
         String pos = String.valueOf(getActivity().getIntent().getLongExtra("POSITION", 0));
         button.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +175,14 @@ public class DetailFragment extends Fragment {
 
         button.setText("haheehe");
         final ImageView thumb1View =(ImageView) v.findViewById(R.id.imageView1);
-        mImageFetcher.loadImage("https://s-media-cache-ak0.pinimg.com/564x/4c/84/03/4c84030879a89cf9dde78ca79b454340.jpg", thumb1View);
+        ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
+            @Override
+            public void onImageLoaded(boolean success) {
+                        pb.setVisibility(View.GONE);
+                thumb1View.setVisibility(View.VISIBLE);
+            }
+        };
+        mImageFetcher.loadImage("https://s-media-cache-ak0.pinimg.com/564x/4c/84/03/4c84030879a89cf9dde78ca79b454340.jpg", thumb1View,imageListener);
         thumb1View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
