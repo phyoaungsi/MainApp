@@ -54,16 +54,15 @@
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressbar_detail_img"
-            android:layout_weight="0.45" />
+            android:layout_width="704dp"
+            android:layout_height="152dp"
+            android:id="@+id/progressbar_detail_img" />
 
         <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New ToggleButton"
-        android:id="@+id/toggleButton"
+        android:id="@+id/tbFavDetail"
         android:layout_gravity="bottom"
         style="@style/toggleButton"
         android:background="@drawable/ic_toggle_bg"/>

@@ -19,7 +19,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import pas.com.mm.shoopingcart.database.DbSupport;
+import pas.com.mm.shoopingcart.database.model.Item;
+import pas.com.mm.shoopingcart.image.FavouritiesImageAdapter;
 import pas.com.mm.shoopingcart.image.MobileImageAdapter;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
@@ -99,6 +103,12 @@ public class ImageGridFragment extends Fragment {
 
         GridView gridview = (GridView) v.findViewById(R.id.gridview_cache);
         MobileImageAdapter  imageAdapter=new MobileImageAdapter(getActivity(),mImageFetcher);
+        Bundle b= this.getArguments();
+        int panel=b.getInt("PANEL");
+        if(panel==2)
+        {
+            imageAdapter=new FavouritiesImageAdapter(getActivity(),mImageFetcher);
+        }
         gridview.setAdapter(imageAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -106,7 +116,12 @@ public class ImageGridFragment extends Fragment {
                                     int position, long id) {
                 Toast.makeText(getActivity(), "" + position,
                         Toast.LENGTH_SHORT).show();
-               Intent intent = new Intent(getActivity(), DetailActivity.class);intent.putExtra("POSITION", id);
+               Intent intent = new Intent(getActivity(), DetailActivity.class);
+               Item item= DbSupport.list.get(position);
+                Gson gson=new Gson();
+               String objStr= gson.toJson(item);
+                intent.putExtra("DETAIL_ITEM",objStr);
+                intent.putExtra("POSITION", id);
                 startActivity(intent);
             //  getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new DetailFragment()).commit();
 

@@ -6,12 +6,15 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +22,15 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.util.ImageCache;
@@ -44,6 +52,8 @@ public class DetailFragment extends Fragment {
     private int mShortAnimationDuration;
     private Context context;
     private String[] mPlanetTitles;
+    public static final String PREFS_NAME = "FAVLIST";
+
     // private DrawerLayout mDrawerLayout;
     // private ListView mDrawerList;
     private static final String IMAGE_CACHE_DIR = "thumbs";
@@ -94,11 +104,6 @@ public class DetailFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
-
-
-
-
         int  mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_big_item_size);
 
         cacheParams = new ImageCache.ImageCacheParams(getActivity(), IMAGE_CACHE_DIR);
@@ -113,9 +118,35 @@ public class DetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View v= inflater.inflate(R.layout.activity_detail, container, false);
         final Context context=this.getContext();
+
         final ProgressBar pb=(ProgressBar) v.findViewById(R.id.progressbar_detail_img);
         final Button button = (Button) v.findViewById(R.id.btnChangeImage);
-        String pos = String.valueOf(getActivity().getIntent().getLongExtra("POSITION", 0));
+        final ToggleButton tb=(ToggleButton)v.findViewById(R.id.tbFavDetail);
+       final String pos = String.valueOf(getActivity().getIntent().getIntExtra("POSITION", 6000));
+        final String detailJson = getActivity().getIntent().getStringExtra("DETAIL_ITEM");
+
+        tb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+               if(b)
+                {Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
+                    Log.d("tag", "checked");
+                }
+                else{
+                   Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
+                   Log.d("tag", "checked");
+               }
+                SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
+
+                Set<String> savedItem=settings.getStringSet("FAVCODE1",new HashSet<String>());
+                savedItem.add(detailJson);
+                SharedPreferences.Editor editor=   settings.edit();
+                editor.putStringSet("FAVCODE1",savedItem);
+                editor.commit();
+
+
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -172,8 +203,10 @@ public class DetailFragment extends Fragment {
                 startActivity(callIntent);
             }
         });
+     //   SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
 
-        button.setText("haheehe");
+
+        button.setText("CAL");
         final ImageView thumb1View =(ImageView) v.findViewById(R.id.imageView1);
         ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
             @Override

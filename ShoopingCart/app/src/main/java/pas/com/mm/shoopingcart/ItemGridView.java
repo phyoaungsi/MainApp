@@ -105,7 +105,10 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
         @Override
         public Fragment getItem(int i) {
             Fragment fragment = new ImageGridFragment();
-            Bundle args = new Bundle();
+            Bundle args=new Bundle();
+            args.putInt("PANEL",i);
+            fragment.setArguments(args);
+
             // Our object is just an integer :-P
            // args.putInt(ImageGridFragment.ARG_OBJECT, i + 1);
            // fragment.setArguments(args);

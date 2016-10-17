@@ -19,7 +19,10 @@ import android.widget.TextView;
 import pas.com.mm.shoopingcart.R;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import pas.com.mm.shoopingcart.database.DbSupport;
+import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 import pas.com.mm.shoopingcart.util.ImageWorker;
 
@@ -30,7 +33,16 @@ public class MobileImageAdapter extends BaseAdapter {
     private int mNumColumns = 1;
     private Context mContext;
     private ImageFetcher mImageFetcher;
-    public MobileImageAdapter(Context c,ImageFetcher fetcher) {
+
+    public Context getmContext() {
+        return mContext;
+    }
+
+    public void setmContext(Context mContext) {
+        this.mContext = mContext;
+    }
+
+    public MobileImageAdapter(Context c, ImageFetcher fetcher) {
         mContext = c;
         mImageFetcher=fetcher;
     }
@@ -69,7 +81,8 @@ public class MobileImageAdapter extends BaseAdapter {
 
 
         TextView textView = (TextView) gridView.findViewById(R.id.grid_caption);
-        textView.setText(DbSupport.list.get(position).description+" "+DbSupport.list.size());
+        textView.setText(getImageDescription( position));
+
         final ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_image);
 
         final ProgressBar pb=(ProgressBar) gridView.findViewById(R.id.progressbar_grid_img);
@@ -92,7 +105,7 @@ public class MobileImageAdapter extends BaseAdapter {
                  //   ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
          //  imageView.setLayoutParams(layoutParms);
           String url="https://drive.google.com/uc?export=download&id=0B_9ZBXw3kTLIN01ibXRqUHV5Umc";
-            url=DbSupport.list.get(position).imgUrl;
+            url=getImageUrl(position);
           //  mImageFetcher.loadImage(Images.imageThumbUrls[position], imageView);
             mImageFetcher.loadImage(url, imageView,imageListener);
             Log.i("test","getview***"+position);
@@ -104,6 +117,17 @@ public class MobileImageAdapter extends BaseAdapter {
      //   imageView.setPadding(0, 0, 0, 0);
 
         return gridView;
+    }
+
+
+    public String getImageUrl(int position)
+    {
+       return DbSupport.list.get(position).imgUrl;
+    }
+
+    public String getImageDescription(int position)
+    {
+        return DbSupport.list.get(position).getDescription();
     }
 
     public int getNumColumns() {

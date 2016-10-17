@@ -27,6 +27,7 @@ public class DbSupport {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("message/items/");
     public static List<Item> list=new ArrayList<Item>();
+    public static List<Item> favList=new ArrayList<Item>();
     public void writeMessage()
     {
 

@@ -127,8 +127,7 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
         // Set the drawer toggle as the DrawerListener
       //  mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-      //  getActionBar().setDisplayHomeAsUpEnabled(true);
-      //  getActionBar().setHomeButtonEnabled(true);
+
 
         if (getSupportFragmentManager().findFragmentByTag(TAG) == null) {
             final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

@@ -74,5 +74,19 @@ public class Item {
 
         return result;
     }
+
+
+    public int hashCode() {
+        return this.code.hashCode();
+    }
+
+    public boolean equals(Object o) {
+
+
+        Item other=(Item)o;
+
+
+        return other.code == code;
+    }
     // [END post_to_map]
 }
