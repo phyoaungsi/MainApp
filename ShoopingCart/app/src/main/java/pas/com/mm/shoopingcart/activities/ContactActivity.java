@@ -41,25 +41,10 @@ public class ContactActivity extends CommonActivity implements ContactFragment.O
     public int getViewId() {
 
 
-        SharedPreferences settings = this.getSharedPreferences("PAS", Context.MODE_WORLD_READABLE);
+        SharedPreferences settings = this.getSharedPreferences("PAS", 0);
        SharedPreferences.Editor editor = settings.edit();
-       editor.clear();
+       editor.clear().commit();
 
-
-        for (int b = 0; b < 15; b++) {
-            Item i = new Item();
-            i.setAmount(12.00);
-            i.setCode("007" + b);
-            i.setDescription("Testing desc");
-            i.setImgUrl("http://www.businessolutions.org.uk/wp-content/uploads/2014/03/courses-for-small-business-owners.jpg");
-            Gson json = new Gson();
-            String s = json.toJson(i);
-            Log.d("contact", s);
-
-            editor.putString(i.getCode(),s);
-        }
-
-        editor.commit();
         return R.layout.activity_contact;
     }
 

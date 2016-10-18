@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.DropBoxManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -127,6 +128,20 @@ public class ImageGridFragment extends Fragment {
 
             }
         });
+
+        final SwipeRefreshLayout mySwipeRefreshLayout=(SwipeRefreshLayout)v.findViewById(R.id.swiperefresh);
+        mySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        Log.i("LOGTAG", "onRefresh called from SwipeRefreshLayout");
+
+                        // This method performs the actual data-refresh operation.
+                        // The method calls setRefreshing(false) when it's finished.
+                        mySwipeRefreshLayout.setRefreshing (false);
+                    }
+                }
+        );
         return v;
 
     }

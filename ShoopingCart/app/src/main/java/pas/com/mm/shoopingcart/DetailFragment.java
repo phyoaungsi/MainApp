@@ -29,10 +29,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.gson.Gson;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
+import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 import pas.com.mm.shoopingcart.util.ImageWorker;
@@ -52,7 +55,7 @@ public class DetailFragment extends Fragment {
     private int mShortAnimationDuration;
     private Context context;
     private String[] mPlanetTitles;
-    public static final String PREFS_NAME = "FAVLIST";
+    public static final String PREFS_NAME = "PAS";
 
     // private DrawerLayout mDrawerLayout;
     // private ListView mDrawerList;
@@ -123,25 +126,41 @@ public class DetailFragment extends Fragment {
         final Button button = (Button) v.findViewById(R.id.btnChangeImage);
         final ToggleButton tb=(ToggleButton)v.findViewById(R.id.tbFavDetail);
        final String pos = String.valueOf(getActivity().getIntent().getIntExtra("POSITION", 6000));
-        final String detailJson = getActivity().getIntent().getStringExtra("DETAIL_ITEM");
 
+        final String detailJson = getActivity().getIntent().getStringExtra("DETAIL_ITEM");
+        Gson gson=new Gson();
+        final Item i=gson.fromJson(detailJson,Item.class);
+        final SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
+        String saved=settings.getString(i.getCode(),"-");
+        if(!saved.equals("-")){
+          tb.setChecked(true);
+        }
+        else
+        {
+            tb.setChecked(false);
+        }
         tb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+
+                SharedPreferences.Editor editor=   settings.edit();
                if(b)
                 {Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
                     Log.d("tag", "checked");
+                    editor.putString(i.getCode(),detailJson);
                 }
                 else{
                    Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
-                   Log.d("tag", "checked");
+                   Log.d("tag", "unchecked");
+                   editor.remove(i.getCode());
                }
-                SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
 
-                Set<String> savedItem=settings.getStringSet("FAVCODE1",new HashSet<String>());
-                savedItem.add(detailJson);
-                SharedPreferences.Editor editor=   settings.edit();
-                editor.putStringSet("FAVCODE1",savedItem);
+
+
+
+
+
                 editor.commit();
 
 
