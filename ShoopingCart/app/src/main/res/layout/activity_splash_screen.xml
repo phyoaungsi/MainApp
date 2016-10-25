@@ -8,10 +8,11 @@
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
+
     <TextView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="434dp"
         android:gravity="center"
         android:keepScreenOn="true"
         android:text="@string/dummy_content"
@@ -20,39 +21,30 @@
         android:textStyle="bold"
         android:elevation="3dp"
         android:ellipsize="middle"/>
+    <TextView
+        android:id="@+id/txtConnection"
+        android:layout_width="340dp"
+        android:layout_height="476dp"
+        android:gravity="bottom"
+        android:keepScreenOn="true"
+        android:text="CONNECTED"
+        android:textColor="#FFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:elevation="3dp"
+        android:ellipsize="middle"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar2"
+        android:layout_gravity="bottom|center_horizontal" />
+
+
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="306dp"
-            android:id="@+id/image_rotate"
-            android:layout_gravity="center" />
-    </FrameLayout>
 
 </FrameLayout>

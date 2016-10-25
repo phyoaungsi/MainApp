@@ -30,6 +30,7 @@
 
         import pas.com.mm.shoopingcart.MainActivity;
         import pas.com.mm.shoopingcart.R;
+        import pas.com.mm.shoopingcart.activities.OpenNotification;
 
 public class NotificationIntentService extends FirebaseMessagingService {
 
@@ -78,8 +79,9 @@ public class NotificationIntentService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, OpenNotification.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("notificationBodys",messageBody);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 

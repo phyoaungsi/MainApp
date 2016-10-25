@@ -5,11 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -32,6 +30,9 @@
             android:name=".ItemGridView"
             android:label="@string/title_activity_grid_view"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
+
         <activity
             android:name=".splash.SplashScreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -69,7 +70,15 @@
         <activity
             android:name=".activities.ContactActivity"
             android:label="@string/title_activity_contact"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.OpenNotification"
+            android:label="@string/title_activity_open_notification"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ItemGridView" />
+        </activity>
     </application>
 
 </manifest>

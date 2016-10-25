@@ -30,6 +30,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -227,14 +228,21 @@ public class DetailFragment extends Fragment {
 
         button.setText("CAL");
         final ImageView thumb1View =(ImageView) v.findViewById(R.id.imageView1);
-        ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
-            @Override
-            public void onImageLoaded(boolean success) {
+        //ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
+       //     @Override
+       //     public void onImageLoaded(boolean success) {
                         pb.setVisibility(View.GONE);
                 thumb1View.setVisibility(View.VISIBLE);
-            }
-        };
-        mImageFetcher.loadImage("https://s-media-cache-ak0.pinimg.com/564x/4c/84/03/4c84030879a89cf9dde78ca79b454340.jpg", thumb1View,imageListener);
+       //     }
+       // };
+       // mImageFetcher.loadImage("https://s-media-cache-ak0.pinimg.com/564x/4c/84/03/4c84030879a89cf9dde78ca79b454340.jpg", thumb1View,imageListener);
+String url="http://i.imgur.com/DvpvklR.png";
+        Picasso.with(context)
+                .load(url)
+               // .resize(150, 50)
+              //  .centerCrop()
+                .into(thumb1View);
+
         thumb1View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

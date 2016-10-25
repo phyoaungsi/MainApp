@@ -54,7 +54,7 @@
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
-            android:layout_width="704dp"
+            android:layout_width="match_parent"
             android:layout_height="152dp"
             android:id="@+id/progressbar_detail_img" />
 

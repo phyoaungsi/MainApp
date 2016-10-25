@@ -3,6 +3,7 @@ package pas.com.mm.shoopingcart.database;
 /**
  * Created by phyo on 08/10/2016.
  */
+import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,13 +26,12 @@ import pas.com.mm.shoopingcart.database.model.Item;
 public class DbSupport {
     private static String TAG="DB";
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("message/items/");
     public static List<Item> list=new ArrayList<Item>();
     public static List<Item> favList=new ArrayList<Item>();
     public void writeMessage()
     {
 
-
+        DatabaseReference myRef = database.getReference("message/items/");
         myRef.setValue("Hello, World!");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -54,6 +54,7 @@ public class DbSupport {
     public void writeNewPost(String userId, String username, String title, double body) {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
+        DatabaseReference myRef = database.getReference("message/items/");
         String key = myRef.child("posts").push().getKey();
         Item post = new Item(userId, username, title, body);
         Map<String, Object> postValues = post.toMap();
@@ -65,7 +66,7 @@ public class DbSupport {
         myRef.updateChildren(childUpdates);
     }
     public void listenDataChange() {
-
+        DatabaseReference myRef = database.getReference("message/items/");
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -98,9 +99,13 @@ public class DbSupport {
 
     }
 
-    public void loadItemList()
+    public void loadItemList(DBListenerCallback cb)
     {
 
+         database.setPersistenceEnabled(true);
+        DatabaseReference myRef = database.getReference("message/items/");
+
+        final DBListenerCallback cb1=cb;
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -122,7 +127,8 @@ public class DbSupport {
 
                 // [END_EXCLUDE]
                 database.goOffline();
-            }
+                cb1.LoadCompleted(true);
+                            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {

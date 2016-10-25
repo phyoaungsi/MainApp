@@ -29,7 +29,7 @@ public class FavouritiesImageAdapter extends MobileImageAdapter {
     public FavouritiesImageAdapter(Context c, ImageFetcher fetcher) {
        super(c,fetcher);
         values=new ArrayList<String>();
-        SharedPreferences settings = c.getSharedPreferences("PAS", Context.MODE_WORLD_READABLE);
+        SharedPreferences settings = c.getSharedPreferences("PAS", 0);
        Map<String,?> valMap= settings.getAll();
 
         for(String s:valMap.keySet()) {

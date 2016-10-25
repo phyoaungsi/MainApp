@@ -3,6 +3,8 @@ package pas.com.mm.shoopingcart.splash;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,20 +13,23 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import pas.com.mm.shoopingcart.ItemGridView;
 import pas.com.mm.shoopingcart.Main2Activity;
 import pas.com.mm.shoopingcart.MainActivity;
 import pas.com.mm.shoopingcart.R;
+import pas.com.mm.shoopingcart.database.DBListenerCallback;
 import pas.com.mm.shoopingcart.database.DbSupport;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class SplashScreen extends AppCompatActivity {
+public class SplashScreen extends AppCompatActivity implements DBListenerCallback {
 
-    AnimationDrawable rocketAnimation;
+   // AnimationDrawable rocketAnimation;
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -102,14 +107,15 @@ public class SplashScreen extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash_screen);
 
-        ImageView rocketImage = (ImageView) findViewById(R.id.image_rotate);
-        rocketImage.setBackgroundResource(R.drawable.splash_animation_list);
-        rocketAnimation = (AnimationDrawable) rocketImage.getBackground();
-        rocketAnimation.start();
+       // ImageView rocketImage = (ImageView) findViewById(R.id.image_rotate);
+      //  rocketImage.setBackgroundResource(R.drawable.splash_animation_list);
+       // rocketAnimation = (AnimationDrawable) rocketImage.getBackground();
+       // rocketAnimation.start();
 
-
+        TextView tv=(TextView)findViewById(R.id.txtConnection);
+        tv.setText("Season Greeting");
         mVisible = true;
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
+      //  mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
 
@@ -117,7 +123,7 @@ public class SplashScreen extends AppCompatActivity {
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggle();
+                //toggle();
             }
         });
 
@@ -126,22 +132,44 @@ public class SplashScreen extends AppCompatActivity {
         // while interacting with the UI.
          /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
-        new Handler().postDelayed(new Runnable(){
-            @Override
-            public void run() {
+   //     new Handler().postDelayed(new Runnable(){
+     //       @Override
+     //       public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(SplashScreen.this,ItemGridView.class);
-                SplashScreen.this.startActivity(mainIntent);
-                SplashScreen.this.finish();
-            }
-        }, 3000);
+              //  Intent mainIntent = new Intent(SplashScreen.this,ItemGridView.class);
+             //   SplashScreen.this.startActivity(mainIntent);
+              //  SplashScreen.this.finish();
+       //     }
+     //   }, 3000);
 
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+      //  findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
         DbSupport db=new DbSupport();
-        db.loadItemList();
+        db.loadItemList(this);
+        checkConnection();
+
     }
 
 
+   private void checkConnection()
+    {
+        TextView tv=(TextView)findViewById(R.id.txtConnection);
+        ConnectivityManager cm =
+                (ConnectivityManager)this.getSystemService(this.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if(!isConnected){
+            Toast.makeText(this,"No Internet Connection",Toast.LENGTH_LONG);
+
+            tv.setText("No Internet Connection");
+        }
+        else{
+            tv.setText("Inter Connecition");
+            Toast.makeText(this,"Yes Internet Connection",Toast.LENGTH_LONG);
+
+        }
+    }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -166,7 +194,7 @@ public class SplashScreen extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        mControlsView.setVisibility(View.GONE);
+//        mControlsView.setVisibility(View.GONE);
         mVisible = false;
 
         // Schedule a runnable to remove the status and navigation bar after a delay
@@ -193,5 +221,14 @@ public class SplashScreen extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    @Override
+    public void LoadCompleted(boolean b) {
+        if(b){
+            Intent mainIntent = new Intent(SplashScreen.this,ItemGridView.class);
+            SplashScreen.this.startActivity(mainIntent);
+            SplashScreen.this.finish();
+        }
     }
 }
