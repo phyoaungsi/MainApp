@@ -38,11 +38,12 @@ import android.widget.Toast;
 import java.util.Locale;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
+import pas.com.mm.shoopingcart.fragments.DescriptionFragment;
 import pas.com.mm.shoopingcart.image.Images;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 
-public class DetailActivity extends AppCompatActivity implements DetailFragment.OnFragmentInteractionListener {
+public class DetailActivity extends AppCompatActivity implements DetailFragment.OnFragmentInteractionListener, DescriptionFragment.OnFragmentInteractionListener {
     private static final String TAG = "DetailActivity";
     // Button button;
     private Context context;

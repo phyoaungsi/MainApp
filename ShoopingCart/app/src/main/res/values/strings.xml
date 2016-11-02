@@ -8,9 +8,9 @@
     <string name="name">Hello blank fragment</string>
     <string name="price">Hello blank fragment</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
-    <string name="large_text">
-       
-    </string>
+    <string name="large_text">  </string>
+     <string name="btnDetail">More</string>
+
     <string name="title_activity_grid_view">{MainTitle}</string>
 
     <string name="title_activity_splash_screen">SplashScreen</string>

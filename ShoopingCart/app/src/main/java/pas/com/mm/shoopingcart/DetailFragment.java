@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,6 +38,7 @@ import java.util.Set;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
+import pas.com.mm.shoopingcart.fragments.DescriptionFragment;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 import pas.com.mm.shoopingcart.util.ImageWorker;
@@ -227,6 +229,7 @@ public class DetailFragment extends Fragment {
 
 
         button.setText("CAL");
+
         final ImageView thumb1View =(ImageView) v.findViewById(R.id.imageView1);
         //ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
        //     @Override
@@ -254,6 +257,24 @@ String url="http://i.imgur.com/DvpvklR.png";
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
 
+
+        Button descButton=(Button) v.findViewById(R.id.btnDesc);
+        descButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d("Clieck", "clicked to change");
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+
+                DescriptionFragment newFragment = new DescriptionFragment();
+
+                ft.replace(R.id.desc_frag_container, newFragment);
+
+// Start the animated transition.
+                ft.commit();
+            }
+        });
         DbSupport db=new DbSupport();
        // db.writeNewPost("CODE002","HELLO","HTTP://WWW",12.9);
         db.listenDataChange();

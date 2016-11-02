@@ -17,73 +17,29 @@
     tools:showIn="@layout/activity_detail"
     android:baselineAligned="false"
     android:orientation="vertical"
-    android:weightSum="1">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.45" >
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.45">
-
-
-
-    <TextView
-        android:layout_width="246dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="အသေးစိတ်"
-        android:id="@+id/textView2"
-        android:layout_weight="0.45" />
+    android:weightSum="1"
+    >
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@drawable/dots"
         style="@style/AppTheme.PopupOverlay"
-        android:padding="2dp"
+        android:padding="0dp"
         android:background="@drawable/ic_favorite_black_48dp"
         android:layout_gravity="center_horizontal"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="match_parent"
-            android:layout_height="152dp"
-            android:id="@+id/progressbar_detail_img" />
 
-        <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/tbFavDetail"
-        android:layout_gravity="bottom"
-        style="@style/toggleButton"
-        android:background="@drawable/ic_toggle_bg"/>
-    />
 
-    <Button
-        android:id="@+id/btnChangeImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change Image" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="152dp"
+        android:id="@+id/progressbar_detail_img"
+        android:visibility="visible"/>
 
-    <Button
-        android:layout_width="78dp"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_gravity="center_vertical"
-        style="@style/Base.TextAppearance.AppCompat.Caption" />
 
-    </LinearLayout>
-    </ScrollView>
 </LinearLayout>
-
 
