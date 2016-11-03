@@ -4,10 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import pas.com.mm.shoopingcart.R;
 
@@ -60,6 +67,9 @@ public class DescriptionFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+            setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -67,7 +77,30 @@ public class DescriptionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d("Fragment", "frag clicked to change");
-        return inflater.inflate(R.layout.fragment_description, container, false);
+
+      ActionBar ab=  ((AppCompatActivity)getActivity()).getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setDisplayShowHomeEnabled(true);
+        View v= inflater.inflate(R.layout.fragment_description, container, false);
+        Button button=(Button) v.findViewById(R.id.btnDescClose);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+               DescriptionFragment f = (DescriptionFragment) fm.findFragmentByTag("DESC");
+
+                ft.setCustomAnimations(R.anim.exit_slide_out_up, R.anim.exit_slide_in_up);
+
+                    ft.remove(f);
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+
+
+                ft.commit();
+
+            }
+        });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -107,5 +140,37 @@ public class DescriptionFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if(id== android.R.id.home) {
+
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            DescriptionFragment f = (DescriptionFragment) fm.findFragmentByTag("DESC");
+            ft.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up);
+
+
+            ft.remove(f);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+
+
+            ft.commit();
+            return true;
+        }
+        if (id == R.id.action_contact) {
+
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

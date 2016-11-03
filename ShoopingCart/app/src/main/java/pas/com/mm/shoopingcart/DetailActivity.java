@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -152,6 +154,48 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
         return true;
     }
 
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if(id== android.R.id.home) {
+
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            DescriptionFragment f = (DescriptionFragment) getSupportFragmentManager().findFragmentByTag("DESC");
+           if(f!=null) {
+               ft.setCustomAnimations(R.anim.exit_slide_out_up, R.anim.exit_slide_in_up);
+
+               ft.remove(f);
+               ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+
+
+               ft.commit();
+               try {
+                  this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                   this.getSupportActionBar().setDisplayShowHomeEnabled(true);
+               }catch(Exception e)
+               {
+                   Log.d("--------",e.getMessage());
+               }
+           }
+            return true;
+        }
+        if (id == R.id.action_contact) {
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void onBackPressed() {
 

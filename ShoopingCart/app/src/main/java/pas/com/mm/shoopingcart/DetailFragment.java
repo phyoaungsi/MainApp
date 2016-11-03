@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,6 +124,9 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v= inflater.inflate(R.layout.activity_detail, container, false);
+        Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         final Context context=this.getContext();
 
         final ProgressBar pb=(ProgressBar) v.findViewById(R.id.progressbar_detail_img);
@@ -268,9 +272,10 @@ String url="http://i.imgur.com/DvpvklR.png";
                 //ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
 
                 DescriptionFragment newFragment = new DescriptionFragment();
+                ft.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up);
 
-                ft.replace(R.id.desc_frag_container, newFragment);
-
+                ft.replace(R.id.desc_frag_container, newFragment,"DESC");
+                ft.addToBackStack("DESC");
 // Start the animated transition.
                 ft.commit();
             }
