@@ -37,12 +37,18 @@
             android:layout_gravity="center_vertical" />
     </FrameLayout>
 
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:contentDescription="@string/description_zoom_touch_close" />
 
 
     <FrameLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:layout_gravity="bottom"
        >
         <ImageView
@@ -54,51 +60,86 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_gravity="bottom">
-        <ToggleButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New ToggleButton"
-            android:id="@+id/tbFavDetail"
-            android:layout_gravity="bottom"
-            style="@style/toggleButton"
-            android:background="@drawable/ic_toggle_bg"
-            android:visibility="visible"/>
-        />
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:weightSum="1">
 
-        <Button
-            android:id="@+id/btnChangeImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Change Image"
-            android:visibility="visible"
-            android:alpha="1" />
 
-        <Button
+
+        <RelativeLayout
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.17"
+            android:gravity="center_vertical"
+            android:fadingEdge="vertical">
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New ToggleButton"
+                android:id="@+id/tbFavDetail"
+                android:layout_gravity="center_vertical"
+                style="@style/toggleButton"
+                android:background="@drawable/ic_toggle_bg"
+                android:visibility="visible"
+                android:gravity="left|center_vertical" />
+            />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_weight="0.74"
+            android:layout_gravity="center_vertical"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="40dp"
+            android:background="@drawable/customborder">
+
+            <Button
             android:layout_width="78dp"
             android:layout_height="wrap_content"
-            android:text="New Button"
+
             android:id="@+id/button"
             android:layout_gravity="center_vertical"
             style="@style/Base.TextAppearance.AppCompat.Caption"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:background="@android:drawable/ic_menu_upload"
             android:visibility="visible"/>
-        <Button
-            android:layout_width="78dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btnDetail"
-            android:id="@+id/btnDesc"
 
-            style="@style/Base.TextAppearance.AppCompat.Caption"
-            android:visibility="visible"/>
-</LinearLayout>
+            <Button
+                android:id="@+id/btnChangeImage"
+                android:layout_height="50dp"
+
+                android:visibility="visible"
+                android:alpha="1"
+                android:textColor="?attr/colorBackgroundFloating"
+
+                android:background="@android:drawable/ic_menu_call"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="50dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:layout_weight="0.06"
+
+            android:layout_width="100dp">
+            <Button
+                android:layout_width="78dp"
+                android:layout_height="wrap_content"
+                android:text="@string/btnDetail"
+                android:id="@+id/btnDesc"
+
+                style="@style/Base.TextAppearance.AppCompat.Caption"
+                android:visibility="visible"
+                android:textColor="?attr/colorBackgroundFloating"
+                android:background="@color/colorPrimary" />
+        </RelativeLayout>
+    </LinearLayout>
     </FrameLayout>
-    <ImageView
-        android:id="@+id/expanded_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"
-        android:contentDescription="@string/description_zoom_touch_close" />
 
 
 </android.support.design.widget.CoordinatorLayout>
