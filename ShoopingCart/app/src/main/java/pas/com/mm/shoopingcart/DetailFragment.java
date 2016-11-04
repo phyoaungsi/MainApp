@@ -40,6 +40,7 @@ import java.util.Set;
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.fragments.DescriptionFragment;
+import pas.com.mm.shoopingcart.image.ZoomImageView;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 import pas.com.mm.shoopingcart.util.ImageWorker;
@@ -234,7 +235,7 @@ public class DetailFragment extends Fragment {
 
         button.setText("CAL");
 
-        final ImageView thumb1View =(ImageView) v.findViewById(R.id.imageView1);
+        final ZoomImageView thumb1View =(ZoomImageView) v.findViewById(R.id.imageView1);
         //ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
        //     @Override
        //     public void onImageLoaded(boolean success) {

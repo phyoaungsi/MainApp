@@ -20,7 +20,7 @@
     android:weightSum="1"
     >
 
-    <ImageView
+    <pas.com.mm.shoopingcart.image.ZoomImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
