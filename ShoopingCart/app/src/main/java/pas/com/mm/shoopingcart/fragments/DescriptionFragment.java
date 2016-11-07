@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 
 import pas.com.mm.shoopingcart.R;
@@ -89,17 +90,22 @@ public class DescriptionFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                DescriptionFragment f = (DescriptionFragment) fm.findFragmentByTag("DESC");
+               if(f!=null) {
+                   ft.setCustomAnimations(R.anim.exit_slide_out_up, R.anim.exit_slide_in_up);
 
-                ft.setCustomAnimations(R.anim.exit_slide_out_up, R.anim.exit_slide_in_up);
+                   ft.remove(f);
 
-                    ft.remove(f);
-                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+                   ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
 
 
-                ft.commit();
+                   ft.commit();
+                   fm.popBackStack();
+               }
 
             }
         });
+        WebView web=(WebView)v.findViewById(R.id.descDetail);
+        web.loadData("<body style=\"background-color:#f3e5f5\"><br/><br/><br/><br/><br/><br/><br/><br/><b>Hello</b><br/><SPAN> test is placed here </SPAN></body>", "text/html; charset=utf-8", "UTF-8");
         return v;
     }
 
@@ -165,6 +171,7 @@ public class DescriptionFragment extends Fragment {
 
 
             ft.commit();
+            fm.popBackStack();
             return true;
         }
         if (id == R.id.action_contact) {

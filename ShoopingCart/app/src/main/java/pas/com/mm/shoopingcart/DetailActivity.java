@@ -188,6 +188,7 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
                    Log.d("--------",e.getMessage());
                }
            }
+
             return true;
         }
         if (id == R.id.action_contact) {

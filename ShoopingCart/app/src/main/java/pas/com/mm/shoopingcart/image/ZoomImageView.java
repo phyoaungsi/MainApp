@@ -173,7 +173,7 @@ public class ZoomImageView extends ImageView {
     @Override
     public void setImageURI(Uri uri) {
         super.setImageURI(uri);
-        savePreviousImageValues();
+       // save8PreviousImageValues();
         fitImageToView();
     }
 

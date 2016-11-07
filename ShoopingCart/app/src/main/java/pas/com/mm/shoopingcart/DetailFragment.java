@@ -274,11 +274,25 @@ String url="http://i.imgur.com/DvpvklR.png";
 
                 DescriptionFragment newFragment = new DescriptionFragment();
                 ft.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up);
-
-                ft.replace(R.id.desc_frag_container, newFragment,"DESC");
-                ft.addToBackStack("DESC");
+                Fragment f = getFragmentManager().findFragmentByTag("DESC");
+                if(f==null || !f.isVisible()) {
+                    Log.d("Clieck", "show fragment");
+                    ft.replace(R.id.desc_frag_container, newFragment, "DESC");
+                    ft.addToBackStack("DESC");
 // Start the animated transition.
-                ft.commit();
+                    ft.commit();
+                }
+                else if(f!=null && f.isVisible()) {
+                    ft.setCustomAnimations(R.anim.exit_slide_out_up, R.anim.exit_slide_in_up);
+
+                    ft.remove(f);
+
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+
+
+                    ft.commit();
+                    getFragmentManager().popBackStack();
+                }
             }
         });
         DbSupport db=new DbSupport();
