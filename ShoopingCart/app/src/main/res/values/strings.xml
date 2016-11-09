@@ -44,12 +44,13 @@
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
     <string name="title_activity_contact">ContactActivity</string>
-    <string name="address_line1">{Address1}</string>
-    <string name="address_line2">{Address2}</string>
-    <string name="address_line3">{Address3}</string>
+    <string name="address_line1">{Address1ကခဂမြန်မာ​ဖေါင့်​အသစ်}</string>
+    <string name="address_line2">{Address2ကခဂမြန်မာ​ဖေါင့်​အသစ်}</string>
+    <string name="address_line3">{Address3ကခဂမြန်မာ​ဖေါင့်​အသစ်}</string>
     <string name="address_line4">{Address4}</string>
     <string name="phone_label">{Phone LABEL}</string>
-    <string name="title_activity_open_notification">OpenNotification</string>
-
-
+    <string name="title_activity_open_notification">{OpenNotification}</string>
+    <string name="title_tab1">Tab 1}</string>
+    <string name="title_tab2">Tab 2}</string>
+    <string name="title_tab3">Tab 3}</string>
 </resources>

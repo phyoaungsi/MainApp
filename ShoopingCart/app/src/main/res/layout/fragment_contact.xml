@@ -29,16 +29,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/textView3"
+            android:text="@string/address_line1"
+            android:id="@+id/addressLine1"
             android:textColor="#7b1fa2" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/textView7"
+            android:text="@string/address_line2"
+            android:id="@+id/addressLine2"
             android:autoText="false"
             android:textColor="#7b1fa2" />
 
@@ -46,8 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/textView4"
+            android:text="@string/address_line3"
+            android:id="@+id/addressLine3"
             android:textColor="#7b1fa2" />
 
         <TextView

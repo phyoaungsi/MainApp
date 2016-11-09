@@ -12,6 +12,9 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -117,8 +120,13 @@ public class SplashScreen extends AppCompatActivity implements DBListenerCallbac
         mVisible = true;
       //  mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
-
-
+        RotateAnimation anim = new RotateAnimation(0f, 350f, 50f, 50f);
+        anim.setInterpolator(new LinearInterpolator());
+        anim.setRepeatCount(Animation.INFINITE);
+        anim.setDuration(2000);
+        ImageView flowerImg=(ImageView) findViewById(R.id.flower);
+        //flowerImg.setAnimation(anim);
+        flowerImg.startAnimation(anim);
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,12 +1,14 @@
 package pas.com.mm.shoopingcart.fragments;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import pas.com.mm.shoopingcart.R;
 
@@ -65,7 +67,14 @@ public class ContactFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contact, container, false);
+        View v= inflater.inflate(R.layout.fragment_contact, container, false);
+
+        TextView text1= (TextView) v.findViewById(R.id.addressLine1);
+        Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(), "fonts/font.ttf");;
+        text1.setTypeface(typeface);
+
+     
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

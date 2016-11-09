@@ -101,9 +101,13 @@ public class DbSupport {
 
     public void loadItemList(DBListenerCallback cb)
     {
+      try {
+          database.setPersistenceEnabled(true);
+      }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
 
-         database.setPersistenceEnabled(true);
-        DatabaseReference myRef = database.getReference("message/items/");
 
         final DBListenerCallback cb1=cb;
         ValueEventListener postListener = new ValueEventListener() {
@@ -140,7 +144,12 @@ public class DbSupport {
                 // [END_EXCLUDE]
             }
         };
-        myRef.addValueEventListener(postListener);
+        try {
+            DatabaseReference myRef = database.getReference("message/items/");
+            myRef.addValueEventListener(postListener);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
     }
 

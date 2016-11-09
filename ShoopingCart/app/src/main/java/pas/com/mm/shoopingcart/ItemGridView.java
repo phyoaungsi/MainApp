@@ -122,7 +122,15 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "OBJECT " + (position + 1);
+            switch (position) {
+                case 1:
+                    return getResources().getString(R.string.title_tab1);
+                case 2:
+                    return getResources().getString(R.string.title_tab2);
+               default:
+                    return getResources().getString(R.string.title_tab3);
+
+            }
         }
     }
 
