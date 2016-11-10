@@ -73,7 +73,7 @@ public class ContactFragment extends Fragment {
         Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(), "fonts/font.ttf");;
         text1.setTypeface(typeface);
 
-     
+
         return v;
     }
 

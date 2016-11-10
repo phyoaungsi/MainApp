@@ -251,15 +251,15 @@ String url="http://i.imgur.com/DvpvklR.png";
               //  .centerCrop()
                 .into(thumb1View);
 
-        thumb1View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb1View, R.drawable.wallpaper);
-            }
-        });
+     //   thumb1View.setOnClickListener(new View.OnClickListener() {
+     //       @Override
+      //      public void onClick(View view) {
+    //            zoomImageFromThumb(thumb1View, R.drawable.wallpaper);
+     //       }
+     //   });
 
         // Retrieve and cache the system's default "short" animation time.
-        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+     //   mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
 
 

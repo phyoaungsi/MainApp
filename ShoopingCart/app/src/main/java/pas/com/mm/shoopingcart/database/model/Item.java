@@ -14,6 +14,13 @@ public class Item {
 
     public String code;
     public String description;
+
+
+
+    public String htmlDetail;
+
+
+    private String title;
     public String imgUrl;
     public String getCode() {
         return code;
@@ -60,8 +67,20 @@ public class Item {
     }
 
     private Double amount;
+    public String getTitle() {
+        return title;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public String getHtmlDetail() {
+        return htmlDetail;
+    }
 
+    public void setHtmlDetail(String htmlDetail) {
+        this.htmlDetail = htmlDetail;
+    }
     // [START post_to_map]
     @Exclude
     public Map<String, Object> toMap() {
@@ -71,7 +90,9 @@ public class Item {
         result.put("description", description);
         result.put("imgUrl", imgUrl);
 
-
+        result.put("htmlDetail", htmlDetail);
+        result.put("title", title);
+        result.put("imgUrl", imgUrl);
         return result;
     }
 
