@@ -20,7 +20,7 @@ public class Item {
     public String htmlDetail;
 
 
-    private String title;
+    public String title;
     public String imgUrl;
     public String getCode() {
         return code;

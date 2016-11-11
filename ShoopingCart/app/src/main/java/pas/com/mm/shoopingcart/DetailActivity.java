@@ -37,9 +37,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.Locale;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
+import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.fragments.DescriptionFragment;
 import pas.com.mm.shoopingcart.image.Images;
 import pas.com.mm.shoopingcart.util.ImageCache;
@@ -54,8 +57,8 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
         super.onCreate(savedInstanceState);
       //  setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
+
        context=this;
 
       //  mDrawerLayout =new  DrawerLayout(this);
@@ -130,11 +133,14 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
         // Set the drawer toggle as the DrawerListener
       //  mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-
-
+      String object= this.getIntent().getStringExtra("DETAIL_ITEM");
+      Gson gson=new Gson();
+      this.setItem((Item) gson.fromJson(object,Item.class));
+       DetailFragment df= new DetailFragment();
+        df.setItem(this.getItem());
         if (getSupportFragmentManager().findFragmentByTag(TAG) == null) {
             final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(android.R.id.content, new DetailFragment(), TAG);
+            ft.add(android.R.id.content, df, TAG);
 
             ft.commit();
         }
@@ -188,6 +194,10 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
                    Log.d("--------",e.getMessage());
                }
            }
+            else{
+              // NavUtils.navigateUpFromSameTask(PARENT_ACTIVITY);
+               return true;
+           }
 
             return true;
         }
@@ -206,6 +216,14 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
         //you can leave it empty
     }
 
+    public Item getItem() {
+        return item;
+    }
 
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    private Item item;
 }
 

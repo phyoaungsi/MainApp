@@ -62,6 +62,7 @@ public class DetailFragment extends Fragment {
     private String[] mPlanetTitles;
     public static final String PREFS_NAME = "PAS";
 
+    private Item item;
     // private DrawerLayout mDrawerLayout;
     // private ListView mDrawerList;
     private static final String IMAGE_CACHE_DIR = "thumbs";
@@ -126,8 +127,11 @@ public class DetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View v= inflater.inflate(R.layout.activity_detail, container, false);
         Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
-
+         toolbar.setTitle(this.getItem().getTitle());
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         final Context context=this.getContext();
 
         final ProgressBar pb=(ProgressBar) v.findViewById(R.id.progressbar_detail_img);
@@ -491,6 +495,15 @@ String url="http://i.imgur.com/DvpvklR.png";
                 mCurrentAnimator = set;
             }
         });
+    }
+
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
 }
