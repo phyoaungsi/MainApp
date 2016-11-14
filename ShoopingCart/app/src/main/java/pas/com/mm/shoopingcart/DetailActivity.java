@@ -184,8 +184,8 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
                ft.remove(f);
                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
 
-
                ft.commit();
+               getSupportFragmentManager().popBackStack();
                try {
                   this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                    this.getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -195,7 +195,7 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
                }
            }
             else{
-              // NavUtils.navigateUpFromSameTask(PARENT_ACTIVITY);
+              NavUtils.navigateUpFromSameTask(this);
                return true;
            }
 
