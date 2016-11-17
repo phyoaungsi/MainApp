@@ -1,5 +1,7 @@
 package pas.com.mm.shoopingcart;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +19,8 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
+
+       // Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(imageView);
         assertEquals(4, 2 + 2);
         ArrayList<String> ar=ParseJSON("category:{\"cat1\",\"cat2\",\"cat3\",\"cat4\"}");
         System.out.println(ar.size());

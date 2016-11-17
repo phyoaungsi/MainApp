@@ -120,6 +120,11 @@ public class DetailFragment extends Fragment {
         mImageFetcher = new ImageFetcher(getActivity(), mImageThumbSize);
         mImageFetcher.setLoadingImage(R.drawable.ie_loader);
         mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
+        String object= getActivity().getIntent().getStringExtra("DETAIL_ITEM");
+        Gson gson=new Gson();
+        this.setItem((Item) gson.fromJson(object,Item.class));
+        DetailFragment df= new DetailFragment();
+        df.setItem(this.getItem());
     }
 
     @Override
