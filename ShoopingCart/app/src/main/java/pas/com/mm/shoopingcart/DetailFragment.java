@@ -139,7 +139,7 @@ public class DetailFragment extends Fragment {
 
         final Context context=this.getContext();
 
-        final ProgressBar pb=(ProgressBar) v.findViewById(R.id.progressbar_detail_img);
+       // final ProgressBar pb=(ProgressBar) v.findViewById(R.id.progressbar_detail_img);
         final Button button = (Button) v.findViewById(R.id.btnChangeImage);
         final ToggleButton tb=(ToggleButton)v.findViewById(R.id.tbFavDetail);
        final String pos = String.valueOf(getActivity().getIntent().getIntExtra("POSITION", 6000));
@@ -248,19 +248,18 @@ public class DetailFragment extends Fragment {
         //ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
        //     @Override
        //     public void onImageLoaded(boolean success) {
-                        pb.setVisibility(View.GONE);
+                   //     pb.setVisibility(View.GONE);
                 thumb1View.setVisibility(View.VISIBLE);
        //     }
        // };
        // mImageFetcher.loadImage("https://s-media-cache-ak0.pinimg.com/564x/4c/84/03/4c84030879a89cf9dde78ca79b454340.jpg", thumb1View,imageListener);
-String url="http://i.imgur.com/DvpvklR.png";
+        String url=this.getItem().getImgUrl();
         Picasso.with(context)
                 .load(url)
                // .resize(150, 50)
               //  .centerCrop()
                 .into(thumb1View);
-
-     //   thumb1View.setOnClickListener(new View.OnClickListener() {
+            //   thumb1View.setOnClickListener(new View.OnClickListener() {
      //       @Override
       //      public void onClick(View view) {
     //            zoomImageFromThumb(thumb1View, R.drawable.wallpaper);
