@@ -9,6 +9,7 @@
     {
       "client_info": {
         "mobilesdk_app_id": "1:427878716271:android:6a8fb38cebde571c",
+<<<<<<< HEAD
         "android_client_info": {
           "package_name": "mm.com.quickdogfoundry.shoppingcart"
         }
@@ -40,8 +41,10 @@
     {
       "client_info": {
         "mobilesdk_app_id": "1:427878716271:android:725f260589266759",
+=======
+>>>>>>> Change DB
         "android_client_info": {
-          "package_name": "pas.com.mm.shoopingcart"
+          "package_name": "mm.com.quickdogfoundry.shoppingcart"
         }
       },
       "oauth_client": [
