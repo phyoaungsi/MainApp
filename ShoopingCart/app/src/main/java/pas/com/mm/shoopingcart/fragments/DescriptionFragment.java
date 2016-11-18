@@ -17,7 +17,11 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 
+import com.google.gson.Gson;
+
+import pas.com.mm.shoopingcart.DetailFragment;
 import pas.com.mm.shoopingcart.R;
+import pas.com.mm.shoopingcart.database.model.Item;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,6 +74,11 @@ public class DescriptionFragment extends Fragment {
         }
 
             setHasOptionsMenu(true);
+        String object= getActivity().getIntent().getStringExtra("DETAIL_ITEM");
+        Gson gson=new Gson();
+        this.setItem((Item) gson.fromJson(object,Item.class));
+        DetailFragment df= new DetailFragment();
+        df.setItem(this.getItem());
 
     }
 
@@ -105,7 +114,8 @@ public class DescriptionFragment extends Fragment {
             }
         });
         WebView web=(WebView)v.findViewById(R.id.descDetail);
-        web.loadData("<body style=\"background-color:#f3e5f5\"><br/><br/><br/><br/><br/><br/><br/><br/><b>Hello</b><br/><SPAN> test is placed here </SPAN></body>", "text/html; charset=utf-8", "UTF-8");
+        String data=this.getItem().getHtmlDetail();
+        web.loadDataWithBaseURL("file:///android_asset/",data, "text/html; charset=utf-8", "UTF-8",null);
         return v;
     }
 
@@ -179,5 +189,18 @@ public class DescriptionFragment extends Fragment {
 
         }
         return super.onOptionsItemSelected(item);
+
+
     }
+
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    private Item item;
 }
