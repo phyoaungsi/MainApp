@@ -54,10 +54,11 @@
                     android:background="@android:color/holo_green_light"
                     android:layout_height="30dp"
                     android:text="Message"
-                    android:layout_width="70dp" />
+                    android:layout_width="70dp"
+                    android:layout_marginTop="2dp" />
 
                 <TextView
-                    android:text=" or tab"
+                    android:text="@string/prompt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
@@ -68,18 +69,20 @@
 
 
                     android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true" />
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp" />
 
                 <Button
                     android:layout_height="30dp"
                     android:id="@+id/btnChangeImage"
                     android:background="@android:color/holo_green_light"
                     android:text="Call"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_marginTop="2dp" />
 
                 <TextView
-                    android:text=" to call"
+                    android:text="@string/prompt3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
@@ -90,7 +93,8 @@
 
 
                     android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true" />
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="3dp" />
             </LinearLayout>
 
 
