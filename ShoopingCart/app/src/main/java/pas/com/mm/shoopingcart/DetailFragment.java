@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -242,7 +243,13 @@ public class DetailFragment extends Fragment {
      //   SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
 
 
-        button.setText("CAL");
+        TextView text1= (TextView) v.findViewById(R.id.txtPrompt1);
+        Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(), "fonts/font.ttf");
+        text1.setTypeface(typeface);
+        TextView text2= (TextView) v.findViewById(R.id.txtPrompt2);
+        text2.setTypeface(typeface);
+        TextView text3= (TextView) v.findViewById(R.id.txtPrompt3);
+        text3.setTypeface(typeface);
 
         final ZoomImageView thumb1View =(ZoomImageView) v.findViewById(R.id.imageView1);
         //ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
