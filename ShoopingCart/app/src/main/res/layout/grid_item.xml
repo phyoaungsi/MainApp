@@ -2,11 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="500dp"
-    android:weightSum="1">
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:layout_marginTop="3dp"
+    android:layout_marginRight="10dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:layout_marginTop="3dp"
+    android:layout_marginRight="3dp"
+    android:elevation="0dp"
+    android:layout_marginBottom="3dp"
+    android:layout_marginLeft="3dp">
 
     <ProgressBar
-        style="?android:attr/progressBarStyleSmall"
+        style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/progressbar_grid_img"
@@ -15,16 +27,25 @@
 
     <ImageView
         android:layout_width="200dp"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:id="@+id/grid_image"
-        android:maxHeight="300dp"
+        android:maxHeight="200dp"
         android:maxWidth="200dp"
-        android:layout_weight="0.18"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:src="@drawable/backgournd_main"
+        android:background="@color/colorPrimaryDark" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/grid_caption" />
+        android:id="@+id/grid_caption"
+        android:textColor="@color/textColorTertiary"
+        android:textSize="17sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.0.0s"
+        android:id="@+id/grid_price" />
+</LinearLayout>
 </LinearLayout>

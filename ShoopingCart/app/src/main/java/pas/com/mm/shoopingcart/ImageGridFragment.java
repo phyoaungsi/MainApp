@@ -52,6 +52,7 @@ public class ImageGridFragment extends Fragment {
     private static final String IMAGE_CACHE_DIR = "thumbs";
     private OnFragmentInteractionListener mListener;
     private ImageFetcher mImageFetcher;
+    private GridView gridview;
     public ImageGridFragment() {
         // Required empty public constructor
     }
@@ -90,7 +91,7 @@ public class ImageGridFragment extends Fragment {
         cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
         Log.i("ImagGrid","actifity aniitialized--------------------");
         mImageFetcher = new ImageFetcher(getActivity(), mImageThumbSize);
-        mImageFetcher.setLoadingImage(R.drawable.ie_loader);
+       //mImageFetcher.setLoadingImage(R.drawable.ie_loader);
         mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
 
     }
@@ -102,7 +103,7 @@ public class ImageGridFragment extends Fragment {
         final View v= inflater.inflate(R.layout.image_grid_fragment, container, false);
         final Context context=this.getContext();
 
-        GridView gridview = (GridView) v.findViewById(R.id.gridview_cache);
+         gridview = (GridView) v.findViewById(R.id.gridview_cache);
         MobileImageAdapter  imageAdapter=new MobileImageAdapter(getActivity(),mImageFetcher);
         Bundle b= this.getArguments();
         int panel=b.getInt("PANEL");
@@ -135,7 +136,9 @@ public class ImageGridFragment extends Fragment {
                     @Override
                     public void onRefresh() {
                         Log.i("LOGTAG", "onRefresh called from SwipeRefreshLayout");
-
+                        DbSupport db=new DbSupport();
+                        db.loadItemList(null);
+                        gridview.invalidateViews();
                         // This method performs the actual data-refresh operation.
                         // The method calls setRefreshing(false) when it's finished.
                         mySwipeRefreshLayout.setRefreshing (false);

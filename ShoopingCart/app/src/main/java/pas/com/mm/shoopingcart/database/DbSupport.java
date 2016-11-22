@@ -108,8 +108,10 @@ public class DbSupport {
             e.printStackTrace();
         }
 
+       // database.goOnline();
 
-        final DBListenerCallback cb1=cb;
+
+                final DBListenerCallback cb1=cb;
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -122,6 +124,7 @@ public class DbSupport {
                   list= new ArrayList<Item>();
                   for(Item i:post.values())
                   {
+                     Log.d("DBSupport", i.getDescription());
                       list.add(i);
                   }
                     // [START_EXCLUDE]
@@ -130,8 +133,11 @@ public class DbSupport {
 
 
                 // [END_EXCLUDE]
-                database.goOffline();
-                cb1.LoadCompleted(true);
+               //database.goOffline();
+               if(cb1!=null) {
+                   cb1.LoadCompleted(true);
+               };
+                Log.d("DBSupport", "---------LOADED--------");
                             }
 
             @Override

@@ -20,6 +20,7 @@ import pas.com.mm.shoopingcart.R;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
@@ -98,19 +99,29 @@ public class MobileImageAdapter extends BaseAdapter {
            //imageView = new RecyclingImageView(mContext);
         //    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //            imageView.setLayoutParams(gridView.getLayoutParams());
+
             Log.i("test","getview new"+position);
         } else { // Otherwise re-use the converted view
           //  gridView = (LinearLayout) convertView;
           //  AbsListView.LayoutParams layoutParms= new AbsListView.LayoutParams(400,600);
                  //   ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
          //  imageView.setLayoutParams(layoutParms);
-          String url="https://drive.google.com/uc?export=download&id=0B_9ZBXw3kTLIN01ibXRqUHV5Umc";
-            url=getImageUrl(position);
+
           //  mImageFetcher.loadImage(Images.imageThumbUrls[position], imageView);
-            mImageFetcher.loadImage(url, imageView,imageListener);
+          //  mImageFetcher.loadImage(url, imageView,imageListener);
+
             Log.i("test","getview***"+position);
         }
-
+        String url="https://drive.google.com/uc?export=download&id=0B_9ZBXw3kTLIN01ibXRqUHV5Umc";
+        url=getImageUrl(position);
+        ViewGroup.LayoutParams param= imageView.getLayoutParams();
+        pb.setVisibility(View.GONE);
+        imageView.setVisibility(View.VISIBLE);
+        Picasso.with(this.getmContext())
+                .load(url)
+                .resize(param.width, param.height)
+                .centerCrop()
+                .into(imageView);
 
       //  mImageFetcher.loadImage(Images.imageThumbUrls[position - mNumColumns], imageView);
        // imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
