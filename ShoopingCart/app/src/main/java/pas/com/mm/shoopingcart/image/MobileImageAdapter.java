@@ -83,7 +83,8 @@ public class MobileImageAdapter extends BaseAdapter {
 
         TextView textView = (TextView) gridView.findViewById(R.id.grid_caption);
         textView.setText(getImageDescription( position));
-
+        TextView textViewPrice = (TextView) gridView.findViewById(R.id.grid_price);
+        textViewPrice.setText(getPrice( position)+" "+getmContext().getResources().getString(R.string.currency));
         final ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_image);
 
         final ProgressBar pb=(ProgressBar) gridView.findViewById(R.id.progressbar_grid_img);
@@ -139,6 +140,11 @@ public class MobileImageAdapter extends BaseAdapter {
     public String getImageDescription(int position)
     {
         return DbSupport.list.get(position).getDescription();
+    }
+
+    public String getPrice(int position)
+    {
+        return DbSupport.list.get(position).getAmount().toString();
     }
 
     public int getNumColumns() {
