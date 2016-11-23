@@ -251,6 +251,9 @@ public class DetailFragment extends Fragment {
         TextView text3= (TextView) v.findViewById(R.id.txtPrompt3);
         text3.setTypeface(typeface);
 
+        TextView textPrice= (TextView) v.findViewById(R.id.textViewPrice);
+        textPrice.setTypeface(typeface);
+        textPrice.setText(this.getItem().getAmount().toString()+" "+getActivity().getResources().getString(R.string.currency));
         final ZoomImageView thumb1View =(ZoomImageView) v.findViewById(R.id.imageView1);
         //ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
        //     @Override
@@ -310,6 +313,7 @@ public class DetailFragment extends Fragment {
                 }
             }
         });
+
         DbSupport db=new DbSupport();
        // db.writeNewPost("CODE002","HELLO","HTTP://WWW",12.9);
         db.listenDataChange();
