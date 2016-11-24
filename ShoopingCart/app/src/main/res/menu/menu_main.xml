@@ -3,32 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pas.com.mm.shoopingcart.MainActivity">
 
-    <item
-        android:id="@+id/sign_in"
 
-        android:title="@string/sign_in"
-        app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_favorite"
-        android:icon="@drawable/ic_favorite_black_48dp"
+        android:icon="@drawable/fav_icon_title"
         android:title="@string/action_favorite"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_contact"
-        android:icon="@android:drawable/sym_action_email"
+        android:icon="@drawable/mail_icon_title"
         android:title="@string/action_contact_title"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
-    <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_orders"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
+
 
 
 </menu>

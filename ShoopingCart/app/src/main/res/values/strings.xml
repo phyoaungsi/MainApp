@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">{app_name}</string>
+    <string name="app_name">Taw Win Pan</string>
     <string name="action_settings">{Settings}</string>
     <string name="title_activity_detail">{Item Details}</string>
-    <string name="action_favorite">{Favourities}</string>
-    <string name="action_contact_title">{Address}</string>
+    <string name="action_favorite">Favourities</string>
+    <string name="action_contact_title">ဆက်သွယ်ရန်</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="name">Hello blank fragment</string>
     <string name="price">Hello blank fragment</string>
@@ -11,9 +11,9 @@
     <string name="large_text">  </string>
      <string name="btnDetail">More</string>
 
-    <string name="title_activity_grid_view">{MainTitle}</string>
+    <string name="title_activity_grid_view">တော်ဝင်ပန်း</string>
 
-    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_splash_screen">Taw Win Pan</string>
     <string name="dummy_button">{Button1}</string>
     <string name="dummy_content">{Button2}</string>
     <string name="sign_in">Sign-in ၀င်ပါ</string>
@@ -44,15 +44,17 @@
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
     <string name="title_activity_contact">ContactActivity</string>
-    <string name="address_line1">{Address1ကခဂမြန်မာ​ဖေါင့်​အသစ်}</string>
-    <string name="address_line2">{Address2ကခဂမြန်မာ​ဖေါင့်​အသစ်}</string>
-    <string name="address_line3">{Address3ကခဂမြန်မာ​ဖေါင့်​အသစ်}</string>
+    <string name="address_line1">No 254, Room 16, Yanaung Road,Yankin township
+Yangon, Myanmar</string>
+    <string name="address_line2">Ph. 01 557008, 09 507 8847 ,
+09 250 356515</string>
+    <string name="address_line3">https://www.facebook.com/twpfashion/</string>
     <string name="address_line4">{Address4}</string>
     <string name="phone_label">{Phone LABEL}</string>
     <string name="title_activity_open_notification">{OpenNotification}</string>
-    <string name="title_tab1">Tab 1}</string>
-    <string name="title_tab2">Tab 2}</string>
-    <string name="title_tab3">Tab 3}</string>
+    <string name="title_tab1">Regular Items</string>
+    <string name="title_tab2">New Arrivals</string>
+    <string name="title_tab3">Promotions</string>
 
     <string name="prompt1"></string>
     <string name="prompt2">သို့မဟုတ်</string>
