@@ -43,12 +43,12 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
-    <string name="title_activity_contact">ContactActivity</string>
+    <string name="title_activity_contact">ဆက်သွယ်ရန်</string>
     <string name="address_line1">No 254, Room 16, Yanaung Road,Yankin township
 Yangon, Myanmar</string>
     <string name="address_line2">Ph. 01 557008, 09 507 8847 ,
 09 250 356515</string>
-    <string name="address_line3">https://www.facebook.com/twpfashion/</string>
+    <string name="address_line3"><a href='https://fb.com/twpfashion/'>https://www.facebook.com/twpfashion/</a></string>
     <string name="address_line4">{Address4}</string>
     <string name="phone_label">{Phone LABEL}</string>
     <string name="title_activity_open_notification">{OpenNotification}</string>

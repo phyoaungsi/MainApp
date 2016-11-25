@@ -18,7 +18,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="225dp"
+        android:layout_width="wrap_content"
         android:layout_height="284dp"
         android:layout_gravity="left|center_vertical"
         android:paddingLeft="20dp"
@@ -48,23 +48,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/address_line3"
             android:id="@+id/addressLine3"
-            android:textColor="#7b1fa2" />
+            android:textColor="#7b1fa2"
+            android:autoLink="web" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/textView5"
-            android:textColor="#7b1fa2" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/textView6"
-            android:textColor="#7b1fa2" />
     </LinearLayout>
 
 </FrameLayout>
