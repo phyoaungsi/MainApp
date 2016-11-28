@@ -21,6 +21,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import pas.com.mm.shoopingcart.activities.ContactActivity;
+import pas.com.mm.shoopingcart.activities.OpenNotification;
 
 public class ItemGridView extends AppCompatActivity implements ImageGridFragment.OnFragmentInteractionListener,DetailFragment.OnFragmentInteractionListener {
     private static final String TAG = "ImageGridActivity";
@@ -88,6 +89,13 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
         if (id == R.id.action_contact) {
 
             Intent intent = new Intent(this, ContactActivity.class);intent.putExtra("POSITION", id);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.action_favorite) {
+
+            Intent intent = new Intent(this, OpenNotification.class);intent.putExtra("POSITION", id);
             startActivity(intent);
             return true;
         }
