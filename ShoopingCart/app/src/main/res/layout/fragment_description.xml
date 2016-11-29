@@ -7,20 +7,12 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="196dp"
-        android:layout_y="417dp"
-        android:id="@+id/btnDescClose"
-        android:layout_marginTop="500dp" />
-
     <WebView
         android:layout_width="match_parent"
         android:layout_height="454dp"
         android:background="@color/colorPrimary"
-        android:id="@+id/descDetail">
+        android:id="@+id/descDetail"
+        android:layout_gravity="center_vertical">
 
 
 

@@ -116,8 +116,8 @@ public class ImageGridFragment extends Fragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "" + position,
-                        Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getActivity(), "" + position,
+               //         Toast.LENGTH_SHORT).show();
                Intent intent = new Intent(getActivity(), DetailActivity.class);
                Item item= DbSupport.list.get(position);
                 Gson gson=new Gson();

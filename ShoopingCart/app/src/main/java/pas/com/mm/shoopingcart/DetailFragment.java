@@ -143,7 +143,7 @@ public class DetailFragment extends Fragment {
        // final ProgressBar pb=(ProgressBar) v.findViewById(R.id.progressbar_detail_img);
         final Button button = (Button) v.findViewById(R.id.btnChangeImage);
         final ToggleButton tb=(ToggleButton)v.findViewById(R.id.tbFavDetail);
-       final String pos = String.valueOf(getActivity().getIntent().getIntExtra("POSITION", 6000));
+//       final String pos = String.valueOf(getActivity().getIntent().getIntExtra("POSITION", 6000));
 
         final String detailJson = getActivity().getIntent().getStringExtra("DETAIL_ITEM");
         Gson gson=new Gson();
@@ -164,12 +164,12 @@ public class DetailFragment extends Fragment {
 
                 SharedPreferences.Editor editor=   settings.edit();
                if(b)
-                {Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
+                {//Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
                     Log.d("tag", "checked");
                     editor.putString(i.getCode(),detailJson);
                 }
                 else{
-                   Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
+                   //Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
                    Log.d("tag", "unchecked");
                    editor.remove(i.getCode());
                }
@@ -216,7 +216,7 @@ public class DetailFragment extends Fragment {
                 {
                     try
                     {
-                        Uri uri = Uri.parse("smsto:+6591814799");
+                        Uri uri = Uri.parse("smsto:09451918188");
                         Intent share = new Intent(android.content.Intent.ACTION_SEND,uri);
                         share.setType("text/plain");
                         share.putExtra(Intent.EXTRA_TEXT, "Your text to share");
@@ -235,7 +235,7 @@ public class DetailFragment extends Fragment {
 
             public void onClick(View v) {
 
-                String number = "tel:91094326";
+                String number = "tel:09451918188";
                 Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
                 startActivity(callIntent);
             }
