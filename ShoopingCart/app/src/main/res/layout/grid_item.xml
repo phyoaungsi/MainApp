@@ -35,7 +35,9 @@
         android:maxWidth="200dp"
         android:visibility="gone"
         android:src="@drawable/backgournd_main"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@color/colorPrimaryDark"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,11 +45,15 @@
         android:text="New Text"
         android:id="@+id/grid_caption"
         android:textColor="@color/textColorTertiary"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-"
-        android:id="@+id/grid_price" />
+        android:id="@+id/grid_price"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>
 </LinearLayout>
