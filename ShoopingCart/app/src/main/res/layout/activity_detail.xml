@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_gravity="bottom"
                 android:weightSum="1"
-                android:background="#000"
+                android:background="#fff"
                 android:alpha="0.9"
                 android:layout_height="40dp">
 
@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
 
                     android:id="@+id/txtPrompt1"
-                    android:textColor="#fff"
+                    android:textColor="@color/colorPrimaryDark"
                     android:layout_centerHorizontal="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="0.25" />
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
 
                     android:id="@+id/txtPrompt2"
-                    android:textColor="#fff"
+                    android:textColor="@color/colorPrimaryDark"
 
 
 
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
 
                     android:id="@+id/txtPrompt3"
-                    android:textColor="#fff"
+                    android:textColor="@color/colorPrimaryDark"
 
 
 
