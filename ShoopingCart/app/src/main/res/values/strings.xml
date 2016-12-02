@@ -51,7 +51,7 @@ Yangon, Myanmar</string>
     <string name="address_line3"><a href='https://fb.com/twpfashion/'>https://www.facebook.com/twpfashion/</a></string>
     <string name="address_line4">{Address4}</string>
     <string name="phone_label">{Phone LABEL}</string>
-    <string name="title_activity_open_notification">{OpenNotification}</string>
+    <string name="title_activity_open_notification">Promotions</string>
     <string name="title_tab1">Regular Items</string>
     <string name="title_tab2">New Arrivals</string>
     <string name="title_tab3">Promotions</string>
