@@ -11,13 +11,21 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.DynamicDrawableSpan;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +34,9 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +46,7 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
@@ -81,9 +92,12 @@ public class DetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private ImageView backImage;
+    private ImageView forwardImage;
+    private String[] imageUrls;
     private OnFragmentInteractionListener mListener;
-
+    SectionsPagerAdapter mSectionsPagerAdapter;
+    ViewPager mViewPager;
     public DetailFragment() {
         // Required empty public constructor
     }
@@ -126,6 +140,7 @@ public class DetailFragment extends Fragment {
         this.setItem((Item) gson.fromJson(object,Item.class));
         DetailFragment df= new DetailFragment();
         df.setItem(this.getItem());
+        imageUrls= getItem().getImgUrl().split(" ");
     }
 
     @Override
@@ -139,7 +154,8 @@ public class DetailFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final Context context=this.getContext();
-
+         backImage=(ImageView) v.findViewById(R.id.back);
+        forwardImage=(ImageView) v.findViewById(R.id.forward);
        // final ProgressBar pb=(ProgressBar) v.findViewById(R.id.progressbar_detail_img);
         final Button button = (Button) v.findViewById(R.id.btnChangeImage);
         final ToggleButton tb=(ToggleButton)v.findViewById(R.id.tbFavDetail);
@@ -186,24 +202,11 @@ public class DetailFragment extends Fragment {
         });
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                /**
-                Toast.makeText(context, "anonymous", Toast.LENGTH_SHORT);
-                View frame = (View) v.findViewById(R.id.sliding_detail_frame);
-                TranslateAnimation anim = new TranslateAnimation(0f, 100f, 0f, 0f);  // might need to review the docs
-                anim.setDuration(1000); // set how long you want the animation
-                frame.setAnimation(anim);
-                frame.startAnimation(anim);
-
-                frame.setLeft(100);
-                //  frame.setVisibility(View.VISIBLE);
-                // Perform action on click
-                 **/
                 boolean sms_success=false;
                 try {
                     Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                     smsIntent.setType("vnd.android-dir/mms-sms");
-                    smsIntent.putExtra("address", "+6591094326");
+                    smsIntent.putExtra("address", "09451918188");
                     smsIntent.putExtra("sms_body", "Body of Message");
                     startActivity(smsIntent);
                     sms_success=true;
@@ -269,6 +272,18 @@ public class DetailFragment extends Fragment {
                // .resize(150, 50)
               //  .centerCrop()
                 .into(thumb1View);
+
+
+        //create imageview here and setbg
+        ImageView imageView = new ImageView(this.getContext());
+
+        imageView.setImageResource(R.drawable.anime);
+
+        ViewGroup.LayoutParams params = imageView.getLayoutParams();
+
+
+        imageView.setLayoutParams(thumb1View.getLayoutParams());
+        ((LinearLayout) v.findViewById(R.id.photo_frame)).addView(imageView);
             //   thumb1View.setOnClickListener(new View.OnClickListener() {
      //       @Override
       //      public void onClick(View view) {
@@ -314,6 +329,38 @@ public class DetailFragment extends Fragment {
             }
         });
 
+
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        mViewPager = (ViewPager) v.findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        if(imageUrls.length==1) {
+            forwardImage.setVisibility(View.GONE);
+        }else
+        {
+            backImage.setVisibility(View.VISIBLE);
+        }
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            public void onPageSelected(int position) {
+                // Check if this is the page you want.
+                if(position==0) {
+                    backImage.setVisibility(View.GONE);
+                }else
+                {
+                    backImage.setVisibility(View.VISIBLE);
+                }
+                if(position==imageUrls.length-1) {
+
+                    forwardImage.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    forwardImage.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
         DbSupport db=new DbSupport();
        // db.writeNewPost("CODE002","HELLO","HTTP://WWW",12.9);
         db.listenDataChange();
@@ -360,31 +407,6 @@ public class DetailFragment extends Fragment {
     }
 
 
-    /* Called whenever we call invalidateOptionsMenu() */
-    // @Override
-    // public boolean onPrepareOptionsMenu(Menu menu) {
-    // If the nav drawer is open, hide action items related to the content view
-    // boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-    // menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
-    // return super.onPrepareOptionsMenu(menu);
-    // }
-
-    /**
-     * "Zooms" in a thumbnail view by assigning the high resolution image to a hidden "zoomed-in"
-     * image view and animating its bounds to fit the entire activity content area. More
-     * specifically:
-     * <p>
-     * <ol>
-     * <li>Assign the high-res image to the hidden "zoomed-in" (expanded) image view.</li>
-     * <li>Calculate the starting and ending bounds for the expanded view.</li>
-     * <li>Animate each of four positioning/sizing properties (X, Y, SCALE_X, SCALE_Y)
-     * simultaneously, from the starting bounds to the ending bounds.</li>
-     * <li>Zoom back out by running the reverse animation on click.</li>
-     * </ol>
-     *
-     * @param thumbView  The thumbnail view to zoom in.
-     * @param imageResId The high-resolution version of the image represented by the thumbnail.
-     */
     private void zoomImageFromThumb(final View thumbView, int imageResId) {
         // If there's an animation in progress, cancel it immediately and proceed with this one.
         if (mCurrentAnimator != null) {
@@ -519,6 +541,119 @@ public class DetailFragment extends Fragment {
 
     public void setItem(Item item) {
         this.item = item;
+    }
+
+
+
+
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        // END_INCLUDE (fragment_pager_adapter)
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        // BEGIN_INCLUDE (fragment_pager_adapter_getitem)
+        /**
+         * Get fragment corresponding to a specific position. This will be used to populate the
+         * contents of the {@link ViewPager}.
+         *
+         * @param position Position to fetch fragment for.
+         * @return Fragment for specified position.
+         */
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a DummySectionFragment (defined as a static inner class
+            // below) with the page number as its lone argument.
+
+
+            Fragment fragment = new DummySectionFragment();
+            Bundle args = new Bundle();
+            args.putString(DummySectionFragment.URL,imageUrls[position]);
+            fragment.setArguments(args);
+            return fragment;
+        }
+        // END_INCLUDE (fragment_pager_adapter_getitem)
+
+        // BEGIN_INCLUDE (fragment_pager_adapter_getcount)
+        /**
+         * Get number of pages the {@link ViewPager} should render.
+         *
+         * @return Number of fragments to be rendered as pages.
+         */
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return imageUrls.length;
+        }
+        // END_INCLUDE (fragment_pager_adapter_getcount)
+
+        // BEGIN_INCLUDE (fragment_pager_adapter_getpagetitle)
+        /**
+         * Get title for each of the pages. This will be displayed on each of the tabs.
+         *
+         * @param position Page to fetch title for.
+         * @return Title for specified page.
+         */
+        @Override
+        public CharSequence getPageTitle(int position) {
+            /**
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return "ha";
+                case 1:
+                    return "funny";
+                case 2:
+                    return "happy";
+            }
+            return null;
+        }
+**/
+        Drawable myDrawable = getResources().getDrawable(R.drawable.fav_toggle_icon_off);
+        SpannableStringBuilder sb = new SpannableStringBuilder("1" ); // space added before text for convenience
+        try {
+            myDrawable.setBounds(5, 5, myDrawable.getIntrinsicWidth(), myDrawable.getIntrinsicHeight());
+            ImageSpan span = new ImageSpan(myDrawable, DynamicDrawableSpan.ALIGN_BASELINE);
+            sb.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+            return sb;
+        // END_INCLUDE (fragment_pager_adapter_getpagetitle)
+
+    }
+
+    }
+    public static class DummySectionFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        public static final String URL = "url";
+        private String url;
+        private Context context;
+
+
+        public DummySectionFragment() {
+
+            context=getActivity();
+        }
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_sliding_photo, container, false);
+            Bundle b=  getArguments();
+            url= b.getString(URL);
+            ZoomImageView slideImageView = (ZoomImageView) rootView.findViewById(R.id.slide1);
+
+            Picasso.with(context)
+                    .load(url)
+                    .into(slideImageView);
+            return rootView;
+        }
     }
 
 }

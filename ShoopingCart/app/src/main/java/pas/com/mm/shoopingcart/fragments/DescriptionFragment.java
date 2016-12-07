@@ -92,6 +92,7 @@ public class DescriptionFragment extends Fragment {
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setDisplayShowHomeEnabled(true);
         View v= inflater.inflate(R.layout.fragment_description, container, false);
+        /**
         Button button=(Button) v.findViewById(R.id.btnDescClose);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +114,7 @@ public class DescriptionFragment extends Fragment {
 
             }
         });
+         **/
         WebView web=(WebView)v.findViewById(R.id.descDetail);
         String data=this.getItem().getHtmlDetail();
         web.loadDataWithBaseURL("file:///android_asset/",data, "text/html; charset=utf-8", "UTF-8",null);

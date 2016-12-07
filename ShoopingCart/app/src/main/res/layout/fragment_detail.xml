@@ -44,7 +44,7 @@
                 android:id="@+id/imageView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/dots"
+
                 style="@style/AppTheme.PopupOverlay"
                 android:padding="2dp"
                 android:background="@drawable/ic_favorite_black_48dp"

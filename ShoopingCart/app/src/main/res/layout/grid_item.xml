@@ -45,7 +45,7 @@
         android:text="New Text"
         android:id="@+id/grid_caption"
         android:textColor="@color/textColorTertiary"
-        android:textSize="17sp"
+        android:textSize="12sp"
         android:gravity="center_horizontal"
         android:layout_gravity="center_horizontal" />
     <TextView
