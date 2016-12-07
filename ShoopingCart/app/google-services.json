@@ -1,27 +1,58 @@
 {
   "project_info": {
-    "project_number": "1052499138149",
-    "firebase_url": "https://pasplatform.firebaseio.com",
-    "project_id": "pasplatform",
-    "storage_bucket": "pasplatform.appspot.com"
+    "project_number": "427878716271",
+    "firebase_url": "https://prod-703bb.firebaseio.com",
+    "project_id": "prod-703bb",
+    "storage_bucket": "prod-703bb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1052499138149:android:725f260589266759",
+        "mobilesdk_app_id": "1:427878716271:android:6a8fb38cebde571c",
+        "android_client_info": {
+          "package_name": "mm.com.quickdogfoundry.shoppingcart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427878716271-4ljml33tvvdv2p6hqok6ggba2m8j6d7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOh5NFhbPdrIlM4ucYnTTcB1Iggow78ko"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427878716271:android:725f260589266759",
         "android_client_info": {
           "package_name": "pas.com.mm.shoopingcart"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1052499138149-6bin35r36ofrcr0e9rvhfs3s42jmm0cg.apps.googleusercontent.com",
+          "client_id": "427878716271-4ljml33tvvdv2p6hqok6ggba2m8j6d7t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA44-0uSbxjmQ0Wwvw6ZrgqizoO1ZN1uEc"
+          "current_key": "AIzaSyAOh5NFhbPdrIlM4ucYnTTcB1Iggow78ko"
         }
       ],
       "services": {
