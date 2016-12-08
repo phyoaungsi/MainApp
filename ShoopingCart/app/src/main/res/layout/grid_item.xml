@@ -45,15 +45,16 @@
         android:text="New Text"
         android:id="@+id/grid_caption"
         android:textColor="@color/textColorTertiary"
-        android:textSize="12sp"
+        android:textSize="13sp"
         android:gravity="center_horizontal"
         android:layout_gravity="center_horizontal" />
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="-"
         android:id="@+id/grid_price"
         android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textSize="13sp"
+        android:layout_height="18dp" />
 </LinearLayout>
 </LinearLayout>
