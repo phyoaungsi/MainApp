@@ -53,7 +53,8 @@ public class FavouritiesImageAdapter extends MobileImageAdapter {
         String jsonString=(String)string[position];
         Gson json=new Gson();
         Item obj = json.fromJson(jsonString, Item.class);
-        return obj.getImgUrl();
+        String[] urls=obj.imgUrl.split(" ");
+        return urls[0];
     }
 
     public String getImageDescription(int position)

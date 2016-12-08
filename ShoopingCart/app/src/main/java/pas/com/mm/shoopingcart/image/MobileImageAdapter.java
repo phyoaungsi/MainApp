@@ -134,7 +134,8 @@ public class MobileImageAdapter extends BaseAdapter {
 
     public String getImageUrl(int position)
     {
-       return DbSupport.list.get(position).imgUrl;
+       String[] urls= DbSupport.list.get(position).imgUrl.split(" ");
+       return urls[0];
     }
 
     public String getImageDescription(int position)
