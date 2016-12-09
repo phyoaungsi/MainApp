@@ -650,7 +650,8 @@ public class DetailFragment extends Fragment {
             ZoomImageView slideImageView = (ZoomImageView) rootView.findViewById(R.id.slide1);
 
             Picasso.with(context)
-                    .load(url)
+                    .load(url) .resize(850, 850)
+                    .centerCrop()
                     .into(slideImageView);
             return rootView;
         }
