@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -257,6 +258,15 @@ public class DetailFragment extends Fragment {
         TextView textPrice= (TextView) v.findViewById(R.id.textViewPrice);
         textPrice.setTypeface(typeface);
         textPrice.setText(this.getItem().getAmount().toString()+" "+getActivity().getResources().getString(R.string.currency));
+
+
+        if(getItem().getDiscount()>0 &&getItem().getDiscount()<getItem().getAmount()) {
+            TextView t = (TextView) v.findViewById(R.id.oldPrice);
+            textPrice.setText(getItem().getDiscount() + " " + getResources().getString(R.string.currency));
+            t.setText(getItem().getAmount() + " " + getResources().getString(R.string.currency));
+            t.setPaintFlags(t.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            t.setVisibility(View.VISIBLE);
+        }
         final ZoomImageView thumb1View =(ZoomImageView) v.findViewById(R.id.imageView1);
         //ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
        //     @Override

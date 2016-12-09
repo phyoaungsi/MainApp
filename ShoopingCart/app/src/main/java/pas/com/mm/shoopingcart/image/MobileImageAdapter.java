@@ -3,6 +3,7 @@ package pas.com.mm.shoopingcart.image;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Paint;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +86,14 @@ public class MobileImageAdapter extends BaseAdapter {
         textView.setText(getImageDescription( position));
         TextView textViewPrice = (TextView) gridView.findViewById(R.id.grid_price);
         textViewPrice.setText(getPrice( position)+" "+getmContext().getResources().getString(R.string.currency));
+
+        if(DbSupport.list.get(position).getDiscount()>0 && DbSupport.list.get(position).getDiscount()<DbSupport.list.get(position).getAmount()) {
+            TextView t = (TextView) gridView.findViewById(R.id.usualPrice);
+            textViewPrice.setText(getDiscountAmount(position) + " " + getmContext().getResources().getString(R.string.currency));
+            t.setText(getPrice(position) + " " + getmContext().getResources().getString(R.string.currency));
+            t.setPaintFlags(t.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            t.setVisibility(View.VISIBLE);
+        }
         final ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_image);
 
         final ProgressBar pb=(ProgressBar) gridView.findViewById(R.id.progressbar_grid_img);
@@ -146,6 +155,12 @@ public class MobileImageAdapter extends BaseAdapter {
     public String getPrice(int position)
     {
         return DbSupport.list.get(position).getAmount().toString();
+    }
+
+    public String getDiscountAmount(int position)
+    {
+
+        return DbSupport.list.get(position).getDiscount().toString();
     }
 
     public int getNumColumns() {

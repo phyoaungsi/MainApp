@@ -17,6 +17,9 @@ public class Item {
 
 
 
+    public double discount;
+
+
     public String htmlDetail;
 
 
@@ -82,10 +85,21 @@ public class Item {
         this.htmlDetail = htmlDetail;
     }
     // [START post_to_map]
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("amount", amount);
+        result.put("discount", discount);
         result.put("code", code);
         result.put("description", description);
         result.put("imgUrl", imgUrl);
