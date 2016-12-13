@@ -27,14 +27,30 @@
 
         import com.google.firebase.messaging.FirebaseMessagingService;
         import com.google.firebase.messaging.RemoteMessage;
+        import com.google.gson.Gson;
 
+        import java.util.Map;
+
+        import pas.com.mm.shoopingcart.DetailActivity;
         import pas.com.mm.shoopingcart.MainActivity;
         import pas.com.mm.shoopingcart.R;
         import pas.com.mm.shoopingcart.activities.OpenNotification;
+        import pas.com.mm.shoopingcart.database.DBListenerCallback;
+        import pas.com.mm.shoopingcart.database.DbSupport;
+        import pas.com.mm.shoopingcart.database.model.Item;
+        import pas.com.mm.shoopingcart.database.model.NotificationModel;
+        import pas.com.mm.shoopingcart.util.PreferenceUtil;
 
-public class NotificationIntentService extends FirebaseMessagingService {
+public class NotificationIntentService extends FirebaseMessagingService implements DBListenerCallback {
 
     private static final String TAG = "MyFirebaseMsgService";
+
+
+
+    private boolean messageReceived;
+
+
+
 
     /**
      * Called when message is received.
@@ -67,7 +83,7 @@ public class NotificationIntentService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
-        sendNotification(remoteMessage.getNotification().getBody());
+        sendNotification(remoteMessage);
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
@@ -76,20 +92,59 @@ public class NotificationIntentService extends FirebaseMessagingService {
     /**
      * Create and show a simple notification containing the received FCM message.
      *
-     * @param messageBody FCM message body received.
+     * @param remoteMessage FCM message body received.
      */
-    private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, OpenNotification.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("notificationBodys",messageBody);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
+    private void sendNotification(RemoteMessage remoteMessage) {
 
+        String messageBody=remoteMessage.getNotification().getBody();
+
+       Map<String,String> data= remoteMessage.getData();
+       NotificationModel noti=new NotificationModel();
+
+
+        noti.setTitle( remoteMessage.getNotification().getTitle());
+        noti.setMessage(messageBody);
+        noti.setContent(data.get("CONTENT"));
+        noti.setType(data.get("TYPE"));
+        noti.setMainImage(data.get("MAIN_IMAGE"));
+
+
+
+
+
+        PendingIntent pendingIntent = null;
+
+        if(noti.getType().equals("ITEM")){
+            Intent intent1 = new Intent(this, DetailActivity.class);
+            Item item=null;
+            DbSupport db=new DbSupport();
+            db.getItemById(noti.getContent(),this);
+            while(!this.isMessageReceived()){
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            Gson gson=new Gson();
+            String objStr= gson.toJson(DbSupport.item);
+            intent1.putExtra("DETAIL_ITEM",objStr);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent1,
+                    PendingIntent.FLAG_CANCEL_CURRENT);
+        }else {
+            Intent intent = new Intent(this, OpenNotification.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("notificationBodys",noti.getMessage());
+            intent.putExtra("imageUrl",noti.getMainImage());
+            pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                    PendingIntent.FLAG_CANCEL_CURRENT);
+        }
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.samoa)
-                .setContentTitle("FCM Message")
-                .setContentText(messageBody)
+                .setContentTitle(noti.getTitle())
+                .setContentText(noti.getMessage())
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
@@ -99,6 +154,19 @@ public class NotificationIntentService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+    public boolean isMessageReceived() {
+        return messageReceived;
+    }
+
+    public void setMessageReceived(boolean messageReceived) {
+        this.messageReceived = messageReceived;
+    }
+
+    @Override
+    public void LoadCompleted(boolean b) {
+        setMessageReceived(true);
     }
 }
 

@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -157,6 +158,57 @@ public class DbSupport {
             e.printStackTrace();
         }
 
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public static Item item;
+    public  Item getItemById(String id,DBListenerCallback cb)
+    {
+        DatabaseReference myRef = database.getReference("message/items/"+id.trim());
+
+
+        final Item r=new Item();
+        final DBListenerCallback callback=cb;
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+
+                //   for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                // TODO: handle the post
+
+             Item dbResult  = dataSnapshot.getValue(Item.class);
+                r.setAmount(dbResult.getAmount());
+                r.setCode(dbResult.getCode());
+                r.setDescription(dbResult.getDescription());
+                r.setDiscount(dbResult.getDiscount());
+                r.setHtmlDetail(dbResult.getHtmlDetail());
+                r.setImgUrl(dbResult.getImgUrl());
+                r.setTitle(dbResult.getTitle());
+                item=r;
+               callback.LoadCompleted(true);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // [START_EXCLUDE]
+                // Toast.makeText(PostDetailActivity.this, "Failed to load post.",
+                //        Toast.LENGTH_SHORT).show();
+                // [END_EXCLUDE]
+            }
+        };
+
+        myRef.addValueEventListener(postListener);
+        return r;
     }
 
 }
