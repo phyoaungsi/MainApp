@@ -175,27 +175,34 @@
 
             android:layout_margin="1dp">
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_centerVertical="true">
+
             <TextView
-                android:text="-"
+                android:text="-aaaaa---"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:id="@+id/oldPrice"
                 android:textColor="#4a148c"
-
+                android:gravity="center_vertical|center_horizontal"
                 android:layout_centerVertical="true"
 
 
 
                 android:layout_alignParentTop="true"
-                android:gravity="left"
+
                 android:visibility="gone"
-                android:layout_marginLeft="19dp" />
+                />
 
 
 
             <TextView
-                android:text="-"
+                android:text="-aaaaaaa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -208,6 +215,7 @@
 
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true" />
+            </LinearLayout>
         </RelativeLayout>
 
         <LinearLayout
@@ -235,13 +243,15 @@
 
 
     </LinearLayout>
-        <ImageView
-            android:id="@+id/expanded_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"
-            android:contentDescription="@string/description_zoom_touch_close" />
-    </FrameLayout>
 
+    </FrameLayout>
+    <pas.com.mm.shoopingcart.image.ZoomImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:contentDescription="@string/description_zoom_touch_close"
+        android:translationZ="10dp"
+        android:background="@color/common_google_signin_btn_text_dark_focused" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -11,7 +11,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="pas.com.mm.shoopingcart.activities.OpenNotificationFragment"
     tools:showIn="@layout/activity_open_notification"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#fff">
 
 
     <TextView
@@ -24,24 +25,12 @@
         android:textSize="24sp"
         android:gravity="top" />
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
 
         android:layout_alignParentTop="true"
         android:layout_marginTop="1dp"
         android:id="@+id/notiImage"
         android:layout_x="9dp"
         android:layout_y="147dp"
-        android:layout_height="wrap_content" />
-    <WebView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_centerVertical="true"
-
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:foregroundGravity="top|center_vertical"
-        android:id="@+id/notiWebView">
-
-
-    </WebView>
+        android:layout_height="match_parent" />
 </LinearLayout>
