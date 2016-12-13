@@ -239,13 +239,15 @@
 
 
     </LinearLayout>
-        <ImageView
-            android:id="@+id/expanded_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"
-            android:contentDescription="@string/description_zoom_touch_close" />
-    </FrameLayout>
 
+    </FrameLayout>
+    <pas.com.mm.shoopingcart.image.ZoomImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:contentDescription="@string/description_zoom_touch_close"
+        android:translationZ="10dp"
+        android:background="@color/common_google_signin_btn_text_dark_focused" />
 
 </android.support.design.widget.CoordinatorLayout>
