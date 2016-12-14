@@ -10,6 +10,8 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import pas.com.mm.shoopingcart.R;
 
 /**
@@ -26,13 +28,12 @@ public class OpenNotificationFragment extends Fragment {
         View v= inflater.inflate(R.layout.fragment_open_notification, container, false);
         TextView tv=(TextView) v.findViewById(R.id.notiTitle);
         tv.setText(this.getActivity().getIntent().getStringExtra("notificationBodys"));
-
+        String imageUrl=getActivity().getIntent().getStringExtra("imageUrl");
         ImageView image=(ImageView) v.findViewById(R.id.notiImage);
-       image.setVisibility(View.VISIBLE);
+        Picasso.with(this.getContext()).load(imageUrl).into(image);
+        image.setVisibility(View.VISIBLE);
 
-        WebView web=(WebView) v.findViewById(R.id.notiWebView);
-        web.setVisibility(View.VISIBLE);
-        web.loadData("hello","text/html","UTF-8");
+
         return v;
     }
 }

@@ -123,7 +123,7 @@ public class ImageGridFragment extends Fragment {
                 Gson gson=new Gson();
                String objStr= gson.toJson(item);
                 intent.putExtra("DETAIL_ITEM",objStr);
-                intent.putExtra("POSITION", id);
+                //intent.putExtra("POSITION", id);
                 startActivity(intent);
             //  getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new DetailFragment()).commit();
 
