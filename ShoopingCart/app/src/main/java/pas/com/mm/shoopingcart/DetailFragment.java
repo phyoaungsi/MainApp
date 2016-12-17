@@ -75,7 +75,6 @@ public class DetailFragment extends Fragment {
     private Context context;
     private String[] mPlanetTitles;
     public static final String PREFS_NAME = "PAS";
-
     private Item item;
     // private DrawerLayout mDrawerLayout;
     // private ListView mDrawerList;
@@ -766,6 +765,7 @@ public class DetailFragment extends Fragment {
                 }
             });
             set.start();
+            this.getActivity().getIntent().putExtra("ZOOMED","y");
            mCurrentAnimator = set;
 
             // Upon clicking the zoomed-in image, it should zoom back down to the original bounds
