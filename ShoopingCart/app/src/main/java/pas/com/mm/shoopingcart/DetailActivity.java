@@ -45,6 +45,7 @@ import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.fragments.DescriptionFragment;
 import pas.com.mm.shoopingcart.image.Images;
+import pas.com.mm.shoopingcart.image.ZoomImageView;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 
@@ -210,7 +211,16 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 
     public void onBackPressed() {
 
-     super.onBackPressed();
+      if(this.getIntent().getStringExtra("ZOOMED").equals("y"))
+      {
+         ImageView expandedImageView = (ImageView ) findViewById(R.id.expanded_image);
+         expandedImageView.setVisibility(View.GONE);
+          ImageView slideImageView = (ImageView) findViewById(R.id.slide1);
+          slideImageView.setAlpha(1f);
+          getIntent().putExtra("ZOOMED","n");
+      }else {
+          super.onBackPressed();
+      }
     }
     public void onFragmentInteraction(Uri uri){
         //you can leave it empty
