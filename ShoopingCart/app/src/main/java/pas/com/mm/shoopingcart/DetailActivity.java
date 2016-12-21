@@ -211,7 +211,7 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
 
     public void onBackPressed() {
 
-      if(this.getIntent().getStringExtra("ZOOMED").equals("y"))
+      if(this.getIntent().getStringExtra("ZOOMED")!=null&&this.getIntent().getStringExtra("ZOOMED").equals("y"))
       {
          ImageView expandedImageView = (ImageView ) findViewById(R.id.expanded_image);
          expandedImageView.setVisibility(View.GONE);

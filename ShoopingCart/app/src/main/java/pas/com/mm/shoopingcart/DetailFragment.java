@@ -220,7 +220,7 @@ public class DetailFragment extends Fragment {
                 {
                     try
                     {
-                        Uri uri = Uri.parse("smsto:09451918188");
+                        Uri uri = Uri.parse("smsto:09451918138");
                         Intent share = new Intent(android.content.Intent.ACTION_SEND,uri);
                         share.setType("text/plain");
                         share.putExtra(Intent.EXTRA_TEXT, "Your text to share");
@@ -239,7 +239,7 @@ public class DetailFragment extends Fragment {
 
             public void onClick(View v) {
 
-                String number = "tel:09451918188";
+                String number = "tel:09451913138";
                 Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
                 startActivity(callIntent);
             }
@@ -805,6 +805,7 @@ public class DetailFragment extends Fragment {
                             mCurrentAnimator = null;
                         }
                     });
+                    this.getActivity().getIntent().putExtra("ZOOMED","n");
                     set.start();
                     mCurrentAnimator = set;
                 }
