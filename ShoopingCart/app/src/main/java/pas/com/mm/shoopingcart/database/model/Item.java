@@ -3,6 +3,8 @@ package pas.com.mm.shoopingcart.database.model;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +12,7 @@ import java.util.Map;
  * Created by phyo on 08/10/2016.
  */
 @IgnoreExtraProperties
-public class Item {
+public class Item implements Comparable<Item>{
 
     public String code;
     public String description;
@@ -22,6 +24,15 @@ public class Item {
 
     public String htmlDetail;
 
+    public Date getTimeOfPost() {
+        return timeOfPost;
+    }
+
+    public void setTimeOfPost(Date timeOfPost) {
+        this.timeOfPost = timeOfPost;
+    }
+
+    public Date timeOfPost;
 
     public String title;
     public String imgUrl;
@@ -107,6 +118,7 @@ public class Item {
         result.put("htmlDetail", htmlDetail);
         result.put("title", title);
         result.put("imgUrl", imgUrl);
+        result.put("timeOfPost",timeOfPost);
         return result;
     }
 
@@ -123,5 +135,16 @@ public class Item {
 
         return other.code == code;
     }
-    // [END post_to_map]
+    @Override
+    public int compareTo(Item o) {
+        String str1=this.code;
+        String str2=o.getCode();
+        int x = String.CASE_INSENSITIVE_ORDER.compare(str1, str2);
+        if (x== 0) {
+            x= str1.compareTo(str2);
+        }
+        return x;
+
+    }
+
 }
