@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import pas.com.mm.shoopingcart.database.DBListenerCallback;
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.image.FavouritiesImageAdapter;
@@ -38,7 +39,7 @@ import pas.com.mm.shoopingcart.util.ImageFetcher;
  * Use the {@link ImageGridFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ImageGridFragment extends Fragment {
+public class ImageGridFragment extends Fragment implements DBListenerCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -102,7 +103,7 @@ public class ImageGridFragment extends Fragment {
         // Inflate the layout for this fragment
         final View v= inflater.inflate(R.layout.image_grid_fragment, container, false);
         final Context context=this.getContext();
-
+        DbSupport dbsupport=new DbSupport();
          gridview = (GridView) v.findViewById(R.id.gridview_cache);
         MobileImageAdapter  imageAdapter=new MobileImageAdapter(getActivity(),mImageFetcher);
         Bundle b= this.getArguments();
@@ -110,6 +111,15 @@ public class ImageGridFragment extends Fragment {
         if(panel==2)
         {
             imageAdapter=new FavouritiesImageAdapter(getActivity(),mImageFetcher);
+        }
+        else if(panel==1)
+        {
+
+            dbsupport.getItemsByType("eat",this);
+        }
+        else if(panel ==2)
+        {
+            dbsupport.getItemsByType("drink",this);
         }
         gridview.setAdapter(imageAdapter);
 
@@ -171,6 +181,11 @@ public class ImageGridFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void LoadCompleted(boolean b) {
+
     }
 
     /**

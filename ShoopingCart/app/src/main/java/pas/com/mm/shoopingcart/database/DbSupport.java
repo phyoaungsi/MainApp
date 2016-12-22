@@ -107,6 +107,7 @@ public class DbSupport {
     {
       try {
           database.setPersistenceEnabled(true);
+
       }catch(Exception e)
         {
             e.printStackTrace();
@@ -126,11 +127,12 @@ public class DbSupport {
                 GenericTypeIndicator<Map<String,Item>> genericTypeIndicator = new GenericTypeIndicator<Map<String,Item>>() {};
                     Map<String,Item> post = dataSnapshot.getValue(genericTypeIndicator);
                   list= new ArrayList<Item>();
-                  for(Item i:post.values())
-                  {
-                     Log.d("DBSupport", i.getDescription());
-                      list.add(i);
-                  }
+                if(post!=null) {
+                    for (Item i : post.values()) {
+                        Log.d("DBSupport", i.getDescription());
+                        list.add(i);
+                    }
+                }
                    Collections.sort(list);
 
                     // [START_EXCLUDE]
@@ -158,7 +160,7 @@ public class DbSupport {
         };
         try {
             DatabaseReference myRef = database.getReference("message/items/");
-            myRef.orderByChild("code").addValueEventListener(postListener);
+            myRef.orderByChild("type").equalTo("eat").addValueEventListener(postListener);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -173,7 +175,6 @@ public class DbSupport {
         this.item = item;
     }
 
-    public static Item item;
     public  Item getItemById(String id,DBListenerCallback cb)
     {
         DatabaseReference myRef = database.getReference("message/items/"+id.trim());
@@ -216,4 +217,73 @@ public class DbSupport {
         return r;
     }
 
+
+
+
+    public static Item item;
+
+
+
+
+    public  void getItemsByType(String type,DBListenerCallback cb)
+    {
+        final Item r=new Item();
+        final DBListenerCallback callback=cb;
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<Map<String,Item>> genericTypeIndicator = new GenericTypeIndicator<Map<String,Item>>() {};
+                Map<String,Item> post = dataSnapshot.getValue(genericTypeIndicator);
+               List list2= new ArrayList<Item>();
+                if(post!=null) {
+                    for (Item i : post.values()) {
+                        Log.d("DBSupport", i.getDescription());
+                        list.add(i);
+                    }
+                }
+                Collections.sort(list);
+
+                // [START_EXCLUDE]
+                //list.add(post);
+                //   }
+
+
+                // [END_EXCLUDE]
+                //database.goOffline();
+                if(callback!=null) {
+
+                    callback.LoadCompleted(true);
+                    resultList=list2;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // [START_EXCLUDE]
+                // Toast.makeText(PostDetailActivity.this, "Failed to load post.",
+                //        Toast.LENGTH_SHORT).show();
+                // [END_EXCLUDE]
+            }
+        };
+
+        try {
+            DatabaseReference myRef = database.getReference("message/items/");
+            myRef.orderByChild("type").equalTo("eat").addValueEventListener(postListener);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public List getResultList() {
+        return resultList;
+    }
+
+    public void setResultList(List resultList) {
+        this.resultList = resultList;
+    }
+
+    private List resultList;
 }

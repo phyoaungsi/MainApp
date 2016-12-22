@@ -23,6 +23,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
@@ -35,7 +37,7 @@ public class MobileImageAdapter extends BaseAdapter {
     private int mNumColumns = 1;
     private Context mContext;
     private ImageFetcher mImageFetcher;
-
+    private List<Item> list;
     public Context getmContext() {
         return mContext;
     }
