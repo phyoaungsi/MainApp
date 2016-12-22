@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,12 +18,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import pas.com.mm.shoopingcart.database.model.Item;
+
 
 public class DbSupport {
     private static String TAG="DB";
@@ -128,6 +131,8 @@ public class DbSupport {
                      Log.d("DBSupport", i.getDescription());
                       list.add(i);
                   }
+                   Collections.sort(list);
+
                     // [START_EXCLUDE]
                    //list.add(post);
              //   }
@@ -153,7 +158,7 @@ public class DbSupport {
         };
         try {
             DatabaseReference myRef = database.getReference("message/items/");
-            myRef.addValueEventListener(postListener);
+            myRef.orderByChild("code").addValueEventListener(postListener);
         }catch(Exception e){
             e.printStackTrace();
         }
