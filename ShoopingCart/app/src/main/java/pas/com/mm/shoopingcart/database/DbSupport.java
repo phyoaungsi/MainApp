@@ -160,7 +160,7 @@ public class DbSupport {
         };
         try {
             DatabaseReference myRef = database.getReference("message/items/");
-            myRef.orderByChild("type").equalTo("eat").addValueEventListener(postListener);
+            myRef.addValueEventListener(postListener);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -229,19 +229,19 @@ public class DbSupport {
     {
         final Item r=new Item();
         final DBListenerCallback callback=cb;
-        ValueEventListener postListener = new ValueEventListener() {
+        ValueEventListener postListener1 = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<Map<String,Item>> genericTypeIndicator = new GenericTypeIndicator<Map<String,Item>>() {};
                 Map<String,Item> post = dataSnapshot.getValue(genericTypeIndicator);
-               List list2= new ArrayList<Item>();
+                List list2= new ArrayList<Item>();
                 if(post!=null) {
                     for (Item i : post.values()) {
-                        Log.d("DBSupport", i.getDescription());
-                        list.add(i);
+                        Log.d("DBSupport---", i.getDescription()+ "<-------------------------");
+                        list2.add(i);
                     }
                 }
-                Collections.sort(list);
+                Collections.sort(list2);
 
                 // [START_EXCLUDE]
                 //list.add(post);
@@ -251,9 +251,9 @@ public class DbSupport {
                 // [END_EXCLUDE]
                 //database.goOffline();
                 if(callback!=null) {
-
-                    callback.LoadCompleted(true);
                     resultList=list2;
+                    callback.LoadCompleted(true);
+
                 }
             }
 
@@ -269,8 +269,10 @@ public class DbSupport {
         };
 
         try {
-            DatabaseReference myRef = database.getReference("message/items/");
-            myRef.orderByChild("type").equalTo("eat").addValueEventListener(postListener);
+            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("message/items/");
+           // myRef.orderByChild("type").equalTo(type)
+
+            myRef.orderByChild("type").equalTo(type).addListenerForSingleValueEvent(postListener1);
         }catch(Exception e){
             e.printStackTrace();
         }

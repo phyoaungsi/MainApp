@@ -22,11 +22,14 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import pas.com.mm.shoopingcart.database.DBListenerCallback;
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.image.FavouritiesImageAdapter;
 import pas.com.mm.shoopingcart.image.MobileImageAdapter;
+import pas.com.mm.shoopingcart.image.PromotionImageGridAdapter;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 
@@ -54,6 +57,10 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
     private OnFragmentInteractionListener mListener;
     private ImageFetcher mImageFetcher;
     private GridView gridview;
+    private DbSupport dbSupport;
+    private DbSupport dao=new DbSupport();
+    private boolean dataLoaded=false;
+    private List<Item> list;
     public ImageGridFragment() {
         // Required empty public constructor
     }
@@ -111,17 +118,35 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
         if(panel==2)
         {
             imageAdapter=new FavouritiesImageAdapter(getActivity(),mImageFetcher);
+            gridview.setAdapter(imageAdapter);
         }
-        else if(panel==1)
+         if(panel==1)
+        {
+            dao.getItemsByType("eat",this);
+            /**
+                dbsupport.getItemsByType("EAT",this);
+
+                while(dataLoaded!=true){
+                    try {
+                        Log.d(this.getClass().getName(),"WAITING DATA");
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+               **/
+          //  imageAdapter=new PromotionImageGridAdapter(getActivity(),mImageFetcher,list);
+
+        }
+        else if(panel ==0)
         {
 
-            dbsupport.getItemsByType("eat",this);
+            dao.getItemsByType("drink",this);
+
+
+
         }
-        else if(panel ==2)
-        {
-            dbsupport.getItemsByType("drink",this);
-        }
-        gridview.setAdapter(imageAdapter);
+
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -185,8 +210,13 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
 
     @Override
     public void LoadCompleted(boolean b) {
+        dataLoaded=true;
+        list= dao.getResultList();
 
+        PromotionImageGridAdapter  imageAdapter=new PromotionImageGridAdapter(getActivity(),mImageFetcher,list);
+        gridview.setAdapter(imageAdapter);
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
