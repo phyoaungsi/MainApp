@@ -23,6 +23,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
@@ -33,9 +35,9 @@ import pas.com.mm.shoopingcart.util.ImageWorker;
  */
 public class MobileImageAdapter extends BaseAdapter {
     private int mNumColumns = 1;
-    private Context mContext;
+    protected Context mContext;
     private ImageFetcher mImageFetcher;
-
+    protected List<Item> list;
     public Context getmContext() {
         return mContext;
     }
@@ -47,6 +49,7 @@ public class MobileImageAdapter extends BaseAdapter {
     public MobileImageAdapter(Context c, ImageFetcher fetcher) {
         mContext = c;
         mImageFetcher=fetcher;
+        this.list=DbSupport.list;
     }
 
     @Override
@@ -58,7 +61,7 @@ public class MobileImageAdapter extends BaseAdapter {
 
         // Size + number of columns for top empty row
         //return Images.imageThumbUrls.length + mNumColumns;
-        return DbSupport.list.size();
+        return list.size();
     }
 
     public Object getItem(int position) {
@@ -120,7 +123,7 @@ public class MobileImageAdapter extends BaseAdapter {
           //  mImageFetcher.loadImage(Images.imageThumbUrls[position], imageView);
           //  mImageFetcher.loadImage(url, imageView,imageListener);
 
-            Log.i("test","getview***"+position);
+            Log.i("test","getview***"+position+" and length "+list.size());
         }
         String url="https://drive.google.com/uc?export=download&id=0B_9ZBXw3kTLIN01ibXRqUHV5Umc";
         url=getImageUrl(position);
@@ -149,18 +152,19 @@ public class MobileImageAdapter extends BaseAdapter {
 
     public String getImageDescription(int position)
     {
-        return DbSupport.list.get(position).getDescription();
+        Log.d("ADAPTER","Invalid Index?"+position);
+        return list.get(position).getDescription();
     }
 
     public String getPrice(int position)
     {
-        return DbSupport.list.get(position).getAmount().toString();
+        return list.get(position).getAmount().toString();
     }
 
     public String getDiscountAmount(int position)
     {
 
-        return DbSupport.list.get(position).getDiscount().toString();
+        return list.get(position).getDiscount().toString();
     }
 
     public int getNumColumns() {

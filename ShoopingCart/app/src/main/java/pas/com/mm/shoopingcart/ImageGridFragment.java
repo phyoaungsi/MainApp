@@ -22,10 +22,14 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
+import pas.com.mm.shoopingcart.database.DBListenerCallback;
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.image.FavouritiesImageAdapter;
 import pas.com.mm.shoopingcart.image.MobileImageAdapter;
+import pas.com.mm.shoopingcart.image.PromotionImageGridAdapter;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 
@@ -38,7 +42,7 @@ import pas.com.mm.shoopingcart.util.ImageFetcher;
  * Use the {@link ImageGridFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ImageGridFragment extends Fragment {
+public class ImageGridFragment extends Fragment implements DBListenerCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -53,6 +57,10 @@ public class ImageGridFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private ImageFetcher mImageFetcher;
     private GridView gridview;
+    private DbSupport dbSupport;
+    private DbSupport dao=new DbSupport();
+    private boolean dataLoaded=false;
+    private List<Item> list;
     public ImageGridFragment() {
         // Required empty public constructor
     }
@@ -102,7 +110,7 @@ public class ImageGridFragment extends Fragment {
         // Inflate the layout for this fragment
         final View v= inflater.inflate(R.layout.image_grid_fragment, container, false);
         final Context context=this.getContext();
-
+        DbSupport dbsupport=new DbSupport();
          gridview = (GridView) v.findViewById(R.id.gridview_cache);
         MobileImageAdapter  imageAdapter=new MobileImageAdapter(getActivity(),mImageFetcher);
         Bundle b= this.getArguments();
@@ -110,8 +118,35 @@ public class ImageGridFragment extends Fragment {
         if(panel==2)
         {
             imageAdapter=new FavouritiesImageAdapter(getActivity(),mImageFetcher);
+            gridview.setAdapter(imageAdapter);
         }
-        gridview.setAdapter(imageAdapter);
+         if(panel==1)
+        {
+            dao.getItemsByType("eat",this);
+            /**
+                dbsupport.getItemsByType("EAT",this);
+
+                while(dataLoaded!=true){
+                    try {
+                        Log.d(this.getClass().getName(),"WAITING DATA");
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+               **/
+          //  imageAdapter=new PromotionImageGridAdapter(getActivity(),mImageFetcher,list);
+
+        }
+        else if(panel ==0)
+        {
+
+            dao.getItemsByType("drink",this);
+
+
+
+        }
+
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -172,6 +207,16 @@ public class ImageGridFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    @Override
+    public void LoadCompleted(boolean b) {
+        dataLoaded=true;
+        list= dao.getResultList();
+
+        PromotionImageGridAdapter  imageAdapter=new PromotionImageGridAdapter(getActivity(),mImageFetcher,list);
+        gridview.setAdapter(imageAdapter);
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

@@ -24,6 +24,9 @@ public class Item implements Comparable<Item>{
 
     public String htmlDetail;
 
+
+
+    public String type;
     public Date getTimeOfPost() {
         return timeOfPost;
     }
@@ -119,6 +122,7 @@ public class Item implements Comparable<Item>{
         result.put("title", title);
         result.put("imgUrl", imgUrl);
         result.put("timeOfPost",timeOfPost);
+        result.put("type",type);
         return result;
     }
 
@@ -146,5 +150,11 @@ public class Item implements Comparable<Item>{
         return x;
 
     }
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
 }
