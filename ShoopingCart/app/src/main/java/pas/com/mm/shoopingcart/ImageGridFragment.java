@@ -122,7 +122,7 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
         }
          if(panel==1)
         {
-            dao.getItemsByType("eat",this);
+            dao.getItemsByType("new",this);
             /**
                 dbsupport.getItemsByType("EAT",this);
 
@@ -141,7 +141,7 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
         else if(panel ==0)
         {
 
-            dao.getItemsByType("drink",this);
+            dao.getItemsByType("promo",this);
 
 
 
