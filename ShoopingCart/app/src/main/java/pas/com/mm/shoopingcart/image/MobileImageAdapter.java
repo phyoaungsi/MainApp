@@ -27,6 +27,7 @@ import java.util.List;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
+import pas.com.mm.shoopingcart.util.FontUtil;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 import pas.com.mm.shoopingcart.util.ImageWorker;
 
@@ -86,11 +87,11 @@ public class MobileImageAdapter extends BaseAdapter {
 
 
         TextView textView = (TextView) gridView.findViewById(R.id.grid_caption);
-        textView.setText(getImageDescription( position));
+       FontUtil.setZawGyiText(mContext,textView,getImageDescription( position));
         TextView textViewPrice = (TextView) gridView.findViewById(R.id.grid_price);
         textViewPrice.setText(getPrice( position)+" "+getmContext().getResources().getString(R.string.currency));
 
-        if(DbSupport.list.get(position).getDiscount()>0 && DbSupport.list.get(position).getDiscount()<DbSupport.list.get(position).getAmount()) {
+        if(list.get(position).getDiscount()>0 && list.get(position).getDiscount()<list.get(position).getAmount()) {
             TextView t = (TextView) gridView.findViewById(R.id.usualPrice);
             textViewPrice.setText(getDiscountAmount(position) + " " + getmContext().getResources().getString(R.string.currency));
             t.setText(getPrice(position) + " " + getmContext().getResources().getString(R.string.currency));
@@ -146,14 +147,14 @@ public class MobileImageAdapter extends BaseAdapter {
 
     public String getImageUrl(int position)
     {
-       String[] urls= DbSupport.list.get(position).imgUrl.split(" ");
+       String[] urls= list.get(position).imgUrl.split(" ");
        return urls[0];
     }
 
     public String getImageDescription(int position)
     {
         Log.d("ADAPTER","Invalid Index?"+position);
-        return list.get(position).getDescription();
+        return list.get(position).getTitle();
     }
 
     public String getPrice(int position)
