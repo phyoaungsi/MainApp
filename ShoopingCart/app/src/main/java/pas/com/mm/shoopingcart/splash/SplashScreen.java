@@ -23,6 +23,7 @@ import pas.com.mm.shoopingcart.ItemGridView;
 import pas.com.mm.shoopingcart.Main2Activity;
 import pas.com.mm.shoopingcart.MainActivity;
 import pas.com.mm.shoopingcart.R;
+import pas.com.mm.shoopingcart.common.ApplicationConfig;
 import pas.com.mm.shoopingcart.database.DBListenerCallback;
 import pas.com.mm.shoopingcart.database.DbSupport;
 
@@ -151,6 +152,9 @@ public class SplashScreen extends AppCompatActivity implements DBListenerCallbac
      //   }, 3000);
 
       //  findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+        ApplicationConfig config=new ApplicationConfig();
+        config.init();
         DbSupport db=new DbSupport();
         db.loadItemList(this);
         checkConnection();
