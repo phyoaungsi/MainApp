@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import pas.com.mm.shoopingcart.activities.ContactActivity;
 import pas.com.mm.shoopingcart.activities.OpenNotification;
+import pas.com.mm.shoopingcart.common.ApplicationConfig;
 
 public class ItemGridView extends AppCompatActivity implements ImageGridFragment.OnFragmentInteractionListener,DetailFragment.OnFragmentInteractionListener {
     private static final String TAG = "ImageGridActivity";
@@ -34,14 +35,7 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
       Log.i("ItemGridVIEW","oNCREATE----");
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
 
 
         // ViewPager and its adapters use support library
@@ -72,6 +66,10 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem v= (MenuItem)menu.findItem(R.id.action_favorite);
+       if(ApplicationConfig.isPromotionOn.equals("false")) {
+            v.setVisible(false);
+        }
         return true;
     }
 
