@@ -83,7 +83,7 @@ public class MobileImageAdapter extends BaseAdapter {
         // if it's not recycled, initialize some attributes
 
         // gridView = new View(mContext);
-        gridView = inflater.inflate(R.layout.grid_item, null);
+        gridView = getLayout(inflater);
 
 
         TextView textView = (TextView) gridView.findViewById(R.id.grid_caption);
@@ -133,14 +133,20 @@ public class MobileImageAdapter extends BaseAdapter {
         imageView.setVisibility(View.VISIBLE);
         Picasso.with(this.getmContext())
                 .load(url)
-                .resize(param.width, param.height)
-                .centerCrop()
+               .resize(400, 400)
+                .centerCrop().transform(new RoundedCornersTransform())
                 .into(imageView);
 
       //  mImageFetcher.loadImage(Images.imageThumbUrls[position - mNumColumns], imageView);
        // imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
      //   imageView.setPadding(0, 0, 0, 0);
 
+        return gridView;
+    }
+
+    protected View getLayout(LayoutInflater inflater) {
+        View gridView;
+        gridView = inflater.inflate(R.layout.grid_item, null);
         return gridView;
     }
 

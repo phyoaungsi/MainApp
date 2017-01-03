@@ -55,6 +55,7 @@ import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.fragments.DescriptionFragment;
 import pas.com.mm.shoopingcart.image.ZoomImageView;
+import pas.com.mm.shoopingcart.util.FontUtil;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 import pas.com.mm.shoopingcart.util.ImageWorker;
@@ -150,6 +151,7 @@ public class DetailFragment extends Fragment {
         final View v= inflater.inflate(R.layout.activity_detail, container, false);
         Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
          toolbar.setTitle(this.getItem().getTitle());
+        FontUtil.setText(this.getContext(),toolbar,false);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

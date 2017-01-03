@@ -2,6 +2,7 @@ package pas.com.mm.shoopingcart;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.DropBoxManager;
@@ -32,6 +33,8 @@ import pas.com.mm.shoopingcart.image.MobileImageAdapter;
 import pas.com.mm.shoopingcart.image.PromotionImageGridAdapter;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
+import pas.com.mm.shoopingcart.util.PreferenceUtil;
+import pas.com.mm.shoopingcart.util.Sorter;
 
 
 /**
@@ -61,6 +64,7 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
     private DbSupport dao=new DbSupport();
     private boolean dataLoaded=false;
     private List<Item> list;
+    SharedPreferences pf=null;
     public ImageGridFragment() {
         // Required empty public constructor
     }
@@ -94,7 +98,7 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
         mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
         mImageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_spacing);
 
-
+        pf=getActivity().getPreferences(Context.MODE_PRIVATE);
         ImageCache.ImageCacheParams cacheParams = new ImageCache.ImageCacheParams(getActivity(), IMAGE_CACHE_DIR);
         cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
         Log.i("ImagGrid","actifity aniitialized--------------------");
@@ -159,6 +163,8 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
                String objStr= gson.toJson(item);
                 intent.putExtra("DETAIL_ITEM",objStr);
                 //intent.putExtra("POSITION", id);
+
+                PreferenceUtil.saveLastAccessItem(pf,item.getType(),item.getCode());
                 startActivity(intent);
             //  getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new DetailFragment()).commit();
 
@@ -212,9 +218,12 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
     public void LoadCompleted(boolean b) {
         dataLoaded=true;
         list= dao.getResultList();
+        if(list.size()>0) {
+            String code = PreferenceUtil.getLastAccessItem(pf, list.get(0).getType());
 
-        PromotionImageGridAdapter  imageAdapter=new PromotionImageGridAdapter(getActivity(),mImageFetcher,list);
-        gridview.setAdapter(imageAdapter);
+            PromotionImageGridAdapter imageAdapter = new PromotionImageGridAdapter(getActivity(), mImageFetcher, Sorter.setRecentFirst(list,code));
+            gridview.setAdapter(imageAdapter);
+        }
     }
 
 

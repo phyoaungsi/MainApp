@@ -9,7 +9,7 @@
     <string name="price">Hello blank fragment</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">  </string>
-     <string name="btnDetail">More</string>
+    <string name="btnDetail">More</string>
 
     <string name="title_activity_grid_view">တော်ဝင်ပန်း</string>
 
@@ -61,5 +61,6 @@ Yangon, Myanmar</string>
     <string name="prompt3">ကို နှိပ်၍ဝယ်ယူ နိုင်ပါသည်</string>
 
     <string name="currency">ကျပ်</string>
+    <string name="title_activity_save_item">SaveItemActivity</string>
 
 </resources>

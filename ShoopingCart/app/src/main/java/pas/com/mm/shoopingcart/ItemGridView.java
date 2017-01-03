@@ -1,5 +1,6 @@
 package pas.com.mm.shoopingcart;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,26 +19,46 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import pas.com.mm.shoopingcart.activities.ContactActivity;
 import pas.com.mm.shoopingcart.activities.OpenNotification;
+import pas.com.mm.shoopingcart.activities.saveitem.SaveItemActivity;
 import pas.com.mm.shoopingcart.common.ApplicationConfig;
+import pas.com.mm.shoopingcart.util.FontUtil;
 
 public class ItemGridView extends AppCompatActivity implements ImageGridFragment.OnFragmentInteractionListener,DetailFragment.OnFragmentInteractionListener {
     private static final String TAG = "ImageGridActivity";
     DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
     ViewPager mViewPager;
+    Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_view);
+        mContext=this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        FontUtil.setText(this.getBaseContext(),toolbar,true);
       Log.i("ItemGridVIEW","oNCREATE----");
-
-
-
+        ApplicationConfig config=new ApplicationConfig();
+        config.init();
+     String promotion=ApplicationConfig.isPromotionOn;
+        Log.i("ItemGridView","Promotion="+promotion);
+      if(promotion.equals("true")) {
+          ImageView imv = (ImageView) findViewById(R.id.banner);
+          imv.setVisibility(View.VISIBLE);
+          imv.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(mContext, OpenNotification.class);
+                  startActivity(intent);
+              }
+          });
+      }
         // ViewPager and its adapters use support library
         // fragments, so use getSupportFragmentManager.
         mDemoCollectionPagerAdapter =
@@ -93,7 +114,7 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
 
         if (id == R.id.action_favorite) {
 
-            Intent intent = new Intent(this, OpenNotification.class);intent.putExtra("POSITION", id);
+            Intent intent = new Intent(this, SaveItemActivity.class);intent.putExtra("POSITION", id);
             startActivity(intent);
             return true;
         }
