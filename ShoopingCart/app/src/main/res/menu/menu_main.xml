@@ -15,9 +15,10 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_favorite"
-        android:icon="@drawable/ic_favorite_black_48dp"
-        android:title="@string/action_favorite"
-        app:showAsAction="ifRoom"/>
+        android:actionLayout="@layout/icon_layout"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="order"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_contact"

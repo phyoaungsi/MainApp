@@ -805,7 +805,7 @@ public class DetailFragment extends Fragment {
                             mCurrentAnimator = null;
                         }
                     });
-                    this.getActivity().getIntent().putExtra("ZOOMED","n");
+                    getActivity().getIntent().putExtra("ZOOMED","n");
                     set.start();
                     mCurrentAnimator = set;
                 }

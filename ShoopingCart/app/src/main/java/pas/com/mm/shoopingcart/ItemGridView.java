@@ -1,6 +1,9 @@
 package pas.com.mm.shoopingcart;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,17 +16,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import pas.com.mm.shoopingcart.activities.ContactActivity;
 import pas.com.mm.shoopingcart.activities.OpenNotification;
+import pas.com.mm.shoopingcart.fragments.orderconfirm.OrderConfirmPopupFragment;
+import pas.com.mm.shoopingcart.fragments.orderlist.OrderListFragment;
 
-public class ItemGridView extends AppCompatActivity implements ImageGridFragment.OnFragmentInteractionListener,DetailFragment.OnFragmentInteractionListener {
+public class ItemGridView extends AppCompatActivity implements ImageGridFragment.OnFragmentInteractionListener,DetailFragment.OnFragmentInteractionListener,OrderListFragment.OnFragmentInteractionListener,OrderConfirmPopupFragment.OnFragmentInteractionListener {
     private static final String TAG = "ImageGridActivity";
     DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
     ViewPager mViewPager;
@@ -32,16 +40,12 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       setSupportActionBar(toolbar);
+        MenuItem menu=(MenuItem)toolbar.findViewById(R.id.sign_in);
+      //  menu.setTitle("0.00");
       Log.i("ItemGridVIEW","oNCREATE----");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
 
 
         // ViewPager and its adapters use support library
@@ -68,11 +72,16 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
         //you can leave it empty
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+         menu.getItem(0).setTitle(OrderListFragment.getTotalText());
+      //  View count = menu.getItem(2).getActionView();//.findItem(R.id.action_favorite).getActionView();
+        menu.findItem(R.id.action_favorite).setIcon(buildCounterDrawable(9, R.drawable.common_google_signin_btn_icon_light_normal));
+        return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override
@@ -142,5 +151,35 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
         }
     }
 
+    private Drawable buildCounterDrawable(int count, int backgroundImageId) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.icon_layout, null);
+        view.setBackgroundResource(backgroundImageId);
+
+        if (count == 0) {
+            View counterTextPanel = view.findViewById(R.id.counterValuePanel);
+            counterTextPanel.setVisibility(View.GONE);
+        } else {
+            TextView textView = (TextView) view.findViewById(R.id.count);
+            textView.setText("" + count);
+        }
+
+        view.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+
+        view.setDrawingCacheEnabled(true);
+        view.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+        view.setDrawingCacheEnabled(false);
+
+        return new BitmapDrawable(getResources(), bitmap);
+    }
+
+    private void doIncrease() {
+        //count=9;
+        invalidateOptionsMenu();
+    }
 
 }

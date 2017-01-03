@@ -9,7 +9,7 @@
     <string name="price">Hello blank fragment</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">  </string>
-     <string name="btnDetail">More</string>
+    <string name="btnDetail">More</string>
 
     <string name="title_activity_grid_view">{MainTitle}</string>
 
@@ -54,5 +54,9 @@
     <string name="title_tab2">Tab 2}</string>
     <string name="title_tab3">Tab 3}</string>
     <string name="prompt1">If you want to buy tab</string>
-    <string name="currency">$</string>
+    <string name="currency">ကျပ်</string>
+    <string name="thankyou">Thank You</string>
+    <string name="submit_order">Submit Order</string>
+    <string name="contine">ဆက်ရွေးမည်...</string>
+    <string name="lbl_total">စုစုပေါင်း</string>
 </resources>

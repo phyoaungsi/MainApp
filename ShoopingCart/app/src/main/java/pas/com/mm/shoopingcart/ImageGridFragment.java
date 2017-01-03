@@ -11,6 +11,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -24,6 +27,8 @@ import com.google.gson.Gson;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
+import pas.com.mm.shoopingcart.fragments.DescriptionFragment;
+import pas.com.mm.shoopingcart.fragments.orderlist.OrderListFragment;
 import pas.com.mm.shoopingcart.image.FavouritiesImageAdapter;
 import pas.com.mm.shoopingcart.image.MobileImageAdapter;
 import pas.com.mm.shoopingcart.util.ImageCache;
@@ -78,6 +83,7 @@ public class ImageGridFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -118,15 +124,40 @@ public class ImageGridFragment extends Fragment {
                                     int position, long id) {
              //   Toast.makeText(getActivity(), "" + position,
                //         Toast.LENGTH_SHORT).show();
-               Intent intent = new Intent(getActivity(), DetailActivity.class);
+
                Item item= DbSupport.list.get(position);
                 Gson gson=new Gson();
                String objStr= gson.toJson(item);
-                intent.putExtra("DETAIL_ITEM",objStr);
-                //intent.putExtra("POSITION", id);
-                startActivity(intent);
-            //  getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new DetailFragment()).commit();
 
+
+                Bundle args = new Bundle();
+                args.putString("item",objStr);
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                OrderListFragment newFragment = new OrderListFragment();
+                newFragment.setArguments(args);
+                ft.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up);
+                Fragment f = getFragmentManager().findFragmentByTag("ORDERS");
+                if(f==null || !f.isVisible()) {
+
+                    ft.replace(R.id.wrapper2, newFragment, "ORDERS");
+                    ft.addToBackStack("ORDERS");
+// Start the animated transition.
+
+                    ft.commit();
+                }
+                else if(f!=null && f.isVisible()) {
+                    ft.setCustomAnimations(R.anim.exit_slide_out_up, R.anim.exit_slide_in_up);
+
+                    ft.remove(f);
+
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+
+
+                    ft.commit();
+                    getFragmentManager().popBackStack();
+                }
             }
         });
 

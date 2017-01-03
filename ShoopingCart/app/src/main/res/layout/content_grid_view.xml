@@ -13,6 +13,10 @@
     tools:showIn="@layout/activity_grid_view"
     android:background="#f3e5f5"
     android:id="@+id/container">
+
+
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -44,4 +48,19 @@
         android:layout_height="match_parent" />
 -->
   </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/wrapper2">
+
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/popupWrapper"
+        android:foregroundGravity="center_vertical|center_horizontal"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true">
+
+    </FrameLayout>
 </RelativeLayout>
