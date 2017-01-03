@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.ArraySet;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.google.gson.Gson;
 
@@ -15,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import pas.com.mm.shoopingcart.R;
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
@@ -64,5 +67,12 @@ public class FavouritiesImageAdapter extends MobileImageAdapter {
         Gson json=new Gson();
         Item obj = json.fromJson(jsonString, Item.class);
         return obj.getDescription();
+    }
+
+    @Override
+    protected View getLayout(LayoutInflater inflater) {
+        View gridView;
+        gridView = inflater.inflate(R.layout.grid_item_horizontal, null);
+        return gridView;
     }
 }

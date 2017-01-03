@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 
 import com.google.android.gms.appindexing.Action;
@@ -100,5 +101,13 @@ public class ContactActivity extends CommonActivity implements ContactFragment.O
         );
 //        AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+       // getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 }

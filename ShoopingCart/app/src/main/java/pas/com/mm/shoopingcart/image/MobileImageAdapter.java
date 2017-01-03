@@ -23,8 +23,11 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
+import pas.com.mm.shoopingcart.util.FontUtil;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 import pas.com.mm.shoopingcart.util.ImageWorker;
 
@@ -33,9 +36,9 @@ import pas.com.mm.shoopingcart.util.ImageWorker;
  */
 public class MobileImageAdapter extends BaseAdapter {
     private int mNumColumns = 1;
-    private Context mContext;
+    protected Context mContext;
     private ImageFetcher mImageFetcher;
-
+    protected List<Item> list;
     public Context getmContext() {
         return mContext;
     }
@@ -47,6 +50,7 @@ public class MobileImageAdapter extends BaseAdapter {
     public MobileImageAdapter(Context c, ImageFetcher fetcher) {
         mContext = c;
         mImageFetcher=fetcher;
+        this.list=DbSupport.list;
     }
 
     @Override
@@ -58,7 +62,7 @@ public class MobileImageAdapter extends BaseAdapter {
 
         // Size + number of columns for top empty row
         //return Images.imageThumbUrls.length + mNumColumns;
-        return DbSupport.list.size();
+        return list.size();
     }
 
     public Object getItem(int position) {
@@ -79,15 +83,15 @@ public class MobileImageAdapter extends BaseAdapter {
         // if it's not recycled, initialize some attributes
 
         // gridView = new View(mContext);
-        gridView = inflater.inflate(R.layout.grid_item, null);
+        gridView = getLayout(inflater);
 
 
         TextView textView = (TextView) gridView.findViewById(R.id.grid_caption);
-        textView.setText(getImageDescription( position));
+       FontUtil.setZawGyiText(mContext,textView,getImageDescription( position));
         TextView textViewPrice = (TextView) gridView.findViewById(R.id.grid_price);
         textViewPrice.setText(getPrice( position)+" "+getmContext().getResources().getString(R.string.currency));
 
-        if(DbSupport.list.get(position).getDiscount()>0 && DbSupport.list.get(position).getDiscount()<DbSupport.list.get(position).getAmount()) {
+        if(list.get(position).getDiscount()>0 && list.get(position).getDiscount()<list.get(position).getAmount()) {
             TextView t = (TextView) gridView.findViewById(R.id.usualPrice);
             textViewPrice.setText(getDiscountAmount(position) + " " + getmContext().getResources().getString(R.string.currency));
             t.setText(getPrice(position) + " " + getmContext().getResources().getString(R.string.currency));
@@ -120,7 +124,7 @@ public class MobileImageAdapter extends BaseAdapter {
           //  mImageFetcher.loadImage(Images.imageThumbUrls[position], imageView);
           //  mImageFetcher.loadImage(url, imageView,imageListener);
 
-            Log.i("test","getview***"+position);
+            Log.i("test","getview***"+position+" and length "+list.size());
         }
         String url="https://drive.google.com/uc?export=download&id=0B_9ZBXw3kTLIN01ibXRqUHV5Umc";
         url=getImageUrl(position);
@@ -129,8 +133,8 @@ public class MobileImageAdapter extends BaseAdapter {
         imageView.setVisibility(View.VISIBLE);
         Picasso.with(this.getmContext())
                 .load(url)
-                .resize(param.width, param.height)
-                .centerCrop()
+               .resize(400, 400)
+                .centerCrop().transform(new RoundedCornersTransform())
                 .into(imageView);
 
       //  mImageFetcher.loadImage(Images.imageThumbUrls[position - mNumColumns], imageView);
@@ -140,27 +144,34 @@ public class MobileImageAdapter extends BaseAdapter {
         return gridView;
     }
 
+    protected View getLayout(LayoutInflater inflater) {
+        View gridView;
+        gridView = inflater.inflate(R.layout.grid_item, null);
+        return gridView;
+    }
+
 
     public String getImageUrl(int position)
     {
-       String[] urls= DbSupport.list.get(position).imgUrl.split(" ");
+       String[] urls= list.get(position).imgUrl.split(" ");
        return urls[0];
     }
 
     public String getImageDescription(int position)
     {
-        return DbSupport.list.get(position).getDescription();
+        Log.d("ADAPTER","Invalid Index?"+position);
+        return list.get(position).getTitle();
     }
 
     public String getPrice(int position)
     {
-        return DbSupport.list.get(position).getAmount().toString();
+        return list.get(position).getAmount().toString();
     }
 
     public String getDiscountAmount(int position)
     {
 
-        return DbSupport.list.get(position).getDiscount().toString();
+        return list.get(position).getDiscount().toString();
     }
 
     public int getNumColumns() {

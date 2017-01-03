@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,12 +18,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import pas.com.mm.shoopingcart.database.model.Item;
+
 
 public class DbSupport {
     private static String TAG="DB";
@@ -104,6 +107,7 @@ public class DbSupport {
     {
       try {
           database.setPersistenceEnabled(true);
+
       }catch(Exception e)
         {
             e.printStackTrace();
@@ -123,11 +127,14 @@ public class DbSupport {
                 GenericTypeIndicator<Map<String,Item>> genericTypeIndicator = new GenericTypeIndicator<Map<String,Item>>() {};
                     Map<String,Item> post = dataSnapshot.getValue(genericTypeIndicator);
                   list= new ArrayList<Item>();
-                  for(Item i:post.values())
-                  {
-                     Log.d("DBSupport", i.getDescription());
-                      list.add(i);
-                  }
+                if(post!=null) {
+                    for (Item i : post.values()) {
+                        Log.d("DBSupport", i.getDescription());
+                        list.add(i);
+                    }
+                }
+                   Collections.sort(list);
+
                     // [START_EXCLUDE]
                    //list.add(post);
              //   }
@@ -168,7 +175,6 @@ public class DbSupport {
         this.item = item;
     }
 
-    public static Item item;
     public  Item getItemById(String id,DBListenerCallback cb)
     {
         DatabaseReference myRef = database.getReference("message/items/"+id.trim());
@@ -211,4 +217,75 @@ public class DbSupport {
         return r;
     }
 
+
+
+
+    public static Item item;
+
+
+
+
+    public  void getItemsByType(String type,DBListenerCallback cb)
+    {
+        final Item r=new Item();
+        final DBListenerCallback callback=cb;
+        ValueEventListener postListener1 = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<Map<String,Item>> genericTypeIndicator = new GenericTypeIndicator<Map<String,Item>>() {};
+                Map<String,Item> post = dataSnapshot.getValue(genericTypeIndicator);
+                List list2= new ArrayList<Item>();
+                if(post!=null) {
+                    for (Item i : post.values()) {
+                        Log.d("DBSupport---", i.getDescription()+ "<-------------------------");
+                        list2.add(i);
+                    }
+                }
+                Collections.sort(list2);
+
+                // [START_EXCLUDE]
+                //list.add(post);
+                //   }
+
+
+                // [END_EXCLUDE]
+                //database.goOffline();
+                if(callback!=null) {
+                    resultList=list2;
+                    callback.LoadCompleted(true);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // [START_EXCLUDE]
+                // Toast.makeText(PostDetailActivity.this, "Failed to load post.",
+                //        Toast.LENGTH_SHORT).show();
+                // [END_EXCLUDE]
+            }
+        };
+
+        try {
+            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("message/items/");
+           // myRef.orderByChild("type").equalTo(type)
+
+            myRef.orderByChild("type").equalTo(type).addListenerForSingleValueEvent(postListener1);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public List getResultList() {
+        return resultList;
+    }
+
+    public void setResultList(List resultList) {
+        this.resultList = resultList;
+    }
+
+    private List resultList;
 }

@@ -2,6 +2,7 @@ package pas.com.mm.shoopingcart;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.DropBoxManager;
@@ -22,12 +23,18 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
+import pas.com.mm.shoopingcart.database.DBListenerCallback;
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.image.FavouritiesImageAdapter;
 import pas.com.mm.shoopingcart.image.MobileImageAdapter;
+import pas.com.mm.shoopingcart.image.PromotionImageGridAdapter;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
+import pas.com.mm.shoopingcart.util.PreferenceUtil;
+import pas.com.mm.shoopingcart.util.Sorter;
 
 
 /**
@@ -38,7 +45,7 @@ import pas.com.mm.shoopingcart.util.ImageFetcher;
  * Use the {@link ImageGridFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ImageGridFragment extends Fragment {
+public class ImageGridFragment extends Fragment implements DBListenerCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -53,6 +60,11 @@ public class ImageGridFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private ImageFetcher mImageFetcher;
     private GridView gridview;
+    private DbSupport dbSupport;
+    private DbSupport dao=new DbSupport();
+    private boolean dataLoaded=false;
+    private List<Item> list;
+    SharedPreferences pf=null;
     public ImageGridFragment() {
         // Required empty public constructor
     }
@@ -86,7 +98,7 @@ public class ImageGridFragment extends Fragment {
         mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
         mImageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_spacing);
 
-
+        pf=getActivity().getPreferences(Context.MODE_PRIVATE);
         ImageCache.ImageCacheParams cacheParams = new ImageCache.ImageCacheParams(getActivity(), IMAGE_CACHE_DIR);
         cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
         Log.i("ImagGrid","actifity aniitialized--------------------");
@@ -102,7 +114,7 @@ public class ImageGridFragment extends Fragment {
         // Inflate the layout for this fragment
         final View v= inflater.inflate(R.layout.image_grid_fragment, container, false);
         final Context context=this.getContext();
-
+        DbSupport dbsupport=new DbSupport();
          gridview = (GridView) v.findViewById(R.id.gridview_cache);
         MobileImageAdapter  imageAdapter=new MobileImageAdapter(getActivity(),mImageFetcher);
         Bundle b= this.getArguments();
@@ -110,8 +122,35 @@ public class ImageGridFragment extends Fragment {
         if(panel==2)
         {
             imageAdapter=new FavouritiesImageAdapter(getActivity(),mImageFetcher);
+            gridview.setAdapter(imageAdapter);
         }
-        gridview.setAdapter(imageAdapter);
+         if(panel==1)
+        {
+            dao.getItemsByType("new",this);
+            /**
+                dbsupport.getItemsByType("EAT",this);
+
+                while(dataLoaded!=true){
+                    try {
+                        Log.d(this.getClass().getName(),"WAITING DATA");
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+               **/
+          //  imageAdapter=new PromotionImageGridAdapter(getActivity(),mImageFetcher,list);
+
+        }
+        else if(panel ==0)
+        {
+
+            dao.getItemsByType("promo",this);
+
+
+
+        }
+
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -124,6 +163,8 @@ public class ImageGridFragment extends Fragment {
                String objStr= gson.toJson(item);
                 intent.putExtra("DETAIL_ITEM",objStr);
                 //intent.putExtra("POSITION", id);
+
+                PreferenceUtil.saveLastAccessItem(pf,item.getType(),item.getCode());
                 startActivity(intent);
             //  getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new DetailFragment()).commit();
 
@@ -172,6 +213,19 @@ public class ImageGridFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    @Override
+    public void LoadCompleted(boolean b) {
+        dataLoaded=true;
+        list= dao.getResultList();
+        if(list.size()>0) {
+            String code = PreferenceUtil.getLastAccessItem(pf, list.get(0).getType());
+
+            PromotionImageGridAdapter imageAdapter = new PromotionImageGridAdapter(getActivity(), mImageFetcher, Sorter.setRecentFirst(list,code));
+            gridview.setAdapter(imageAdapter);
+        }
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

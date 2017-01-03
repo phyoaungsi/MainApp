@@ -56,7 +56,8 @@
 
                     android:text="Call"
                     android:layout_width="70dp"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:layout_marginTop="2dp" />
 
 
                 <TextView
@@ -80,9 +81,9 @@
                     android:id="@+id/btnChangeImage"
                     android:background="@android:color/holo_green_light"
                     android:text="Message"
-                    android:layout_width="60dp"
                     android:layout_marginTop="2dp"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:layout_width="70dp" />
                 <TextView
                     android:text="@string/prompt3"
                     android:layout_width="wrap_content"

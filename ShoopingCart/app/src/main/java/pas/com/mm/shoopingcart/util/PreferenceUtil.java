@@ -1,5 +1,8 @@
 package pas.com.mm.shoopingcart.util;
 
+import android.content.SharedPreferences;
+
+import pas.com.mm.shoopingcart.R;
 import pas.com.mm.shoopingcart.database.model.NotificationModel;
 
 /**
@@ -19,4 +22,21 @@ public class PreferenceUtil {
     {
             return null;
     }
+
+    public static void saveLastAccessItem(SharedPreferences sharedPref,String key,String value)
+    {
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public static String getLastAccessItem(SharedPreferences sharedPref,String key)
+    {
+
+
+       String defaultValue="not_found";
+        return sharedPref.getString(key, defaultValue);
+    }
+
 }

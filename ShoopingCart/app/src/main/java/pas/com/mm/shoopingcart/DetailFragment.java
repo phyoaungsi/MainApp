@@ -55,6 +55,7 @@ import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.fragments.DescriptionFragment;
 import pas.com.mm.shoopingcart.image.ZoomImageView;
+import pas.com.mm.shoopingcart.util.FontUtil;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 import pas.com.mm.shoopingcart.util.ImageWorker;
@@ -75,7 +76,6 @@ public class DetailFragment extends Fragment {
     private Context context;
     private String[] mPlanetTitles;
     public static final String PREFS_NAME = "PAS";
-
     private Item item;
     // private DrawerLayout mDrawerLayout;
     // private ListView mDrawerList;
@@ -151,6 +151,7 @@ public class DetailFragment extends Fragment {
         final View v= inflater.inflate(R.layout.activity_detail, container, false);
         Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
          toolbar.setTitle(this.getItem().getTitle());
+        FontUtil.setText(this.getContext(),toolbar,false);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -221,7 +222,7 @@ public class DetailFragment extends Fragment {
                 {
                     try
                     {
-                        Uri uri = Uri.parse("smsto:09451918188");
+                        Uri uri = Uri.parse("smsto:09451918138");
                         Intent share = new Intent(android.content.Intent.ACTION_SEND,uri);
                         share.setType("text/plain");
                         share.putExtra(Intent.EXTRA_TEXT, "Your text to share");
@@ -240,7 +241,7 @@ public class DetailFragment extends Fragment {
 
             public void onClick(View v) {
 
-                String number = "tel:09451918188";
+                String number = "tel:09451913138";
                 Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
                 startActivity(callIntent);
             }
@@ -766,6 +767,7 @@ public class DetailFragment extends Fragment {
                 }
             });
             set.start();
+            this.getActivity().getIntent().putExtra("ZOOMED","y");
            mCurrentAnimator = set;
 
             // Upon clicking the zoomed-in image, it should zoom back down to the original bounds
@@ -805,6 +807,9 @@ public class DetailFragment extends Fragment {
                             mCurrentAnimator = null;
                         }
                     });
+
+                    getActivity().getIntent().putExtra("ZOOMED","n");
+
                     set.start();
                     mCurrentAnimator = set;
                 }
