@@ -269,17 +269,29 @@ var editButton = postElement.getElementsByClassName('mdl-button')[0];
 			var titleInput = document.getElementById('edit-post-title');
 			var code = document.getElementById('edit-post-code');
 			var type = document.getElementById('edit-post-cat');
-			var desc = document.getElementById('edit-post-desc');
-			var amount = document.getElementById('edit-post-amount');
+			//var desc = document.getElementById('edit-post-desc');
+			var amountInput = document.getElementById('edit-post-amount');
 			var imageUrl = document.getElementById('edit-post-imageUrl');
 			
 				 titleInput.value  = data.val().title;
 				code.value = data.val().code;
-				type.value  = data.val().type;
-				desc.value  = data.val().description;
-				amount.value  = data.val().amount;
+				//type.value  = data.val().type;
+				var type_=data.val().type;
+				var amount0=data.val().amount;
+				//desc.value  = data.val().description;
+				amountInput.value  = data.val().amount+"";
 				imageUrl.value  = data.val().imgUrl;
 				keyHidden.value=data.key;
+				if(type_=="promo"){
+					$("#option2edit").attr('checked', 'checked');
+					}
+				else if(type_=="new"){
+					$("#option3edit").attr('checked', 'checked');
+					}
+				else if(type_=="regular"){
+					$("#option1edit").attr('checked', 'checked');
+					}
+				
           
 		  });
 		  document.getElementById('add').style.display='none';
