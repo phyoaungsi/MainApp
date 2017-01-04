@@ -92,7 +92,7 @@ function writeNewPost(uid, username, picture, title, body,desc,amount,code,type,
 
 			  // Write the new post's data simultaneously in the posts list and the user's post list.
 			  var updates = {};
-			  updates['/posts/' + newPostKey] = postData;
+			  updates['/message/items/' + newPostKey] = postData;
 			  updates['/user-posts/' + uid + '/' + newPostKey] = postData;
 
 			  firebase.database().ref().update(updates);
@@ -245,7 +245,7 @@ var editButton = postElement.getElementsByClassName('mdl-button')[0];
 
   // Bind starring action.
   var onStarClicked = function() {
-    var globalPostRef = firebase.database().ref('/posts/' + postId);
+    var globalPostRef = firebase.database().ref('/message/items/' + postId);
     var userPostRef = firebase.database().ref('/user-posts/' + authorId + '/' + postId);
     toggleStar(globalPostRef, uid);
     toggleStar(userPostRef, uid);
@@ -254,7 +254,7 @@ var editButton = postElement.getElementsByClassName('mdl-button')[0];
   star.onclick = onStarClicked;
 
   var onStarClicked = function() {
-    var globalPostRef = firebase.database().ref('/posts/' + postId);
+    var globalPostRef = firebase.database().ref('/message/items/' + postId);
     var userPostRef = firebase.database().ref('/user-posts/' + authorId + '/' + postId);
     toggleStar(globalPostRef, uid);
     toggleStar(userPostRef, uid);
@@ -262,7 +262,7 @@ var editButton = postElement.getElementsByClassName('mdl-button')[0];
   editButton.onclick = function() {
     showSection(updatePost);
 	
-	 var getSinglePostRef = firebase.database().ref('/posts/'+postId);
+	 var getSinglePostRef = firebase.database().ref('/message/items/'+postId);
 	
 	 getSinglePostRef.once('value').then(function(data) {
 				  var messageInput = document.getElementById('edit-post-message');
@@ -359,7 +359,7 @@ function startDatabaseQueries() {
   var topUserPostsRef = firebase.database().ref('user-posts/' + myUserId).orderByChild('starCount');
   // [END my_top_posts_query]
   // [START recent_posts_query]
-  var recentPostsRef = firebase.database().ref('posts').limitToLast(100);
+  var recentPostsRef = firebase.database().ref('message/items/').limitToLast(100);
   // [END recent_posts_query]
   var userPostsRef = firebase.database().ref('user-posts/' + myUserId);
 
@@ -535,15 +535,15 @@ window.addEventListener('load', function() {
     var text = messageInput.value;
     var title = titleInput.value;
 	var code_=code.value;
-	var desc_=desc.value;
+	var desc_=titleInput.value;
 	var type_=$('input[name=rtype]:checked').val();
-	var amount=Number($("#discount-price").val());
-	if(type_=="promo" && (amount==0)){
+	var discount=Number($("#discount-price").val());
+	if(type_=="promo" && (discount==0)){
 		
 		alert("Enter promotion amount");
 		return;
 	}
-	var amount_=amount.value;
+	var amount_=parseFloat(amount.value);
 	var imgUrl=imageUrl.value;
     if (text && title) {
       newPostForCurrentUser(title, text,desc_,amount_,code_,type_,imgUrl).then(function() {
@@ -562,7 +562,7 @@ window.addEventListener('load', function() {
   var r = confirm("Are you sure?");
     if (r == true) {
         var id=keyHidden.value;
-		var getSinglePostRef = firebase.database().ref('/posts/');
+		var getSinglePostRef = firebase.database().ref('/message/items/');
 		getSinglePostRef.child(id).remove();
 		
 		
