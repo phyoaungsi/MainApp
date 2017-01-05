@@ -40,6 +40,16 @@ var myTopPostsMenuButton = document.getElementById('menu-my-top-posts');
 var listeningFirebaseRefs = [];
 var storageRef = firebase.storage().ref();
 var keyHidden=document.getElementById('updateKey');
+var updateButton=document.getElementById('saveSubmit');
+
+ var messageInputU = document.getElementById('edit-post-message');
+			var titleInputU = document.getElementById('edit-post-title');
+			var codeU = document.getElementById('edit-post-code');
+			var typeU = document.getElementById('edit-post-cat');
+			//var desc = document.getElementById('edit-post-desc');
+			var amountInputU = document.getElementById('edit-post-amount');
+			var imageUrlU = document.getElementById('edit-post-imageUrl');
+			var editTextU = document.getElementById('edit-post-message');
 /**
  * Saves a new post to the Firebase DB.
  */
@@ -76,7 +86,7 @@ function writeNewPost(uid, username, picture, title, body,desc,amount,code,type,
 			  var postData = {
 				author: username,
 				uid: uid,
-				body: body,
+				htmlDetail: body,
 				title: title,
 				description:title,
 				amount:amount,
@@ -265,31 +275,28 @@ var editButton = postElement.getElementsByClassName('mdl-button')[0];
 	 var getSinglePostRef = firebase.database().ref('/message/items/'+postId);
 	
 	 getSinglePostRef.once('value').then(function(data) {
-				  var messageInput = document.getElementById('edit-post-message');
-			var titleInput = document.getElementById('edit-post-title');
-			var code = document.getElementById('edit-post-code');
-			var type = document.getElementById('edit-post-cat');
-			//var desc = document.getElementById('edit-post-desc');
-			var amountInput = document.getElementById('edit-post-amount');
-			var imageUrl = document.getElementById('edit-post-imageUrl');
+				 
 			
-				 titleInput.value  = data.val().title;
-				code.value = data.val().code;
+				 titleInputU.value  = data.val().title;
+				codeU.value = data.val().code;
 				//type.value  = data.val().type;
 				var type_=data.val().type;
 				var amount0=data.val().amount;
 				//desc.value  = data.val().description;
-				amountInput.value  = data.val().amount+"";
-				imageUrl.value  = data.val().imgUrl;
+				amountInputU.value  = data.val().amount+"";
+				imageUrlU.value  = data.val().imgUrl;
+				editTextU.value=data.val().htmlDetail;
 				keyHidden.value=data.key;
 				if(type_=="promo"){
-					$("#option2edit").attr('checked', 'checked');
+				document.getElementById('option2edit').parentNode.MaterialRadio.check();
 					}
 				else if(type_=="new"){
-					$("#option3edit").attr('checked', 'checked');
+					document.getElementById('option3edit').parentNode.MaterialRadio.check();
 					}
 				else if(type_=="regular"){
-					$("#option1edit").attr('checked', 'checked');
+
+					document.getElementById('option1edit').parentNode.MaterialRadio.check();
+					
 					}
 				
           
@@ -380,7 +387,7 @@ function startDatabaseQueries() {
       var author = data.val().author || 'Anonymous';
       var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
       containerElement.insertBefore(
-          createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid, data.val().authorPic,data.val().imgUrl),
+          createPostElement(data.key, data.val().title, data.val().htmlDetail, author, data.val().uid, data.val().authorPic,data.val().imgUrl),
           containerElement.firstChild);
     });
     postsRef.on('child_changed', function(data) {	
@@ -521,6 +528,34 @@ function getSequenceNumber()
 		  });
 }
 
+
+function update()
+{
+	
+	var titleu= titleInputU.value;
+	var typeu=$('input[name=rtypeedit]:checked').val();
+	var amountU=amountInputU.value;
+	var textU=editTextU.value;
+	var key_=keyHidden.value;
+			 var postData = {
+						
+				htmlDetail: textU,
+				title: titleu,
+				amount:amountU,
+				type:typeu,
+						
+			  };	
+	 firebase.database().ref('message/items/' + key_).update({
+						
+				htmlDetail: textU,
+				title: titleu,
+				amount:amountU,
+				type:typeu,
+						
+			  });
+			  alert("Updated Successfully!");
+	
+}
 // Bindings on load.
 window.addEventListener('load', function() {
 
@@ -568,6 +603,8 @@ window.addEventListener('load', function() {
 	
 	}
   };
+  
+
 
   deleteButton.onclick= function(){
   
