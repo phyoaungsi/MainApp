@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
+import pas.com.mm.shoopingcart.BuildConfig;
 import pas.com.mm.shoopingcart.R;
 
 /**
@@ -16,6 +17,10 @@ import pas.com.mm.shoopingcart.R;
 
 public class ApplicationConfig {
      public static String isPromotionOn;
+    public static boolean open;
+    public static String smsNumber;
+    public static String phoneNumber;
+    public static String smsMessage;
     private static final String IS_PROMOTION_CONFIG_KEY = "is_promotion_on";
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     public void init(){
@@ -30,7 +35,7 @@ public class ApplicationConfig {
         // can test different config values during development.
         // [START enable_dev_mode]
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(true)
+                .setDeveloperModeEnabled(BuildConfig.DEBUG)
                 .build();
         mFirebaseRemoteConfig.setConfigSettings(configSettings);
         // [END enable_dev_mode]

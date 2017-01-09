@@ -100,12 +100,12 @@ public class MobileImageAdapter extends BaseAdapter {
         }
         final ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_image);
 
-        final ProgressBar pb=(ProgressBar) gridView.findViewById(R.id.progressbar_grid_img);
+      //  final ProgressBar pb=(ProgressBar) gridView.findViewById(R.id.progressbar_grid_img);
         ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
             @Override
             public void onImageLoaded(boolean success) {
-                pb.setVisibility(View.GONE);
-                imageView.setVisibility(View.VISIBLE);
+          //      pb.setVisibility(View.GONE);
+           //     imageView.setVisibility(View.VISIBLE);
             }
         };
         //imageView.setImageResource(mThumbIds[position]);
@@ -129,12 +129,13 @@ public class MobileImageAdapter extends BaseAdapter {
         String url="https://drive.google.com/uc?export=download&id=0B_9ZBXw3kTLIN01ibXRqUHV5Umc";
         url=getImageUrl(position);
         ViewGroup.LayoutParams param= imageView.getLayoutParams();
-        pb.setVisibility(View.GONE);
+//        pb.setVisibility(View.GONE);
         imageView.setVisibility(View.VISIBLE);
         Picasso.with(this.getmContext())
                 .load(url)
+                .placeholder(R.drawable.placeholder)
                .resize(400, 400)
-                .centerCrop().transform(new RoundedCornersTransform())
+               .centerCrop().transform(new RoundedCornersTransform())
                 .into(imageView);
 
       //  mImageFetcher.loadImage(Images.imageThumbUrls[position - mNumColumns], imageView);

@@ -30,7 +30,9 @@ public class OpenNotificationFragment extends Fragment {
         tv.setText(this.getActivity().getIntent().getStringExtra("notificationBodys"));
         String imageUrl=getActivity().getIntent().getStringExtra("imageUrl");
         ImageView image=(ImageView) v.findViewById(R.id.notiImage);
-        Picasso.with(this.getContext()).load(imageUrl).into(image);
+        Picasso.with(this.getContext())
+                .load(imageUrl).placeholder(R.drawable.placeholder)
+        .into(image);
         image.setVisibility(View.VISIBLE);
 
 

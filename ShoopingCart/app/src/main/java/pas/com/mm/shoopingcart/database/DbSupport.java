@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import pas.com.mm.shoopingcart.common.ApplicationConfig;
+import pas.com.mm.shoopingcart.database.model.Config;
 import pas.com.mm.shoopingcart.database.model.Item;
 
 
@@ -32,6 +34,7 @@ public class DbSupport {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     public static List<Item> list=new ArrayList<Item>();
     public static List<Item> favList=new ArrayList<Item>();
+    private Item result;
     public void writeMessage()
     {
 
@@ -198,7 +201,8 @@ public class DbSupport {
                 r.setHtmlDetail(dbResult.getHtmlDetail());
                 r.setImgUrl(dbResult.getImgUrl());
                 r.setTitle(dbResult.getTitle());
-                item=r;
+                r.setKey(dataSnapshot.getKey());
+                result=r;
                callback.LoadCompleted(true);
             }
 
@@ -232,15 +236,13 @@ public class DbSupport {
         ValueEventListener postListener1 = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<Map<String,Item>> genericTypeIndicator = new GenericTypeIndicator<Map<String,Item>>() {};
-                Map<String,Item> post = dataSnapshot.getValue(genericTypeIndicator);
+
                 List list2= new ArrayList<Item>();
-                if(post!=null) {
-                    for (Item i : post.values()) {
-                        Log.d("DBSupport---", i.getDescription()+ "<-------------------------");
+                    for (DataSnapshot snapshot  : dataSnapshot.getChildren()){
+                        Item i=snapshot.getValue(Item.class);
+                        i.setKey(snapshot.getKey());
                         list2.add(i);
                     }
-                }
                 Collections.sort(list2);
 
                 // [START_EXCLUDE]
@@ -288,4 +290,61 @@ public class DbSupport {
     }
 
     private List resultList;
+
+
+    public Item getResult() {
+        return result;
+    }
+
+    public void setResult(Item result) {
+        this.result = result;
+    }
+
+
+    public Config getConfig( DBListenerCallback cb)
+    {
+        DatabaseReference myRef = database.getReference("config");
+
+
+        final Config r=new Config();
+        final DBListenerCallback callback=cb;
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+
+                //   for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                // TODO: handle the post
+
+                Config dbResult  = dataSnapshot.getValue(Config.class);
+                r.setMessageNumber(dbResult.getMessageNumber());
+                r.setPromotionOn(dbResult.getPromotionOn());
+                r.setPhoneNumber(dbResult.getPhoneNumber());
+                r.setOpen(dbResult.getOpen());
+                r.setPromotionBanner(dbResult.getPromotionBanner());
+                r.setPromotionImage(dbResult.getPromotionImage());
+                r.setSmsMessage(dbResult.getSmsMessage());
+                ApplicationConfig.smsMessage=dbResult.getSmsMessage();
+                ApplicationConfig.open=r.getOpen();
+                ApplicationConfig.smsNumber=r.getMessageNumber();
+                ApplicationConfig.phoneNumber=r.getPhoneNumber();
+
+                // callback.LoadCompleted(true);
+                callback.receiveResult(r);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // [START_EXCLUDE]
+                // Toast.makeText(PostDetailActivity.this, "Failed to load post.",
+                //        Toast.LENGTH_SHORT).show();
+                // [END_EXCLUDE]
+            }
+        };
+
+        myRef.addValueEventListener(postListener);
+        return r;
+    }
 }

@@ -51,6 +51,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import pas.com.mm.shoopingcart.common.ApplicationConfig;
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.fragments.DescriptionFragment;
@@ -59,6 +60,7 @@ import pas.com.mm.shoopingcart.util.FontUtil;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 import pas.com.mm.shoopingcart.util.ImageWorker;
+import pas.com.mm.shoopingcart.util.StringUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -168,7 +170,7 @@ public class DetailFragment extends Fragment {
         Gson gson=new Gson();
         final Item i=gson.fromJson(detailJson,Item.class);
         final SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
-        String saved=settings.getString(i.getCode(),"-");
+        String saved=settings.getString(i.getKey(),"-");
         if(!saved.equals("-")){
           tb.setChecked(true);
         }
@@ -185,12 +187,12 @@ public class DetailFragment extends Fragment {
                if(b)
                 {//Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
                     Log.d("tag", "checked");
-                    editor.putString(i.getCode(),detailJson);
+                    editor.putString(i.getKey(),detailJson);
                 }
                 else{
                    //Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
                    Log.d("tag", "unchecked");
-                   editor.remove(i.getCode());
+                   editor.remove(i.getKey());
                }
 
 
@@ -209,8 +211,8 @@ public class DetailFragment extends Fragment {
                 try {
                     Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                     smsIntent.setType("vnd.android-dir/mms-sms");
-                    smsIntent.putExtra("address", "09451918188");
-                    smsIntent.putExtra("sms_body", "Body of Message");
+                    smsIntent.putExtra("address", ApplicationConfig.smsNumber);
+                    smsIntent.putExtra("sms_body", StringUtils.getSmsMessage(getItem()));
                     startActivity(smsIntent);
                     sms_success=true;
                 }
@@ -222,7 +224,7 @@ public class DetailFragment extends Fragment {
                 {
                     try
                     {
-                        Uri uri = Uri.parse("smsto:09451918138");
+                        Uri uri = Uri.parse("smsto:"+ApplicationConfig.smsNumber);
                         Intent share = new Intent(android.content.Intent.ACTION_SEND,uri);
                         share.setType("text/plain");
                         share.putExtra(Intent.EXTRA_TEXT, "Your text to share");
@@ -241,7 +243,7 @@ public class DetailFragment extends Fragment {
 
             public void onClick(View v) {
 
-                String number = "tel:09451913138";
+                String number = "tel:"+ApplicationConfig.phoneNumber;
                 Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
                 startActivity(callIntent);
             }
@@ -281,6 +283,7 @@ public class DetailFragment extends Fragment {
         String url=this.getItem().getImgUrl();
         Picasso.with(context)
                 .load(url)
+                .placeholder(R.drawable.placeholder)
                // .resize(150, 50)
               //  .centerCrop()
                 .into(thumb1View);

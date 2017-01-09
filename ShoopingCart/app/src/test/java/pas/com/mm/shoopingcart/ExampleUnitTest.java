@@ -22,8 +22,10 @@ public class ExampleUnitTest {
 
        // Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(imageView);
         assertEquals(4, 2 + 2);
-        ArrayList<String> ar=ParseJSON("category:{\"cat1\",\"cat2\",\"cat3\",\"cat4\"}");
-        System.out.println(ar.size());
+//        ArrayList<String> ar=ParseJSON("category:{\"cat1\",\"cat2\",\"cat3\",\"cat4\"}");
+  //      System.out.println(ar.size());
+        String text=String.format("hellow %s is not %s","this","good");
+        System.out.println(text);
     }
 
     private ArrayList<String> ParseJSON(String json) {

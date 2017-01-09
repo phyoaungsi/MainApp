@@ -28,6 +28,7 @@ import java.util.List;
 import pas.com.mm.shoopingcart.database.DBListenerCallback;
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
+import pas.com.mm.shoopingcart.database.model.Model;
 import pas.com.mm.shoopingcart.image.FavouritiesImageAdapter;
 import pas.com.mm.shoopingcart.image.MobileImageAdapter;
 import pas.com.mm.shoopingcart.image.PromotionImageGridAdapter;
@@ -65,6 +66,7 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
     private boolean dataLoaded=false;
     private List<Item> list;
     SharedPreferences pf=null;
+    private static int panel=-1;
     public ImageGridFragment() {
         // Required empty public constructor
     }
@@ -118,11 +120,12 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
          gridview = (GridView) v.findViewById(R.id.gridview_cache);
         MobileImageAdapter  imageAdapter=new MobileImageAdapter(getActivity(),mImageFetcher);
         Bundle b= this.getArguments();
-        int panel=b.getInt("PANEL");
+        panel=b.getInt("PANEL");
         if(panel==2)
         {
-            imageAdapter=new FavouritiesImageAdapter(getActivity(),mImageFetcher);
-            gridview.setAdapter(imageAdapter);
+           // imageAdapter=new FavouritiesImageAdapter(getActivity(),mImageFetcher);
+           // gridview.setAdapter(imageAdapter);
+            dao.getItemsByType("regular",this);
         }
          if(panel==1)
         {
@@ -158,7 +161,7 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
              //   Toast.makeText(getActivity(), "" + position,
                //         Toast.LENGTH_SHORT).show();
                Intent intent = new Intent(getActivity(), DetailActivity.class);
-               Item item= DbSupport.list.get(position);
+               Item item= list.get(position);
                 Gson gson=new Gson();
                String objStr= gson.toJson(item);
                 intent.putExtra("DETAIL_ITEM",objStr);
@@ -177,8 +180,20 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
                     @Override
                     public void onRefresh() {
                         Log.i("LOGTAG", "onRefresh called from SwipeRefreshLayout");
-                        DbSupport db=new DbSupport();
-                        db.loadItemList(null);
+
+                        if(panel==2)
+                        {
+                            dao.getItemsByType("regular",null);
+                        }
+                        if(panel==1)
+                        {
+                            dao.getItemsByType("new",null);
+                        }
+                        else if(panel ==0)
+                        {
+                            dao.getItemsByType("promo",null);
+                        }
+
                         gridview.invalidateViews();
                         // This method performs the actual data-refresh operation.
                         // The method calls setRefreshing(false) when it's finished.
@@ -220,10 +235,15 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
         list= dao.getResultList();
         if(list.size()>0) {
             String code = PreferenceUtil.getLastAccessItem(pf, list.get(0).getType());
-
-            PromotionImageGridAdapter imageAdapter = new PromotionImageGridAdapter(getActivity(), mImageFetcher, Sorter.setRecentFirst(list,code));
+            list=Sorter.setRecentFirst(list,code);
+            PromotionImageGridAdapter imageAdapter = new PromotionImageGridAdapter(getActivity(), mImageFetcher, list);
             gridview.setAdapter(imageAdapter);
         }
+    }
+
+    @Override
+    public void receiveResult(Model model) {
+
     }
 
 

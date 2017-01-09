@@ -26,6 +26,7 @@ import pas.com.mm.shoopingcart.R;
 import pas.com.mm.shoopingcart.common.ApplicationConfig;
 import pas.com.mm.shoopingcart.database.DBListenerCallback;
 import pas.com.mm.shoopingcart.database.DbSupport;
+import pas.com.mm.shoopingcart.database.model.Model;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -141,15 +142,15 @@ public class SplashScreen extends AppCompatActivity implements DBListenerCallbac
         // while interacting with the UI.
          /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
-   //     new Handler().postDelayed(new Runnable(){
-     //       @Override
-     //       public void run() {
+       new Handler().postDelayed(new Runnable(){
+         @Override
+         public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-              //  Intent mainIntent = new Intent(SplashScreen.this,ItemGridView.class);
-             //   SplashScreen.this.startActivity(mainIntent);
-              //  SplashScreen.this.finish();
-       //     }
-     //   }, 3000);
+                //Intent mainIntent = new Intent(SplashScreen.this,ItemGridView.class);
+               // SplashScreen.this.startActivity(mainIntent);
+               // SplashScreen.this.finish();
+           }
+        }, 3000);
 
       //  findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
@@ -242,5 +243,10 @@ public class SplashScreen extends AppCompatActivity implements DBListenerCallbac
             SplashScreen.this.startActivity(mainIntent);
             SplashScreen.this.finish();
         }
+    }
+
+    @Override
+    public void receiveResult(Model model) {
+
     }
 }

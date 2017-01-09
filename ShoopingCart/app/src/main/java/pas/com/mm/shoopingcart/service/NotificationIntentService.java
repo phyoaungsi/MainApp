@@ -38,6 +38,7 @@
         import pas.com.mm.shoopingcart.database.DBListenerCallback;
         import pas.com.mm.shoopingcart.database.DbSupport;
         import pas.com.mm.shoopingcart.database.model.Item;
+        import pas.com.mm.shoopingcart.database.model.Model;
         import pas.com.mm.shoopingcart.database.model.NotificationModel;
         import pas.com.mm.shoopingcart.util.PreferenceUtil;
 
@@ -167,6 +168,11 @@ public class NotificationIntentService extends FirebaseMessagingService implemen
     @Override
     public void LoadCompleted(boolean b) {
         setMessageReceived(true);
+    }
+
+    @Override
+    public void receiveResult(Model model) {
+
     }
 }
 

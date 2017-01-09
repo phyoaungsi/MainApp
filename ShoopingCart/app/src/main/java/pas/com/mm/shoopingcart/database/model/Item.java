@@ -12,11 +12,14 @@ import java.util.Map;
  * Created by phyo on 08/10/2016.
  */
 @IgnoreExtraProperties
-public class Item implements Comparable<Item>{
+public class Item extends Model implements Comparable<Item>{
 
     public String code;
     public String description;
 
+
+
+    public String key;
 
 
     public double discount;
@@ -123,6 +126,7 @@ public class Item implements Comparable<Item>{
         result.put("imgUrl", imgUrl);
         result.put("timeOfPost",timeOfPost);
         result.put("type",type);
+        result.put("key",key);
         return result;
     }
 
@@ -156,5 +160,14 @@ public class Item implements Comparable<Item>{
 
     public void setType(String type) {
         this.type = type;
+    }
+
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

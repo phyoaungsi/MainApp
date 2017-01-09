@@ -69,6 +69,25 @@ public class FavouritiesImageAdapter extends MobileImageAdapter {
         return obj.getDescription();
     }
 
+    public String getPrice(int position)
+    {
+        Object[] string= values.toArray();
+        String jsonString=(String)string[position];
+        Gson json=new Gson();
+        Item obj = json.fromJson(jsonString, Item.class);
+        return obj.getAmount().toString();
+    }
+
+    public String getDiscountAmount(int position)
+    {
+
+        Object[] string= values.toArray();
+        String jsonString=(String)string[position];
+        Gson json=new Gson();
+        Item obj = json.fromJson(jsonString, Item.class);
+        return obj.getAmount().toString();
+    }
+
     @Override
     protected View getLayout(LayoutInflater inflater) {
         View gridView;

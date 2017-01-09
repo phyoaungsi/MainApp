@@ -34,7 +34,7 @@ public class RoundedCornersTransform implements Transformation {
         paint.setShader(shader);
         paint.setAntiAlias(true);
 
-        float r = size / 24f;
+        float r = size / 12f;
         canvas.drawRoundRect(new RectF(0, 0, source.getWidth(), source.getHeight()), r, r, paint);
         squaredBitmap.recycle();
         return bitmap;
