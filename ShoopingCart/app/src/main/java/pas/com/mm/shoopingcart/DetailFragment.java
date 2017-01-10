@@ -14,6 +14,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -137,7 +138,7 @@ public class DetailFragment extends Fragment {
         cacheParams = new ImageCache.ImageCacheParams(getActivity(), IMAGE_CACHE_DIR);
         cacheParams.setMemCacheSizePercent(0.25f);
         mImageFetcher = new ImageFetcher(getActivity(), mImageThumbSize);
-        mImageFetcher.setLoadingImage(R.drawable.ie_loader);
+        mImageFetcher.setLoadingImage(R.drawable.placeholder);
         mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
         String object= getActivity().getIntent().getStringExtra("DETAIL_ITEM");
         Gson gson=new Gson();
@@ -205,6 +206,7 @@ public class DetailFragment extends Fragment {
 
             }
         });
+        final String smsText=StringUtils.getSmsMessage(getItem());
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 boolean sms_success=false;
@@ -212,7 +214,7 @@ public class DetailFragment extends Fragment {
                     Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                     smsIntent.setType("vnd.android-dir/mms-sms");
                     smsIntent.putExtra("address", ApplicationConfig.smsNumber);
-                    smsIntent.putExtra("sms_body", StringUtils.getSmsMessage(getItem()));
+                    smsIntent.putExtra("sms_body",smsText);
                     startActivity(smsIntent);
                     sms_success=true;
                 }
@@ -227,7 +229,7 @@ public class DetailFragment extends Fragment {
                         Uri uri = Uri.parse("smsto:"+ApplicationConfig.smsNumber);
                         Intent share = new Intent(android.content.Intent.ACTION_SEND,uri);
                         share.setType("text/plain");
-                        share.putExtra(Intent.EXTRA_TEXT, "Your text to share");
+                        share.putExtra(Intent.EXTRA_TEXT, smsText);
                         share.setPackage("com.viber.voip");
                         startActivity(Intent.createChooser(share, "Select"));
                     }
@@ -243,9 +245,23 @@ public class DetailFragment extends Fragment {
 
             public void onClick(View v) {
 
-                String number = "tel:"+ApplicationConfig.phoneNumber;
-                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
-                startActivity(callIntent);
+                try {
+                    String number = "tel:" + ApplicationConfig.phoneNumber;
+                    Intent callIntent = null;
+                    int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                    if (currentapiVersion >= 23){
+                        // Do something for lollipop and above versions
+                        callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse(number));
+                    } else{
+                        // do something for phones running an SDK before lollipop
+                        callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+                    }
+                    startActivity(callIntent);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
      //   SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
@@ -292,7 +308,7 @@ public class DetailFragment extends Fragment {
         //create imageview here and setbg
         ImageView imageView = new ImageView(this.getContext());
 
-        imageView.setImageResource(R.drawable.anime);
+        imageView.setImageResource(R.drawable.placeholder);
 
         ViewGroup.LayoutParams params = imageView.getLayoutParams();
 

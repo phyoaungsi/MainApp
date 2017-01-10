@@ -57,7 +57,7 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
         FontUtil.setText(this.getBaseContext(),toolbar,true);
       Log.i("ItemGridVIEW","oNCREATE----");
 
-       initRemoteConfig();
+     //  initRemoteConfig();
 
         // ViewPager and its adapters use support library
         // fragments, so use getSupportFragmentManager.
@@ -190,7 +190,7 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
      mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
      // [END set_default_values]
 
-     fetchWelcome();
+    // fetchWelcome();
  }
 
     private void fetchWelcome() {

@@ -196,7 +196,8 @@ public class DetailActivity extends AppCompatActivity implements DetailFragment.
                }
            }
             else{
-              NavUtils.navigateUpFromSameTask(this);
+            //  NavUtils.navigateUpFromSameTask(this);
+               super.onBackPressed();
                return true;
            }
 

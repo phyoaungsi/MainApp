@@ -27,6 +27,7 @@ import java.util.Set;
 import pas.com.mm.shoopingcart.common.ApplicationConfig;
 import pas.com.mm.shoopingcart.database.model.Config;
 import pas.com.mm.shoopingcart.database.model.Item;
+import pas.com.mm.shoopingcart.database.model.Model;
 
 
 public class DbSupport {
@@ -204,6 +205,7 @@ public class DbSupport {
                 r.setKey(dataSnapshot.getKey());
                 result=r;
                callback.LoadCompleted(true);
+               callback.receiveResult(r);
             }
 
             @Override

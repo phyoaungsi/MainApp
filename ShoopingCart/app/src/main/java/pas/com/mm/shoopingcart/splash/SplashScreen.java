@@ -1,6 +1,7 @@
 package pas.com.mm.shoopingcart.splash;
 
 import android.annotation.SuppressLint;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
@@ -19,14 +20,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import pas.com.mm.shoopingcart.DetailActivity;
 import pas.com.mm.shoopingcart.ItemGridView;
 import pas.com.mm.shoopingcart.Main2Activity;
 import pas.com.mm.shoopingcart.MainActivity;
 import pas.com.mm.shoopingcart.R;
+import pas.com.mm.shoopingcart.activities.OpenNotification;
 import pas.com.mm.shoopingcart.common.ApplicationConfig;
 import pas.com.mm.shoopingcart.database.DBListenerCallback;
 import pas.com.mm.shoopingcart.database.DbSupport;
+import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.database.model.Model;
+import pas.com.mm.shoopingcart.database.model.NotificationModel;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -137,6 +144,33 @@ public class SplashScreen extends AppCompatActivity implements DBListenerCallbac
             }
         });
 
+
+        NotificationModel noti=new NotificationModel();
+
+
+        noti.setTitle( this.getIntent().getStringExtra("TITLE"));
+        noti.setMessage(this.getIntent().getStringExtra("BODY"));
+        noti.setContent(this.getIntent().getStringExtra("CONTENT"));
+        noti.setType(this.getIntent().getStringExtra("TYPE"));
+        noti.setMainImage(this.getIntent().getStringExtra("MAIN_IMAGE"));
+        boolean notiPressed=false;
+        if(this.getIntent().getStringExtra("TYPE")!=null ){
+            if (noti.getType().equals("ITEM")) {
+
+
+                NotiItemDbListener listener = new NotiItemDbListener(this);
+                DbSupport db = new DbSupport();
+                db.getItemById(noti.getContent(), listener);
+                notiPressed=true;
+
+            }
+            else if (noti.getType().equals("PROMO")) {
+                DbSupport db = new DbSupport();
+                NotiPromoDbListener listener = new NotiPromoDbListener(this);
+                db.getConfig(listener);
+                notiPressed=true;
+            }
+        }
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
@@ -154,10 +188,12 @@ public class SplashScreen extends AppCompatActivity implements DBListenerCallbac
 
       //  findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
-        ApplicationConfig config=new ApplicationConfig();
-        config.init();
-        DbSupport db=new DbSupport();
-        db.loadItemList(this);
+       // ApplicationConfig config=new ApplicationConfig();
+      //  config.init();
+        if(!notiPressed) {
+            DbSupport db = new DbSupport();
+            db.loadItemList(this);
+        }
         checkConnection();
 
     }

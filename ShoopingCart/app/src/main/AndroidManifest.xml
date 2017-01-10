@@ -23,7 +23,9 @@
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ItemGridView" />
@@ -35,10 +37,12 @@
         <activity
             android:name=".ItemGridView"
             android:label="@string/title_activity_grid_view"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".splash.SplashScreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_splash_screen"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
@@ -78,14 +82,18 @@
             android:name=".activities.OpenNotification"
             android:exported="true"
             android:label="@string/title_activity_open_notification"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
+                android:launchMode="singleTop"
                 android:value=".ItemGridView" />
         </activity>
         <activity
             android:name=".activities.saveitem.SaveItemActivity"
             android:label="@string/title_activity_save_item"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"></activity>
     </application>
 

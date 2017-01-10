@@ -48,16 +48,16 @@
                     android:id="@+id/button"
 
                     style="@style/Base.TextAppearance.AppCompat.Caption"
-                    android:textColor="?attr/colorBackgroundFloating"
+                    android:textColor="@android:color/white"
 
                     android:visibility="visible"
                     android:background="@android:color/holo_green_light"
                     android:layout_height="30dp"
 
                     android:text="Call"
-                    android:layout_width="70dp"
                     android:textAllCaps="false"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:layout_width="60dp" />
 
 
                 <TextView
@@ -79,11 +79,14 @@
                 <Button
                     android:layout_height="30dp"
                     android:id="@+id/btnChangeImage"
+                    style="@style/Base.TextAppearance.AppCompat.Caption"
                     android:background="@android:color/holo_green_light"
                     android:text="Message"
+                    android:textColor="@android:color/white"
+
                     android:layout_marginTop="2dp"
                     android:textAllCaps="false"
-                    android:layout_width="70dp" />
+                    android:layout_width="80dp" />
                 <TextView
                     android:text="@string/prompt3"
                     android:layout_width="wrap_content"
