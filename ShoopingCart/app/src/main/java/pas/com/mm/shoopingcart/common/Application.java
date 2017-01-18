@@ -1,11 +1,13 @@
 package pas.com.mm.shoopingcart.common;
 
+import android.support.multidex.MultiDexApplication;
+
 import pas.com.mm.shoopingcart.util.FontOverride;
 
 /**
  * Created by phyo on 22/12/2016.
  */
-public final class Application extends android.app.Application {
+public final class Application  extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();

@@ -22,9 +22,9 @@ import pas.com.mm.shoopingcart.database.model.Model;
  */
 
 public class NotiPromoDbListener implements DBListenerCallback {
-    private  SplashScreen mContext;
+    private  Activity mContext;
 
-    public NotiPromoDbListener(SplashScreen splashScreen) {
+    public NotiPromoDbListener(Activity splashScreen) {
         this.mContext=splashScreen;
 
     }
@@ -43,7 +43,7 @@ public class NotiPromoDbListener implements DBListenerCallback {
         //intent.putExtra("notificationBodys",config.get);
         intent.putExtra("imageUrl",config.getPromotionImage());
         intent.putExtra("clicked_noti",true);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+      //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         mContext.startActivity(intent);
     }
 }

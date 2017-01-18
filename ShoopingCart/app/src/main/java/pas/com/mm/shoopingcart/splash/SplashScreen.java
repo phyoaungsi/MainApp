@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import pas.com.mm.shoopingcart.BuildConfig;
 import pas.com.mm.shoopingcart.DetailActivity;
 import pas.com.mm.shoopingcart.ItemGridView;
 import pas.com.mm.shoopingcart.Main2Activity;
@@ -144,33 +145,6 @@ public class SplashScreen extends AppCompatActivity implements DBListenerCallbac
             }
         });
 
-
-        NotificationModel noti=new NotificationModel();
-
-
-        noti.setTitle( this.getIntent().getStringExtra("TITLE"));
-        noti.setMessage(this.getIntent().getStringExtra("BODY"));
-        noti.setContent(this.getIntent().getStringExtra("CONTENT"));
-        noti.setType(this.getIntent().getStringExtra("TYPE"));
-        noti.setMainImage(this.getIntent().getStringExtra("MAIN_IMAGE"));
-        boolean notiPressed=false;
-        if(this.getIntent().getStringExtra("TYPE")!=null ){
-            if (noti.getType().equals("ITEM")) {
-
-
-                NotiItemDbListener listener = new NotiItemDbListener(this);
-                DbSupport db = new DbSupport();
-                db.getItemById(noti.getContent(), listener);
-                notiPressed=true;
-
-            }
-            else if (noti.getType().equals("PROMO")) {
-                DbSupport db = new DbSupport();
-                NotiPromoDbListener listener = new NotiPromoDbListener(this);
-                db.getConfig(listener);
-                notiPressed=true;
-            }
-        }
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
@@ -190,12 +164,14 @@ public class SplashScreen extends AppCompatActivity implements DBListenerCallbac
 
        // ApplicationConfig config=new ApplicationConfig();
       //  config.init();
-        if(!notiPressed) {
+
             DbSupport db = new DbSupport();
             db.loadItemList(this);
-        }
-        checkConnection();
 
+       // checkConnection();
+
+        TextView textVersion=(TextView)findViewById(R.id.version);
+        textVersion.setText( BuildConfig.VERSION_NAME);
     }
 
 
@@ -276,6 +252,11 @@ public class SplashScreen extends AppCompatActivity implements DBListenerCallbac
     public void LoadCompleted(boolean b) {
         if(b){
             Intent mainIntent = new Intent(SplashScreen.this,ItemGridView.class);
+            mainIntent.putExtra("TITLE", this.getIntent().getStringExtra("TITLE"));
+            mainIntent.putExtra("BODY",this.getIntent().getStringExtra("BODY"));
+            mainIntent.putExtra("CONTENT",this.getIntent().getStringExtra("CONTENT"));
+            mainIntent.putExtra("TYPE",this.getIntent().getStringExtra("TYPE"));
+            mainIntent.putExtra("MAIN_IMAGE",this.getIntent().getStringExtra("MAIN_IMAGE"));
             SplashScreen.this.startActivity(mainIntent);
             SplashScreen.this.finish();
         }

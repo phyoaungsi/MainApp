@@ -20,10 +20,10 @@ import pas.com.mm.shoopingcart.database.model.Model;
  */
 
 public class NotiItemDbListener implements DBListenerCallback {
-    private  SplashScreen mContext;
+    private  Activity mContext;
 
-    public NotiItemDbListener(SplashScreen splashScreen) {
-        this.mContext=splashScreen;
+    public NotiItemDbListener(Activity screen) {
+        this.mContext=screen;
     }
 
     @Override

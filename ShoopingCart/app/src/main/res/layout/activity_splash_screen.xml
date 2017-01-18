@@ -36,12 +36,22 @@
         android:ellipsize="middle"
         android:visibility="gone" />
 
+
+
     <ProgressBar
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar2"
         android:layout_gravity="bottom|center_horizontal" />
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/version"
+        android:layout_gravity="bottom|center_horizontal"
+        android:textColor="?attr/colorBackgroundFloating"
+        android:textSize="10sp" />
 
 <FrameLayout
     android:layout_height="137dp"

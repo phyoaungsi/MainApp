@@ -4,6 +4,8 @@ package pas.com.mm.shoopingcart.image;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +21,10 @@ import android.widget.TextView;
 
 import pas.com.mm.shoopingcart.R;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -131,13 +135,23 @@ public class MobileImageAdapter extends BaseAdapter {
         ViewGroup.LayoutParams param= imageView.getLayoutParams();
 //        pb.setVisibility(View.GONE);
         imageView.setVisibility(View.VISIBLE);
-        Picasso.with(this.getmContext())
-                .load(url)
-                .placeholder(R.drawable.placeholder)
-               .resize(400, 400)
-               .centerCrop().transform(new RoundedCornersTransform())
-                .into(imageView);
-
+        if(isOnline()) {
+            Picasso.with(this.getmContext())
+                    .load(url)
+                    .placeholder(R.drawable.placeholder)
+                     .networkPolicy(NetworkPolicy.OFFLINE)
+                    .resize(400, 400)
+                    .centerCrop().transform(new RoundedCornersTransform())
+                    .into(imageView);
+        }else {
+            Picasso.with(this.getmContext())
+                    .load(url)
+                    //  .placeholder(R.drawable.placeholder)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .resize(400, 400)
+                    .centerCrop().transform(new RoundedCornersTransform())
+                    .into(imageView);
+        }
       //  mImageFetcher.loadImage(Images.imageThumbUrls[position - mNumColumns], imageView);
        // imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
      //   imageView.setPadding(0, 0, 0, 0);
@@ -177,5 +191,16 @@ public class MobileImageAdapter extends BaseAdapter {
 
     public int getNumColumns() {
         return mNumColumns;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) this.getmContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+
+            return false;
+        }
+        return true;
     }
 }

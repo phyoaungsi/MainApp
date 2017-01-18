@@ -46,6 +46,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
@@ -292,13 +293,14 @@ public class DetailFragment extends Fragment {
        //     @Override
        //     public void onImageLoaded(boolean success) {
                    //     pb.setVisibility(View.GONE);
-                thumb1View.setVisibility(View.VISIBLE);
+         //       thumb1View.setVisibility(View.VISIBLE);
        //     }
        // };
        // mImageFetcher.loadImage("https://s-media-cache-ak0.pinimg.com/564x/4c/84/03/4c84030879a89cf9dde78ca79b454340.jpg", thumb1View,imageListener);
         String url=this.getItem().getImgUrl();
         Picasso.with(context)
                 .load(url)
+              //  .networkPolicy(NetworkPolicy.OFFLINE)
                 .placeholder(R.drawable.placeholder)
                // .resize(150, 50)
               //  .centerCrop()
@@ -684,6 +686,8 @@ public class DetailFragment extends Fragment {
 
             Picasso.with(context)
                     .load(url)
+                  //  .networkPolicy(NetworkPolicy.)
+                    .placeholder(R.drawable.placeholder)
                    // .resize(850, 850)
                   //  .centerCrop()
                     .into(slideImageView);
