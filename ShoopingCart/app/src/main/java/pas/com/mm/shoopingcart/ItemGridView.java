@@ -57,7 +57,7 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FontUtil.setText(this.getBaseContext(),toolbar,true);
+        FontUtil.setText(this.getBaseContext(),toolbar,false);
       Log.i("ItemGridVIEW","oNCREATE----");
 
      //  initRemoteConfig();
@@ -184,7 +184,7 @@ public class ItemGridView extends AppCompatActivity implements ImageGridFragment
             switch (position) {
                 case 1:
                     return getResources().getString(R.string.title_tab1);
-                case 2:
+                case 0:
                     return getResources().getString(R.string.title_tab2);
                default:
                     return getResources().getString(R.string.title_tab3);

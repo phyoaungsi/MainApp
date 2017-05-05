@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "24.0.1"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "pas.com.mm.shoopingcart"
@@ -10,8 +10,8 @@ android {
         targetSdkVersion 24
         multiDexEnabled true
 
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2-beta"
     }
     buildTypes {
         release {

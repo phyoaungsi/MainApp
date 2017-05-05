@@ -139,7 +139,7 @@ public class MobileImageAdapter extends BaseAdapter {
             Picasso.with(this.getmContext())
                     .load(url)
                     .placeholder(R.drawable.placeholder)
-                     .networkPolicy(NetworkPolicy.OFFLINE)
+                     .networkPolicy(NetworkPolicy.NO_STORE)
                     .resize(400, 400)
                     .centerCrop().transform(new RoundedCornersTransform())
                     .into(imageView);

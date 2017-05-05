@@ -25,6 +25,7 @@ import pas.com.mm.shoopingcart.R;
 import pas.com.mm.shoopingcart.common.CommonActivity;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.fragments.ContactFragment;
+import pas.com.mm.shoopingcart.util.FontUtil;
 
 public class ContactActivity extends CommonActivity implements ContactFragment.OnFragmentInteractionListener {
 
@@ -57,7 +58,10 @@ public class ContactActivity extends CommonActivity implements ContactFragment.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        FontUtil.setText(this.getBaseContext(),toolbar,false);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();

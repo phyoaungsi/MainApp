@@ -11,7 +11,7 @@ public final class Application  extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        boolean unicode=true;
+        boolean unicode=false;
         if(unicode) {
             FontOverride.setDefaultFont(this, "DEFAULT", "fonts/font.ttf");
             FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/font.ttf");

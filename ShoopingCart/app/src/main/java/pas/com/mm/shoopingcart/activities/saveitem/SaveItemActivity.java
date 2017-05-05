@@ -39,6 +39,7 @@ public class SaveItemActivity extends AppCompatActivity implements DBListenerCal
         FontUtil.setText(this,  toolbar, true);
         toolbar.setTitle(this.getResources().getString(R.string.favourities));
         setSupportActionBar(toolbar);
+        FontUtil.setText(this.getBaseContext(),toolbar,false);
         mContext=this;
 
         gridview = (GridView) findViewById(R.id.gridview_save);

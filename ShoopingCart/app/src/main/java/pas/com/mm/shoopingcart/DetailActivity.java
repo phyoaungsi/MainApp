@@ -35,6 +35,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -46,6 +47,7 @@ import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.fragments.DescriptionFragment;
 import pas.com.mm.shoopingcart.image.Images;
 import pas.com.mm.shoopingcart.image.ZoomImageView;
+import pas.com.mm.shoopingcart.util.FontUtil;
 import pas.com.mm.shoopingcart.util.ImageCache;
 import pas.com.mm.shoopingcart.util.ImageFetcher;
 

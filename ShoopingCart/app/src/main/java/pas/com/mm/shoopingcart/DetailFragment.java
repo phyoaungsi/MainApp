@@ -212,11 +212,7 @@ public class DetailFragment extends Fragment {
             public void onClick(View v) {
                 boolean sms_success=false;
                 try {
-                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                    smsIntent.setType("vnd.android-dir/mms-sms");
-                    smsIntent.putExtra("address", ApplicationConfig.smsNumber);
-                    smsIntent.putExtra("sms_body",smsText);
-                    startActivity(smsIntent);
+                    sendViber(smsText);
                     sms_success=true;
                 }
                 catch(Exception e)
@@ -227,12 +223,8 @@ public class DetailFragment extends Fragment {
                 {
                     try
                     {
-                        Uri uri = Uri.parse("smsto:"+ApplicationConfig.smsNumber);
-                        Intent share = new Intent(android.content.Intent.ACTION_SEND,uri);
-                        share.setType("text/plain");
-                        share.putExtra(Intent.EXTRA_TEXT, smsText);
-                        share.setPackage("com.viber.voip");
-                        startActivity(Intent.createChooser(share, "Select"));
+
+                        sendSms(smsText);
                     }
                     catch(Exception e)
                     {
@@ -269,15 +261,17 @@ public class DetailFragment extends Fragment {
 
 
         TextView text1= (TextView) v.findViewById(R.id.txtPrompt1);
-        Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(), "fonts/font.ttf");
-        text1.setTypeface(typeface);
+
+
+        FontUtil.setFont(context,text1);
+
         TextView text2= (TextView) v.findViewById(R.id.txtPrompt2);
-        text2.setTypeface(typeface);
+        FontUtil.setFont(context,text2);
         TextView text3= (TextView) v.findViewById(R.id.txtPrompt3);
-        text3.setTypeface(typeface);
+        FontUtil.setFont(context,text2);
 
         TextView textPrice= (TextView) v.findViewById(R.id.textViewPrice);
-        textPrice.setTypeface(typeface);
+        FontUtil.setFont(context,textPrice);
         textPrice.setText(this.getItem().getAmount().toString()+" "+getActivity().getResources().getString(R.string.currency));
 
 
@@ -398,6 +392,23 @@ public class DetailFragment extends Fragment {
        // db.writeNewPost("CODE002","HELLO","HTTP://WWW",12.9);
         db.listenDataChange();
         return v;
+    }
+
+    private void sendViber(String smsText) {
+        Uri uri = Uri.parse("smsto:"+ ApplicationConfig.smsNumber);
+        Intent share = new Intent(Intent.ACTION_SEND,uri);
+        share.setType("text/plain");
+        share.putExtra(Intent.EXTRA_TEXT, smsText);
+        share.setPackage("com.viber.voip");
+        startActivity(Intent.createChooser(share, "Select"));
+    }
+
+    private void sendSms(String smsText) {
+        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+        smsIntent.setType("vnd.android-dir/mms-sms");
+        smsIntent.putExtra("address", ApplicationConfig.smsNumber);
+        smsIntent.putExtra("sms_body",smsText);
+        startActivity(smsIntent);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

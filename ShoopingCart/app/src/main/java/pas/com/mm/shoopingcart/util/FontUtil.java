@@ -20,6 +20,14 @@ public class FontUtil {
         textView.setText(text);
     }
 
+    public static void setFont(Context context, TextView textView)
+    {
+
+        Typeface typeface=Typeface.createFromAsset(context.getAssets(), "fonts/zawgyi.ttf");
+        textView.setTypeface(typeface);
+
+    }
+
     public static void setUniText(Context context, TextView textView,String text)
     {
         Typeface typeface=Typeface.createFromAsset(context.getAssets(), "fonts/font.ttf");

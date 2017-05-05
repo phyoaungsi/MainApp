@@ -121,7 +121,7 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
         MobileImageAdapter  imageAdapter=new MobileImageAdapter(getActivity(),mImageFetcher);
         Bundle b= this.getArguments();
         panel=b.getInt("PANEL");
-        if(panel==2)
+        if(panel==0)
         {
            // imageAdapter=new FavouritiesImageAdapter(getActivity(),mImageFetcher);
            // gridview.setAdapter(imageAdapter);
@@ -145,7 +145,7 @@ public class ImageGridFragment extends Fragment implements DBListenerCallback {
           //  imageAdapter=new PromotionImageGridAdapter(getActivity(),mImageFetcher,list);
 
         }
-        else if(panel ==0)
+        else if(panel ==2)
         {
 
             dao.getItemsByType("promo",this);
