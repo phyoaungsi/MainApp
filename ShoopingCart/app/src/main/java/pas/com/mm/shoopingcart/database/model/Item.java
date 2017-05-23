@@ -6,6 +6,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,6 +18,10 @@ public class Item extends Model implements Comparable<Item>{
     public String code;
     public String description;
 
+
+
+
+    public List<String> children;
 
 
     public String key;
@@ -127,6 +132,8 @@ public class Item extends Model implements Comparable<Item>{
         result.put("timeOfPost",timeOfPost);
         result.put("type",type);
         result.put("key",key);
+        result.put("children",children);
+
         return result;
     }
 
@@ -158,6 +165,14 @@ public class Item extends Model implements Comparable<Item>{
         return type;
     }
 
+    public List<String> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<String> children) {
+        this.children = children;
+    }
+
     public void setType(String type) {
         this.type = type;
     }
@@ -170,4 +185,6 @@ public class Item extends Model implements Comparable<Item>{
     public void setKey(String key) {
         this.key = key;
     }
+
+
 }

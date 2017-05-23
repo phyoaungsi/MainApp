@@ -14,9 +14,9 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -30,6 +30,7 @@ import android.text.Spanned;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,13 +51,17 @@ import com.google.gson.Gson;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
 import pas.com.mm.shoopingcart.common.ApplicationConfig;
+import pas.com.mm.shoopingcart.database.DBListenerCallback;
 import pas.com.mm.shoopingcart.database.DbSupport;
 import pas.com.mm.shoopingcart.database.model.Item;
+import pas.com.mm.shoopingcart.database.model.Model;
 import pas.com.mm.shoopingcart.fragments.DescriptionFragment;
 import pas.com.mm.shoopingcart.image.ZoomImageView;
 import pas.com.mm.shoopingcart.util.FontUtil;
@@ -81,8 +87,7 @@ public class DetailFragment extends Fragment {
     private String[] mPlanetTitles;
     public static final String PREFS_NAME = "PAS";
     private Item item;
-    // private DrawerLayout mDrawerLayout;
-    // private ListView mDrawerList;
+    private List<Item> childs=new ArrayList<Item>();
     private static final String IMAGE_CACHE_DIR = "thumbs";
     // private ActionBarDrawerToggle mDrawerToggle;
     // private CharSequence mDrawerTitle;
@@ -94,13 +99,15 @@ public class DetailFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private  TextView textPrice;
+    private TextView t;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private ImageView backImage;
     private ImageView forwardImage;
-    private String[] imageUrls;
+    int noOfChildren=0;
+    //private String[] imageUrls;
     private OnFragmentInteractionListener mListener;
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
@@ -146,7 +153,26 @@ public class DetailFragment extends Fragment {
         this.setItem((Item) gson.fromJson(object,Item.class));
         DetailFragment df= new DetailFragment();
         df.setItem(this.getItem());
-        imageUrls= getItem().getImgUrl().split(" ");
+        //imageUrls= getItem().getImgUrl().split(" ");
+        DbSupport dbSupport=new DbSupport();
+        List<String> childIds=getItem().getChildren();
+        if(childIds!=null) {
+            for (String id : childIds) {
+                dbSupport.getItemById(id, new DBListenerCallback() {
+                    @Override
+                    public void LoadCompleted(boolean b) {
+
+                    }
+
+                    @Override
+                    public void receiveResult(Model model) {
+                        Item item = (Item) model;
+                        childs.add(item);
+                        mSectionsPagerAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }
     }
 
     @Override
@@ -190,6 +216,8 @@ public class DetailFragment extends Fragment {
                 {//Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
                     Log.d("tag", "checked");
                     editor.putString(i.getKey(),detailJson);
+                    Snackbar.make(v, "Added to liked items", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
                 }
                 else{
                    //Toast.makeText(context,"Checked",Toast.LENGTH_SHORT);
@@ -212,7 +240,7 @@ public class DetailFragment extends Fragment {
             public void onClick(View v) {
                 boolean sms_success=false;
                 try {
-                    sendViber(smsText);
+                    sendSms(smsText);
                     sms_success=true;
                 }
                 catch(Exception e)
@@ -223,8 +251,8 @@ public class DetailFragment extends Fragment {
                 {
                     try
                     {
+                        sendViber(smsText);
 
-                        sendSms(smsText);
                     }
                     catch(Exception e)
                     {
@@ -270,18 +298,12 @@ public class DetailFragment extends Fragment {
         TextView text3= (TextView) v.findViewById(R.id.txtPrompt3);
         FontUtil.setFont(context,text2);
 
-        TextView textPrice= (TextView) v.findViewById(R.id.textViewPrice);
+         textPrice= (TextView) v.findViewById(R.id.textViewPrice);
+         t = (TextView) v.findViewById(R.id.oldPrice);
         FontUtil.setFont(context,textPrice);
-        textPrice.setText(this.getItem().getAmount().toString()+" "+getActivity().getResources().getString(R.string.currency));
 
 
-        if(getItem().getDiscount()>0 &&getItem().getDiscount()<getItem().getAmount()) {
-            TextView t = (TextView) v.findViewById(R.id.oldPrice);
-            textPrice.setText(getItem().getDiscount() + " " + getResources().getString(R.string.currency));
-            t.setText(getItem().getAmount() + " " + getResources().getString(R.string.currency));
-            t.setPaintFlags(t.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            t.setVisibility(View.VISIBLE);
-        }
+        setPrice(getItem());
         final ZoomImageView thumb1View =(ZoomImageView) v.findViewById(R.id.imageView1);
         //ImageWorker.OnImageLoadedListener imageListener=new ImageWorker.OnImageLoadedListener() {
        //     @Override
@@ -356,29 +378,61 @@ public class DetailFragment extends Fragment {
             }
         });
 
-
+        final LinearLayout layout=(LinearLayout) v.findViewById(R.id.circle_container);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
         mViewPager = (ViewPager) v.findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        if(imageUrls.length==1) {
+        if(getItem().getChildren()!=null){
+         noOfChildren= this.getItem().getChildren().size();
+        }
+        if(noOfChildren==0) {
             forwardImage.setVisibility(View.GONE);
         }else
         {
             backImage.setVisibility(View.VISIBLE);
+
+            for(int index=0;index<noOfChildren+1;index++) {
+                ImageView image = new ImageView(this.getContext());
+                //image.setLayoutParams(new android.view.ViewGroup.LayoutParams(80,60));
+                image.setMaxHeight(10);
+                image.setMaxWidth(10);
+                if (index > 0){
+                    image.setImageResource(R.drawable.circle_pointer);
+                }
+                else{
+                    image.setImageResource(R.drawable.circle_pointer_select);
+                }
+                layout.addView(image);
+            }
         }
+
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrollStateChanged(int state) {}
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             public void onPageSelected(int position) {
                 // Check if this is the page you want.
+
+                final int childcount = layout.getChildCount();
+                for (int i = 0; i < childcount; i++) {
+                    ImageView v = (ImageView)layout.getChildAt(i);
+                    if(i==position){
+                        v.setImageResource(R.drawable.circle_pointer_select);
+                    }
+                    else{
+                        v.setImageResource(R.drawable.circle_pointer);
+                    }
+                }
                 if(position==0) {
                     backImage.setVisibility(View.GONE);
+                    setPrice(getItem());
                 }else
                 {
                     backImage.setVisibility(View.VISIBLE);
+                    setPrice(childs.get(position-1));
                 }
-                if(position==imageUrls.length-1) {
+                if(position==childs.size()-1) {
 
                     forwardImage.setVisibility(View.INVISIBLE);
                 }
@@ -392,6 +446,18 @@ public class DetailFragment extends Fragment {
        // db.writeNewPost("CODE002","HELLO","HTTP://WWW",12.9);
         db.listenDataChange();
         return v;
+    }
+
+    private void setPrice(Item item) {
+        textPrice.setText(item.getAmount().toString()+" "+getActivity().getResources().getString(R.string.currency));
+        t.setVisibility(View.GONE);
+        if(item.getDiscount()>0 &&item.getDiscount()<item.getAmount()) {
+
+            textPrice.setText(item.getDiscount() + " " + getResources().getString(R.string.currency));
+            t.setText(item.getAmount() + " " + getResources().getString(R.string.currency));
+            t.setPaintFlags(t.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            t.setVisibility(View.VISIBLE);
+        }
     }
 
     private void sendViber(String smsText) {
@@ -615,7 +681,15 @@ public class DetailFragment extends Fragment {
 
             Fragment fragment = new DummySectionFragment();
             Bundle args = new Bundle();
-            args.putString(DummySectionFragment.URL,imageUrls[position]);
+            String[] imageUrls=null;
+            if(position==0)
+            {
+               imageUrls= item.getImgUrl().split(" "); //parent The reason to split is to backward compatable
+            }
+            else if(position>0){ //children
+                imageUrls =childs.get(position-1).getImgUrl().split(" ");
+            }
+            args.putString(DummySectionFragment.URL,imageUrls[0]);
             fragment.setArguments(args);
             return fragment;
         }
@@ -630,7 +704,8 @@ public class DetailFragment extends Fragment {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return imageUrls.length;
+            //To count parent+children
+            return childs.size()+1;
         }
         // END_INCLUDE (fragment_pager_adapter_getcount)
 
