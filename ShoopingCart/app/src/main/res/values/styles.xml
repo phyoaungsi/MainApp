@@ -43,6 +43,8 @@
         <item name="android:textOn"></item>
         <item name="android:textOff"></item>
     </style>
-
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">14sp</item>
+    </style>
 
 </resources>

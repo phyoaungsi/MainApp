@@ -89,8 +89,8 @@ public class DetailFragment extends Fragment {
     private Item item;
     private List<Item> childs=new ArrayList<Item>();
     private static final String IMAGE_CACHE_DIR = "thumbs";
-    // private ActionBarDrawerToggle mDrawerToggle;
-    // private CharSequence mDrawerTitle;
+    private Toolbar toolbar;
+    String smsText;
     private  ImageCache.ImageCacheParams cacheParams;
     private CharSequence mTitle;
     private ImageFetcher mImageFetcher;
@@ -179,7 +179,7 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v= inflater.inflate(R.layout.activity_detail, container, false);
-        Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+        toolbar = (Toolbar) v.findViewById(R.id.toolbar);
          toolbar.setTitle(this.getItem().getTitle());
         FontUtil.setText(this.getContext(),toolbar,false);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -235,7 +235,9 @@ public class DetailFragment extends Fragment {
 
             }
         });
-        final String smsText=StringUtils.getSmsMessage(getItem());
+        if(smsText==null) {
+            smsText = StringUtils.getSmsMessage(getItem());
+        }
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 boolean sms_success=false;
@@ -427,12 +429,16 @@ public class DetailFragment extends Fragment {
                 if(position==0) {
                     backImage.setVisibility(View.GONE);
                     setPrice(getItem());
+                    toolbar.setTitle(getItem().getTitle());
+                    smsText = StringUtils.getSmsMessage(getItem());
                 }else
                 {
                     backImage.setVisibility(View.VISIBLE);
                     setPrice(childs.get(position-1));
+                    toolbar.setTitle(childs.get(position-1).getTitle());
+                    smsText = StringUtils.getSmsMessage(childs.get(position-1));
                 }
-                if(position==childs.size()-1) {
+                if(position==childs.size()) {
 
                     forwardImage.setVisibility(View.INVISIBLE);
                 }
@@ -844,7 +850,7 @@ public class DetailFragment extends Fragment {
 
             // Hide the thumbnail and show the zoomed-in view. When the animation begins,
             // it will position the zoomed-in view in the place of the thumbnail.
-            thumbView.setAlpha(0f);
+            //thumbView.setAlpha(0f);
             expandedImageView.setVisibility(View.VISIBLE);
 
             // Set the pivot point for SCALE_X and SCALE_Y transformations to the top-left corner of

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -203,6 +204,8 @@ public class DbSupport {
                 r.setImgUrl(dbResult.getImgUrl());
                 r.setTitle(dbResult.getTitle());
                 r.setKey(dataSnapshot.getKey());
+                List<String> list=dbResult.getChildren();
+                r.setChildren(list);
                 result=r;
                callback.LoadCompleted(true);
                callback.receiveResult(r);
