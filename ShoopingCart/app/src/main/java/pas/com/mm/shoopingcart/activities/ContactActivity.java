@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -22,6 +23,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import pas.com.mm.shoopingcart.R;
+import pas.com.mm.shoopingcart.common.ApplicationConfig;
 import pas.com.mm.shoopingcart.common.CommonActivity;
 import pas.com.mm.shoopingcart.database.model.Item;
 import pas.com.mm.shoopingcart.fragments.ContactFragment;
@@ -64,6 +66,10 @@ public class ContactActivity extends CommonActivity implements ContactFragment.O
         FontUtil.setText(this.getBaseContext(),toolbar,false);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
+        TextView add1=(TextView) findViewById(R.id.addressLine1);
+        TextView add2=(TextView) findViewById(R.id.addressLine2);
+        add1.setText(ApplicationConfig.address1);
+        add2.setText(ApplicationConfig.address2);
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 

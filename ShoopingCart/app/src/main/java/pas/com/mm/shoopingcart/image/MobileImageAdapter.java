@@ -24,9 +24,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import pas.com.mm.shoopingcart.database.DbSupport;
@@ -43,6 +45,7 @@ public class MobileImageAdapter extends BaseAdapter {
     protected Context mContext;
     private ImageFetcher mImageFetcher;
     protected List<Item> list;
+    DecimalFormat formater = new DecimalFormat("#");
     public Context getmContext() {
         return mContext;
     }
@@ -134,24 +137,33 @@ public class MobileImageAdapter extends BaseAdapter {
         url=getImageUrl(position);
         ViewGroup.LayoutParams param= imageView.getLayoutParams();
 //        pb.setVisibility(View.GONE);
+        final String reloadUrl=url;
+        final Context reloadContext=this.getmContext();
         imageView.setVisibility(View.VISIBLE);
-        if(isOnline()) {
-            Picasso.with(this.getmContext())
-                    .load(url)
+    //    if(isOnline()) {
+        Picasso mPicasso = Picasso.with(this.getmContext());
+       // mPicasso.setIndicatorsEnabled(true);
+       // mPicasso.with(this.getmContext())
+      //  mPicasso.setLoggingEnabled(true);
+
+        mPicasso.load(url)
                     .placeholder(R.drawable.placeholder)
-                     .networkPolicy(NetworkPolicy.NO_STORE)
+                .error(R.drawable.ic_close_dark)
+                 //   .networkPolicy(NetworkPolicy.OFFLINE)
+
                     .resize(400, 400)
                     .centerCrop().transform(new RoundedCornersTransform())
                     .into(imageView);
-        }else {
+       /** }else {
             Picasso.with(this.getmContext())
                     .load(url)
-                    //  .placeholder(R.drawable.placeholder)
+                     .placeholder(R.drawable.placeholder)
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .resize(400, 400)
                     .centerCrop().transform(new RoundedCornersTransform())
                     .into(imageView);
         }
+        **/
       //  mImageFetcher.loadImage(Images.imageThumbUrls[position - mNumColumns], imageView);
        // imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
      //   imageView.setPadding(0, 0, 0, 0);
@@ -180,13 +192,14 @@ public class MobileImageAdapter extends BaseAdapter {
 
     public String getPrice(int position)
     {
-        return list.get(position).getAmount().toString();
+
+        return formater.format(list.get(position).getAmount());
     }
 
     public String getDiscountAmount(int position)
     {
 
-        return list.get(position).getDiscount().toString();
+        return formater.format(list.get(position).getDiscount());
     }
 
     public int getNumColumns() {

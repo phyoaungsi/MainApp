@@ -329,10 +329,14 @@ public class DbSupport {
                 r.setPromotionBanner(dbResult.getPromotionBanner());
                 r.setPromotionImage(dbResult.getPromotionImage());
                 r.setSmsMessage(dbResult.getSmsMessage());
+                r.setAddress1(dbResult.getAddress1());
+                r.setAddress2(dbResult.getAddress2());
                 ApplicationConfig.smsMessage=dbResult.getSmsMessage();
                 ApplicationConfig.open=r.getOpen();
                 ApplicationConfig.smsNumber=r.getMessageNumber();
                 ApplicationConfig.phoneNumber=r.getPhoneNumber();
+                ApplicationConfig.address1=r.getAddress1();
+                ApplicationConfig.address2=r.getAddress2();
 
                 // callback.LoadCompleted(true);
                 callback.receiveResult(r);

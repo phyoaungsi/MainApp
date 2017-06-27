@@ -60,7 +60,11 @@ public class Config extends Model {
     public String messageNumber;
     public String promotionBanner;
     public String promotionImage;
+    public String address1;
 
+
+
+    public String address2;
     public String getSmsMessage() {
         return smsMessage;
     }
@@ -71,4 +75,20 @@ public class Config extends Model {
 
     public String smsMessage;
     public Boolean promotionOn,open;
+
+    public String getAddress1() {
+        return address1;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
 }

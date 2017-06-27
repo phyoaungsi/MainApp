@@ -51,6 +51,7 @@ import com.google.gson.Gson;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -109,6 +110,7 @@ public class DetailFragment extends Fragment {
     int noOfChildren=0;
     //private String[] imageUrls;
     private OnFragmentInteractionListener mListener;
+    private DecimalFormat formater = new DecimalFormat("#");
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     public DetailFragment() {
@@ -455,12 +457,12 @@ public class DetailFragment extends Fragment {
     }
 
     private void setPrice(Item item) {
-        textPrice.setText(item.getAmount().toString()+" "+getActivity().getResources().getString(R.string.currency));
+        textPrice.setText(formater.format(item.getAmount())+" "+getActivity().getResources().getString(R.string.currency));
         t.setVisibility(View.GONE);
         if(item.getDiscount()>0 &&item.getDiscount()<item.getAmount()) {
 
-            textPrice.setText(item.getDiscount() + " " + getResources().getString(R.string.currency));
-            t.setText(item.getAmount() + " " + getResources().getString(R.string.currency));
+            textPrice.setText(formater.format(item.getDiscount()) + " " + getResources().getString(R.string.currency));
+            t.setText(formater.format(item.getAmount()) + " " + getResources().getString(R.string.currency));
             t.setPaintFlags(t.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             t.setVisibility(View.VISIBLE);
         }

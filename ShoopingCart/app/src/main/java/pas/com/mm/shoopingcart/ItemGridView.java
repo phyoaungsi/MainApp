@@ -40,13 +40,14 @@ import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.text.DecimalFormat;
+
 
 public class ItemGridView extends AppCompatActivity implements ImageGridFragment.OnFragmentInteractionListener,DetailFragment.OnFragmentInteractionListener {
     private static final String TAG = "ImageGridActivity";
     DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
     ViewPager mViewPager;
     Context mContext;
-
     private static final String IS_PROMOTION_CONFIG_KEY = "is_promotion_on";
     private String isPromotionOn="invalid";
     @Override

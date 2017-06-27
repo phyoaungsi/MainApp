@@ -154,9 +154,9 @@ public class Item extends Model implements Comparable<Item>{
     public int compareTo(Item o) {
         String str1=this.code;
         String str2=o.getCode();
-        int x = String.CASE_INSENSITIVE_ORDER.compare(str1, str2);
+        int x = String.CASE_INSENSITIVE_ORDER.compare(str2, str1);
         if (x== 0) {
-            x= str1.compareTo(str2);
+            x= str2.compareTo(str1);
         }
         return x;
 
