@@ -64,7 +64,7 @@
        Copy the snippet that appears in place of this comment.
        *************************************************************************** -->
 
-<script>
+<script>/**
   // Initialize Firebase
   // TODO: Replace with your project's customized code snippet
   var config = {
@@ -74,169 +74,17 @@
     storageBucket: "pasplatform.appspot.com",
     messagingSenderId: "test_id1",
   };
-  firebase.initializeApp(config);
+  
 
-
-
-
- function MaterialSelect(element) {
-  'use strict';
-
-  this.element_ = element;
-  this.maxRows = this.Constant_.NO_MAX_ROWS;
-  // Initialize instance.
-  this.init();
-}
-
-MaterialSelect.prototype.Constant_ = {
-  NO_MAX_ROWS: -1,
-  MAX_ROWS_ATTRIBUTE: 'maxrows'
+**/
+ var config = {
+     apiKey: "AIzaSyBRaQYTG-9c4m5VmX9eCVipvEVUhtP6Gns",
+    authDomain: "prod-703bb.firebaseapp.com",
+    databaseURL: "https://prod-703bb.firebaseio.com",
+    storageBucket: "prod-703bb.appspot.com",
+    messagingSenderId: "test_id1",
 };
-
-MaterialSelect.prototype.CssClasses_ = {
-  LABEL: 'mdl-textfield__label',
-  INPUT: 'mdl-select__input',
-  IS_DIRTY: 'is-dirty',
-  IS_FOCUSED: 'is-focused',
-  IS_DISABLED: 'is-disabled',
-  IS_INVALID: 'is-invalid',
-  IS_UPGRADED: 'is-upgraded'
-};
-
-MaterialSelect.prototype.onKeyDown_ = function(event) {
-  'use strict';
-
-  var currentRowCount = event.target.value.split('\n').length;
-  if (event.keyCode === 13) {
-    if (currentRowCount >= this.maxRows) {
-      event.preventDefault();
-    }
-  }
-};
-
-MaterialSelect.prototype.onFocus_ = function(event) {
-  'use strict';
-
-  this.element_.classList.add(this.CssClasses_.IS_FOCUSED);
-};
-
-MaterialSelect.prototype.onBlur_ = function(event) {
-  'use strict';
-
-  this.element_.classList.remove(this.CssClasses_.IS_FOCUSED);
-};
-
-MaterialSelect.prototype.updateClasses_ = function() {
-  'use strict';
-  this.checkDisabled();
-  this.checkValidity();
-  this.checkDirty();
-};
-
-MaterialSelect.prototype.checkDisabled = function() {
-  'use strict';
-  if (this.input_.disabled) {
-    this.element_.classList.add(this.CssClasses_.IS_DISABLED);
-  } else {
-    this.element_.classList.remove(this.CssClasses_.IS_DISABLED);
-  }
-};
-
-MaterialSelect.prototype.checkValidity = function() {
-  'use strict';
-  if (this.input_.validity.valid) {
-    this.element_.classList.remove(this.CssClasses_.IS_INVALID);
-  } else {
-    this.element_.classList.add(this.CssClasses_.IS_INVALID);
-  }
-};
-
-MaterialSelect.prototype.checkDirty = function() {
-  'use strict';
-  if (this.input_.value && this.input_.value.length > 0) {
-    this.element_.classList.add(this.CssClasses_.IS_DIRTY);
-  } else {
-    this.element_.classList.remove(this.CssClasses_.IS_DIRTY);
-  }
-};
-
-MaterialSelect.prototype.disable = function() {
-  'use strict';
-
-  this.input_.disabled = true;
-  this.updateClasses_();
-};
-
-MaterialSelect.prototype.enable = function() {
-  'use strict';
-
-  this.input_.disabled = false;
-  this.updateClasses_();
-};
-
-MaterialSelect.prototype.change = function(value) {
-  'use strict';
-
-  if (value) {
-    this.input_.value = value;
-  }
-  this.updateClasses_();
-};
-
-MaterialSelect.prototype.init = function() {
-  'use strict';
-
-  if (this.element_) {
-    this.label_ = this.element_.querySelector('.' + this.CssClasses_.LABEL);
-    this.input_ = this.element_.querySelector('.' + this.CssClasses_.INPUT);
-
-    if (this.input_) {
-      if (this.input_.hasAttribute(this.Constant_.MAX_ROWS_ATTRIBUTE)) {
-        this.maxRows = parseInt(this.input_.getAttribute(
-            this.Constant_.MAX_ROWS_ATTRIBUTE), 10);
-        if (isNaN(this.maxRows)) {
-          this.maxRows = this.Constant_.NO_MAX_ROWS;
-        }
-      }
-
-      this.boundUpdateClassesHandler = this.updateClasses_.bind(this);
-      this.boundFocusHandler = this.onFocus_.bind(this);
-      this.boundBlurHandler = this.onBlur_.bind(this);
-      this.input_.addEventListener('input', this.boundUpdateClassesHandler);
-      this.input_.addEventListener('focus', this.boundFocusHandler);
-      this.input_.addEventListener('blur', this.boundBlurHandler);
-
-      if (this.maxRows !== this.Constant_.NO_MAX_ROWS) {
-        // TODO: This should handle pasting multi line text.
-        // Currently doesn't.
-        this.boundKeyDownHandler = this.onKeyDown_.bind(this);
-        this.input_.addEventListener('keydown', this.boundKeyDownHandler);
-      }
-
-      this.updateClasses_();
-      this.element_.classList.add(this.CssClasses_.IS_UPGRADED);
-    }
-  }
-};
-
-MaterialSelect.prototype.mdlDowngrade_ = function() {
-  'use strict';
-  this.input_.removeEventListener('input', this.boundUpdateClassesHandler);
-  this.input_.removeEventListener('focus', this.boundFocusHandler);
-  this.input_.removeEventListener('blur', this.boundBlurHandler);
-  if (this.boundKeyDownHandler) {
-    this.input_.removeEventListener('keydown', this.boundKeyDownHandler);
-  }
-};
-
-// The component registers itself. It can assume componentHandler is available
-// in the global scope.
-componentHandler.register({
-  constructor: MaterialSelect,
-  classAsString: 'MaterialSelect',
-  cssClass: 'mdl-js-select',
-  widget: true
-});
+firebase.initializeApp(config);
 
 $( document ).ready(function() {
     console.log( "ready!" );
@@ -249,6 +97,20 @@ $( document ).ready(function() {
 		else
 		{
 		$("#discount-price").prop("readonly", true);
+		
+		}
+    });
+	
+	
+	$(document).on('click', '[name="rtypeedit"]', function () {
+        var selectedType= $(this).val();
+		if(selectedType=='promo')
+		{
+		   $("#discount-price-edit").prop("readonly", false);
+		}
+		else
+		{
+		$("#discount-price-edit").prop("readonly", true);
 		
 		}
     });
@@ -280,12 +142,12 @@ $( document ).ready(function() {
     <div class="tab mdl-layout__header-row mdl-color--light-blue-600">
       <div class="mdl-tab">
         <div id="menu-recent" class="mdl-layout__tab is-active mdl-button mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">new_releases</i> Recent
+          <i class="material-icons">home</i> Recent
         </div>
-        <div id="menu-my-posts" class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect">
+        <div id="menu-my-posts" style="display:none" class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect">
           <i class="material-icons">home</i> My posts
         </div>
-        <div id="menu-my-top-posts" class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect">
+        <div id="menu-my-top-posts" style="display:none"  class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect">
           <i class="material-icons">trending_up</i> My top posts
         </div>
         <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect" id="add">
@@ -329,13 +191,13 @@ $( document ).ready(function() {
         </div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                   <input class="mdl-textfield__input" type="text" id="new-post-title">
-                  <label class="mdl-textfield__label" for="new-post-title">Post title...</label>
+                  <label class="mdl-textfield__label" for="new-post-title">Title</label>
                 </div>
 
 				
 				<div class="mdl-textfield mdl-js-textfield">
     <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="new-post-amount">
-    <label class="mdl-textfield__label" for="new-post-amount">Amount...</label>
+    <label class="mdl-textfield__label" for="new-post-amount">Amount</label>
     <span class="mdl-textfield__error">Input is not a number!</span>
   </div>
   
@@ -364,11 +226,20 @@ $( document ).ready(function() {
          </label>      
 	   </td>
       </tr>
+	  <tr>
+	   <td>
+         <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option4">
+            <input type="radio" id="option4" name="rtype" class="mdl-radio__button" value="unlisted"  >
+            <span class="mdl-radio__label">Do not list</span>
+         </label>      
+	   </td>
+	   <td/><td/>
+	   </tr>
    </table> 
    
    	<div class="mdl-textfield mdl-js-textfield">
     <input class="mdl-textfield__input" value="0" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="discount-price" readonly>
-    <label class="mdl-textfield__label" for="discount-price">Discount Price...</label>
+    <label class="mdl-textfield__label" for="discount-price">Discount Price</label>
     <span class="mdl-textfield__error">Input is not a number!</span>
   </div>
   
@@ -377,8 +248,8 @@ $( document ).ready(function() {
                   <input class="mdl-textfield__input" type="hidden" id="new-post-imageUrl" >
     
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <textarea class="mdl-textfield__input" rows="3" id="new-post-message"></textarea>
-                  <label class="mdl-textfield__label" for="new-post-message">Detail message...</label>
+                  <textarea class="mdl-textfield__input" rows="7" id="new-post-message"></textarea>
+                  <label class="mdl-textfield__label" for="new-post-message">Details</label>
                 </div>
 				
 
@@ -403,13 +274,16 @@ $( document ).ready(function() {
             </div>
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
               <form id="update-form" action="#">
-			   <div class="mdl-textfield mdl-js-textfield ">
-                  <input class="mdl-textfield__input" type="text" id="edit-post-code">
-                  <label class="mdl-textfield__label" for="new-post-code">Post code...</label>
+			   <div class="mdl-textfield">
+                  <input class="mdl-textfield__input" type="text" id="edit-post-code" readonly>
+                  <label class="mdl-textfield__label" for="new-post-code"></label>
                 </div>
-                <div class="mdl-textfield mdl-js-textfield ">
+				
+				
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+				 <label  for="new-post-title">Title</label>
                   <input class="mdl-textfield__input" type="text" id="edit-post-title">
-                  <label class="mdl-textfield__label" for="new-post-title">Post title...</label>
+                 
                 </div>
 				<!--
 				 <div class="mdl-textfield mdl-js-textfield ">
@@ -417,50 +291,81 @@ $( document ).ready(function() {
                   <label class="mdl-textfield__label" for="new-post-desc">Post description...</label>
                 </div>
 				-->
+				
+				
 				 <div class="mdl-textfield mdl-js-textfield">
+				  <label for="new-post-amount">Amount</label>
                   <input class="mdl-textfield__input" type="text" id="edit-post-amount">
-                  <label class="mdl-textfield__label" for="new-post-amount">Post amount...</label>
+                 
                 </div>
-				 <div class="mdl-select mdl-js-select mdl-select--floating-label">
-                  <select class="mdl-select__input"  id="edit-post-cat">
-				  <option value=""></option>
-					<option value="new">New</option>
-					<option value="promo">Promotions</option>
-					<option value="regular">RegularItems</option>
-				  </select>
-                  <label class="mdl-select__label" for="new-post-cat">Post category...</label>
-                </div>
+			
+			
+				  <table>
 					
+					  <tr><td> 
+						 <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option1edit">
+							<input type="radio" id="option1edit" name="rtypeedit" class="mdl-radio__button"  value="regular" >
+							<span class="mdl-radio__label">Regular Item</span>
+						 </label>
+					  </td>
+					  <td>
+						 <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option2edit">
+							<input type="radio" id="option2edit" name="rtypeedit" class="mdl-radio__button" value="promo">
+							<span class="mdl-radio__label">Promotion</span>
+						 </label>
+					  </td>
+					   <td>
+						 <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option3edit">
+							<input type="radio" id="option3edit" name="rtypeedit" class="mdl-radio__button" value="new"  >
+							<span class="mdl-radio__label">New Arrival</span>
+						 </label>      
+					   </td>
+					    <td>
+						 <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option4edit">
+							<input type="radio" id="option4edit" name="rtypeedit" class="mdl-radio__button" value="unlisted"  >
+							<span class="mdl-radio__label">Do not list</span>
+						 </label>      
+					   </td>
+					  </tr>
+				   </table> 
+	
+					<div class="mdl-textfield mdl-js-textfield">
+					<label for="discount-price">Discount Price</label>
+					<input class="mdl-textfield__input" value="0" rows= "5" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="discount-price-edit" >
+					
+					<span class="mdl-textfield__error">Input is not a number!</span>
+				  </div>
+									
                   <input class="mdl-textfield__input" type="hidden" id="edit-post-imageUrl">
 
-                <div class="mdl-textfield mdl-js-textfield ">
+                <div class="mdl-textfield mdl-js-textfield  mdl-textfield--floating-label">
+				  <label for="new-post-message">Details</label>
                   <textarea class="mdl-textfield__input" rows="3" id="edit-post-message"></textarea>
-                  <label class="mdl-textfield__label" for="new-post-message">Post message...</label>
+                
                 </div>
 				
 				        <!-- Container for the demo -->
         <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
           <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
-            <h2 class="mdl-card__title-text">Upload a file</h2>
+            <h2 class="mdl-card__title-text">Image</h2>
           </div>
           <div class="mdl-card__supporting-text mdl-color-text--grey-600" id="messagesDiv">
-            <p>Select a file below. When it is uploaded, a link will be displayed to the uploaded file.</p>
-            <h6>Choose File</h6>
-            <input type="file" id="file" name="file"/>
-
-            <h6>File URL:</h6>
-            <span id="linkbox"></span>
+            <img src="" id="editImg" height="300px" />
           </div>
         </div>
-                <button type="submit" disabled id="submit1" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                  Add post
+		<div style="text-align:right">
+                <button type="submit"  id="saveSubmit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                  Save
                 </button>
+				</div>
 				<input type="hidden" id="updateKey"/>
               </form>
             </div>
-			  <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect" name="delete" id="delete">
-          <i class="material-icons">delete</i>
-        </button>
+			
+			<button class="mdl-button mdl-js-button mdl-button--icon " name="delete" id="delete">
+  <i class="material-icons">delete</i>
+</button>
+			
         </div>
       </div>
     </section>
